@@ -1,0 +1,49 @@
+.contentLogin {
+  width: 100%;
+  height: 100vh;
+  .contentTitleForm {
+    display: flex;
+    flex: 2;
+    height: 75%;
+    .contentLoginTitle {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      h1 {
+        font-size: 3.5rem;
+        font-weight: 600;
+        color: var(--main-color);
+
+        &.titleSennova {
+          text-align: right;
+        }
+      }
+    }
+
+    .contentLoginForm {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      .titleForm {
+        color: var(--main-color);
+      }
+    }
+  }
+
+  .contentLoginFooter {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    height: 20%;
+
+    img {
+      width: 25%;
+    }
+  }
+}
