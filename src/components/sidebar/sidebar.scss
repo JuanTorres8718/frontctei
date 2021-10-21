@@ -4,4 +4,81 @@
   background-color: rgb(251, 251, 255);
   position: sticky;
   top: 50px;
+
+  .sidebarWrapper {
+    padding: 20px;
+    color: #555;
+
+    .sidebarMenu {
+      margin-bottom: 10px;
+
+      .sidebarTitle {
+        font-size: 13px;
+        color: rgb(187, 186, 186);
+      }
+
+      .sidebarList {
+        list-style: none;
+        padding: 5px;
+
+        .sidebarListItem {
+          padding: 5px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          border-radius: 10px;
+
+          &.active,
+          &:hover {
+            background-color: rgb(252, 115, 35);
+            color: white;
+          }
+
+          .sidebarIcon {
+            margin-right: 5px;
+            font-size: 20px;
+          }
+        }
+
+        .indicator {
+          padding: 5px;
+          cursor: pointer;
+          display: flex;
+          border-radius: 10px;
+          flex-direction: column;
+
+          &:hover {
+            background-color: rgb(252, 115, 35);
+            color: white;
+          }
+
+          .sidebarIcon {
+            margin-right: 5px;
+            font-size: 20px;
+          }
+        }
+
+        .options {
+          display: flex;
+          flex-direction: column;
+          margin-left: 28px;
+
+          span {
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 10px;
+
+            &:hover {
+              background-color: rgb(252, 115, 35);
+              color: white;
+            }
+          }
+        }
+
+        .displayOptions {
+          display: none;
+        }
+      }
+    }
+  }
 }
