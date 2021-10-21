@@ -11,6 +11,7 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      margin-left: 2%;
       h1 {
         font-size: 3.5rem;
         font-weight: 600;
@@ -18,6 +19,8 @@
 
         &.titleSennova {
           text-align: right;
+          width: 100%;
+          margin-right: 5%;
         }
       }
     }
@@ -31,6 +34,52 @@
 
       .titleForm {
         color: var(--main-color);
+        font-size: 3rem;
+        margin-bottom: 18px;
+      }
+
+      .inputLogin {
+        width: 18rem;
+        height: 2rem;
+        padding: 5px;
+        margin-bottom: 20px;
+        border: 2px solid var(--border-color);
+        border-radius: 5px;
+        color: #484646;
+        font-size: 18px;
+
+        &:focus {
+          border: 2px solid var(--border-color);
+        }
+      }
+
+      .contentLoginCheck {
+        width: 19rem;
+        height: 2rem;
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+
+        .checkbox {
+          width: 22px;
+          height: 18px;
+          border: 2px solid var(--border-color);
+        }
+
+        .checkboxLetter {
+          margin-left: 5px;
+        }
+      }
+
+      .contentLoginButton {
+        width: 10rem;
+        height: 2rem;
+        border-radius: 9px;
+        font-size: 21px;
+        border-style: none;
+        color: white;
+        background-color: var(--main-color);
+        cursor: pointer;
       }
     }
   }

@@ -12,11 +12,21 @@ export default function Login() {
         </div>
         <div className="contentLoginForm">
           <h3 className="titleForm">Iniciar Sesión</h3>
-          <input type="text" name="email" placeholder="Correo electrónico *" />
-          <input type="password" name="password" placeholder="Contraseña *" />
+          <input
+            className="inputLogin"
+            type="text"
+            name="email"
+            placeholder="Correo electrónico *"
+          />
+          <input
+            className="inputLogin"
+            type="password"
+            name="password"
+            placeholder="Contraseña *"
+          />
           <div className="contentLoginCheck">
             <input type="checkbox" />
-            <small>Recordar mi sesión</small>
+            <small className="checkboxLetter">Recordar mi sesión</small>
           </div>
           <Link to="/">
             <button className="contentLoginButton">Ingresar</button>

@@ -1,6 +1,6 @@
 .sidebar {
   flex: 1;
-  height: calc(100vh - 50px);
+  height: calc(98vh - 50px);
   background-color: rgb(251, 251, 255);
   position: sticky;
   top: 50px;
@@ -50,6 +50,11 @@
           &:hover {
             background-color: rgb(252, 115, 35);
             color: white;
+          }
+
+          .listIndicator {
+            display: flex;
+            align-items: center;
           }
 
           .sidebarIcon {
