@@ -1,5 +1,6 @@
 import "./login.scss";
 import LogoSennova from "../../images/logo-sennova.png";
+import grafica from "../../images/graficas-radiales.png";
 import { Link } from "react-router-dom";
 
 export default function Login() {
@@ -7,6 +8,7 @@ export default function Login() {
     <div className="contentLogin">
       <div className="contentTitleForm">
         <div className="contentLoginTitle">
+          <img className="imgGraf" src={grafica} alt="grafica" />
           <h1 className="titleIndicador">Indicadores CTeI</h1>
           <h1 className="titleSennova">SENNOVA</h1>
         </div>

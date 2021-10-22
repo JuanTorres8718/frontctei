@@ -1,0 +1,67 @@
+.editUser {
+  flex: 4;
+  padding: 40px;
+
+  .editUserTitle {
+    text-align: center;
+  }
+
+  .contentEditUser {
+    background-color: var(--border-color);
+    border-radius: 7px;
+    padding: 8px;
+    text-align: center;
+    padding: 35px;
+    max-width: 80%;
+    margin: auto;
+
+    .contentEditUserGroup {
+      margin: 25px 35px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .pLetter {
+        font-size: 18px;
+        margin-left: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-align: left;
+        text-overflow: ellipsis;
+        width: 50%;
+      }
+
+      .contentEditUserSelect {
+        width: 17rem;
+        height: 2rem;
+        border-radius: 10px;
+        padding-left: 13px;
+        border: none;
+        font-size: 15px;
+        background-color: white;
+      }
+
+      .contentEditUserInput {
+        width: 16rem;
+        height: 2rem;
+        border-radius: 10px;
+        padding-left: 13px;
+        border: none;
+        font-size: 15px;
+        background-color: white;
+      }
+    }
+
+    .contentEditUserButton {
+      width: 10rem;
+      height: 2rem;
+      border-radius: 9px;
+      font-size: 21px;
+      border-style: none;
+      color: white;
+      background-color: var(--main-color);
+      cursor: pointer;
+      margin: 20px 0px;
+    }
+  }
+}

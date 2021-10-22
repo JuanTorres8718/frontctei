@@ -4,7 +4,11 @@ import Sidebar from "./components/sidebar/Sidebar";
 import Topbar from "./components/topbar/Topbar";
 import BancodeDatos from "./pages/bancodedatos/BancodeDatos";
 import Home from "./pages/home/Home";
+import ListaMaquinaria from "./pages/maquinaria/listamaquinaria/ListaMaquinaria";
+import ListaUsuarios from "./pages/usuarios/listausuarios/ListaUsuarios";
 import Login from "./pages/login/Login";
+import NuevoUsuario from "./pages/usuarios/nuevousuario/NuevoUsuario";
+import EditarUsuario from "./pages/usuarios/editarusuario/EditarUsuario";
 
 function App() {
   return (
@@ -18,14 +22,23 @@ function App() {
       <div className="container">
         <Sidebar />
         <Switch>
-          <Route path="/">
+          <Route exact path="/">
             <Home />
           </Route>
           <Route path="/users">
-            <Home />
+            <ListaUsuarios />
+          </Route>
+          <Route path="/newUser">
+            <NuevoUsuario />
+          </Route>
+          <Route path="/user/:id">
+            <EditarUsuario />
           </Route>
           <Route path="/proyects">
             <Home />
+          </Route>
+          <Route path="/machinery">
+            <ListaMaquinaria />
           </Route>
           <Route path="/databank">
             <BancodeDatos />

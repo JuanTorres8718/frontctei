@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 export default function Sidebar() {
   const hoverMenu = () => {
     let options = document.getElementById("options");
-    options.classList.toggle("displayOptions")
+    options.classList.toggle("displayOptions");
   };
 
   return (
@@ -67,7 +67,7 @@ export default function Sidebar() {
               </li>
             </Link>
             <li className="indicator" onClick={hoverMenu}>
-              <div className="ListIndicator">
+              <div className="listIndicator">
                 <Equalizer className="sidebarIcon" />
                 Indicadores CTeI
                 <ArrowDropDown className="icon" />

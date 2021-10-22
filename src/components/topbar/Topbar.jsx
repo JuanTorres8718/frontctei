@@ -18,8 +18,8 @@ export default function Topbar() {
             <span>Pepito Fdez</span>
             <ArrowDropDown className="icon" />
             <div className="options">
-              <span>Setting</span>
-              <span>Logout</span>
+              <span className="option">Setting</span>
+              <span className="option">Logout</span>
             </div>
           </div>
         </div>

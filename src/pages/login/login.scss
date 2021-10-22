@@ -12,6 +12,15 @@
       align-items: center;
       flex-direction: column;
       margin-left: 2%;
+
+      .imgGraf {
+        position: absolute;
+        width: 42rem;
+        left: 10%;
+        top: -3%;
+        z-index: -999;
+      }
+
       h1 {
         font-size: 3.5rem;
         font-weight: 600;

@@ -1,0 +1,37 @@
+.maquinaryList {
+  flex: 4;
+  padding: 20px;
+
+  .maquinaryListContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+
+    .maquinaryAddButton {
+      width: 10rem;
+      height: 2rem;
+      border-radius: 9px;
+      font-size: 21px;
+      border-style: none;
+      color: white;
+      background-color: var(--main-color);
+      cursor: pointer;
+    }
+  }
+
+  .maquinaryListEdit {
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    background-color: #3bb077;
+    color: white;
+    cursor: pointer;
+    margin-right: 20px;
+  }
+
+  .maquinaryListDelete {
+    color: red;
+    cursor: pointer;
+  }
+}
