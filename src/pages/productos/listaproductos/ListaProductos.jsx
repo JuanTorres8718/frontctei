@@ -2,42 +2,46 @@ import "./listaProductos.scss";
 // import { useState } from 'react'
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
-import { userRows } from "../../dummyData";
+import { productRows } from "../../../dummyData";
 import { Link } from "react-router-dom";
 
-export default function ListaUsuarios() {
-  const data = userRows;
+export default function ListaProductos() {
+  const data = productRows;
 
   //   const handleDelete = (id) => {
   //     setData(data.filter((item) => item.id !== id));
   //   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 110 },
     {
-      field: "nombre_completo",
-      headerName: "Nombre Completo",
+      field: "id",
+      headerName: "ID",
+      width: 110
+    },
+    {
+      field: "nombre_producto",
+      headerName: "Nombre del Producto",
       width: 190,
     },
     {
-      field: "correo_electronico",
-      headerName: "Correo Electrónico",
+      field: "tipologia_producto",
+      headerName: "Descripción del Producto",
       width: 190,
     },
     {
-      field: "centro_formacion",
-      headerName: "Centro de Formación",
-      width: 170,
-    },
-    {
-      field: "rol",
-      headerName: "Rol",
+      field: "fecha_registro",
+      headerName: "Fecha de registro del producto",
       width: 130,
     },
     {
-      field: "estado",
-      headerName: "Estado",
+      field: "semillero",
+      headerName: "Semillero",
       width: 130,
+    },
+    {
+      field: "talento_humano",
+      headerName: "Talento Humano",
+      width: 160,
     },
     {
       field: "action",
@@ -46,7 +50,7 @@ export default function ListaUsuarios() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/user/" + params.row.id}>
+            <Link to={"/product/" + params.row.id}>
               <button className="productListEdit">Editar</button>
             </Link>
             <DeleteOutline
@@ -61,7 +65,7 @@ export default function ListaUsuarios() {
   return (
     <div className="productList" style={{ height: "75vh", width: "100%" }}>
       <div className="productListContainer">
-        <h1 className="productTitle">Usuarios Registrados</h1>
+        <h1 className="productTitle">Productos Registrados</h1>
         <Link to="/newProduct">
           <button className="productAddButton">Registrar</button>
         </Link>

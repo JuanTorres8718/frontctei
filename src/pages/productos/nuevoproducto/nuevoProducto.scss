@@ -1,12 +1,12 @@
-.newUser {
+.newProduct {
   flex: 4;
   padding: 20px;
 
-  .newUserTitle {
+  .newProductTitle {
     text-align: center;
   }
 
-  .contentNewUser {
+  .contentNewProduct {
     background-color: var(--border-color);
     border-radius: 7px;
     padding: 8px;
@@ -15,7 +15,7 @@
     max-width: 80%;
     margin: auto;
 
-    .contentNewUserGroup {
+    .contentNewProductGroup {
       margin: 25px 35px;
       display: flex;
       justify-content: space-between;
@@ -31,7 +31,7 @@
         width: 50%;
       }
 
-      .contentNewUserSelect {
+      .contentNewProductSelect {
         width: 17rem;
         height: 2rem;
         border-radius: 10px;
@@ -41,7 +41,7 @@
         background-color: white;
       }
 
-      .contentNewUserInput {
+      .contentNewProductInput {
         width: 16rem;
         height: 2rem;
         border-radius: 10px;
@@ -52,7 +52,7 @@
       }
     }
 
-    .contentNewUserButton {
+    .contentNewProductButton {
       width: 10rem;
       height: 2rem;
       border-radius: 9px;

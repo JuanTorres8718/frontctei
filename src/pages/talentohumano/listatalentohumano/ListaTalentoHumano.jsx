@@ -1,12 +1,12 @@
-import "./listaProductos.scss";
+import "./listaTalentoHumano.scss";
 // import { useState } from 'react'
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
-import { userRows } from "../../dummyData";
+import { talentRows } from "../../../dummyData";
 import { Link } from "react-router-dom";
 
-export default function ListaUsuarios() {
-  const data = userRows;
+export default function ListaTalentoHumano() {
+  const data = talentRows;
 
   //   const handleDelete = (id) => {
   //     setData(data.filter((item) => item.id !== id));
@@ -15,29 +15,24 @@ export default function ListaUsuarios() {
   const columns = [
     { field: "id", headerName: "ID", width: 110 },
     {
-      field: "nombre_completo",
+      field: "nombre_persona",
       headerName: "Nombre Completo",
       width: 190,
     },
     {
-      field: "correo_electronico",
-      headerName: "Correo Electrónico",
+      field: "nivel_academico",
+      headerName: "Nivel academico",
       width: 190,
     },
     {
-      field: "centro_formacion",
-      headerName: "Centro de Formación",
-      width: 170,
+      field: "tipo_contrato",
+      headerName: "Tipo de contrato",
+      width: 150,
     },
     {
-      field: "rol",
-      headerName: "Rol",
-      width: 130,
-    },
-    {
-      field: "estado",
-      headerName: "Estado",
-      width: 130,
+      field: "estado_contrato",
+      headerName: "Estado del contrato",
+      width: 150,
     },
     {
       field: "action",
@@ -46,7 +41,7 @@ export default function ListaUsuarios() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/user/" + params.row.id}>
+            <Link to={"/talent/" + params.row.id}>
               <button className="productListEdit">Editar</button>
             </Link>
             <DeleteOutline
@@ -61,10 +56,10 @@ export default function ListaUsuarios() {
   return (
     <div className="productList" style={{ height: "75vh", width: "100%" }}>
       <div className="productListContainer">
-        <h1 className="productTitle">Usuarios Registrados</h1>
-        <Link to="/newProduct">
+        <h1 className="productTitle">Talento Humano Registrado</h1>
+        {/* <Link to="/newProduct">
           <button className="productAddButton">Registrar</button>
-        </Link>
+        </Link> */}
       </div>
       <DataGrid
         rows={data}

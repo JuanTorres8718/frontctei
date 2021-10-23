@@ -9,6 +9,12 @@ import ListaUsuarios from "./pages/usuarios/listausuarios/ListaUsuarios";
 import Login from "./pages/login/Login";
 import NuevoUsuario from "./pages/usuarios/nuevousuario/NuevoUsuario";
 import EditarUsuario from "./pages/usuarios/editarusuario/EditarUsuario";
+import ListaTalentoHumano from "./pages/talentohumano/listatalentohumano/ListaTalentoHumano";
+import EditarTalentoHumano from "./pages/talentohumano/editartalentohumano/EditarTalentoHumano";
+import ListaProductos from "./pages/productos/listaproductos/ListaProductos";
+import NuevoProducto from "./pages/productos/nuevoproducto/NuevoProducto";
+import EditarProducto from "./pages/productos/editarproductos/EditarProducto";
+import Financiero from "./pages/indicadores/Financiero";
 
 function App() {
   return (
@@ -21,7 +27,7 @@ function App() {
       <Topbar />
       <div className="container">
         <Sidebar />
-        <Switch>
+            <Switch>
           <Route exact path="/">
             <Home />
           </Route>
@@ -37,8 +43,26 @@ function App() {
           <Route path="/proyects">
             <Home />
           </Route>
+          <Route path="/talents">
+            <ListaTalentoHumano />
+          </Route>
+          <Route path="/talent/:id">
+            <EditarTalentoHumano />
+          </Route>
+          <Route path="/products">
+            <ListaProductos />
+          </Route>
+          <Route path="/newProduct">
+            <NuevoProducto />
+          </Route>
+          <Route path="/product/:id">
+            <EditarProducto />
+          </Route>
           <Route path="/machinery">
             <ListaMaquinaria />
+          </Route>
+          <Route path="/chartfinanciero">
+            <Financiero />
           </Route>
           <Route path="/databank">
             <BancodeDatos />

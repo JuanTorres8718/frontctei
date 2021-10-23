@@ -74,7 +74,10 @@ export default function Sidebar() {
               </div>
             </li>
             <div id="options" className="options displayOptions">
+              <Link to="/chartfinanciero" className="link">
+                
               <span>-Financiero</span>
+            </Link>
               <span>-Talento Humano</span>
               <span>-Maquinaria y equipos</span>
               <span>-Productos</span>
