@@ -26,7 +26,9 @@ export default function EditarProducto() {
           </div>
           <div className="contentEditProductGroup">
             <p className="pLetter">Descripción del producto</p>
-            <textarea name="descripcion" id="" cols="30" rows="10">Escribe aquí la descripción del producto...</textarea>
+            <textarea name="descripcion" id="" cols="30" rows="10">
+              Escribe aquí la descripción del producto...
+            </textarea>
           </div>
           <div className="contentEditProductGroup">
             <p className="pLetter">Tipologia del producto</p>
@@ -39,48 +41,44 @@ export default function EditarProducto() {
                 Seleccione la tipologia del producto
               </option>
               <option value="antiquia">
-              Seleccione la tipologia del producto
+                Seleccione la tipologia del producto
               </option>
               <option value="antiquia">
-              Seleccione la tipologia del producto
+                Seleccione la tipologia del producto
               </option>
-              <option value="antiquia">Seleccione la tipologia del producto</option>
               <option value="antiquia">
-              Seleccione la tipologia del producto
+                Seleccione la tipologia del producto
               </option>
-              <option value="antiquia">Seleccione la tipologia del producto</option>
+              <option value="antiquia">
+                Seleccione la tipologia del producto
+              </option>
+              <option value="antiquia">
+                Seleccione la tipologia del producto
+              </option>
             </select>
           </div>
           <div className="contentDataBankCheckAll">
-                <p className="pLetter">¿El producto esta asociado algún proyecto?</p>
+            <p className="pLetter">
+              ¿El producto esta asociado algún proyecto?
+            </p>
             <input className="checkbox" name="asociado" type="checkbox" />
             <input className="checkbox" name="asociado" type="checkbox" />
-            
-              </div>
-            <div className="contentEditProductGroup">
+          </div>
+          <div className="contentEditProductGroup">
             <p className="pLetter">Proyecto asociado</p>
             <select
               className="contentEditProductSelect"
               name="centro_formacion"
               id="centro_formacion"
             >
-              <option value="antiquia">
-                Seleccione el proyecto a asociar
-              </option>
-              <option value="antiquia">
-              Seleccione el proyecto a asociar
-              </option>
-              <option value="antiquia">
-              Seleccione el proyecto a asociar
-              </option>
               <option value="antiquia">Seleccione el proyecto a asociar</option>
-              <option value="antiquia">
-              Seleccione el proyecto a asociar
-              </option>
+              <option value="antiquia">Seleccione el proyecto a asociar</option>
+              <option value="antiquia">Seleccione el proyecto a asociar</option>
+              <option value="antiquia">Seleccione el proyecto a asociar</option>
+              <option value="antiquia">Seleccione el proyecto a asociar</option>
               <option value="antiquia">Seleccione el proyecto a asociar</option>
             </select>
           </div>
-
           <button className="contentEditProductButton">Editar</button>
         </form>
       </div>

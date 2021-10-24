@@ -14,7 +14,10 @@ import EditarTalentoHumano from "./pages/talentohumano/editartalentohumano/Edita
 import ListaProductos from "./pages/productos/listaproductos/ListaProductos";
 import NuevoProducto from "./pages/productos/nuevoproducto/NuevoProducto";
 import EditarProducto from "./pages/productos/editarproductos/EditarProducto";
-import Financiero from "./pages/indicadores/Financiero";
+import ChartFinanciero from "./components/charts/ChartFinanciero";
+import ChartTalentoHumano from "./components/charts/ChartTalentHumano";
+import ChartMaquinaria from "./components/charts/ChartMaquinaria";
+import ChartProductos from "./components/charts/ChartProductos";
 
 function App() {
   return (
@@ -27,7 +30,7 @@ function App() {
       <Topbar />
       <div className="container">
         <Sidebar />
-            <Switch>
+        <Switch>
           <Route exact path="/">
             <Home />
           </Route>
@@ -62,7 +65,16 @@ function App() {
             <ListaMaquinaria />
           </Route>
           <Route path="/chartfinanciero">
-            <Financiero />
+            <ChartFinanciero />
+          </Route>
+          <Route path="/charttalentohumano">
+            <ChartTalentoHumano />
+          </Route>
+          <Route path="/chartmaquinaria">
+            <ChartMaquinaria />
+          </Route>
+          <Route path="/chartproductos">
+            <ChartProductos />
           </Route>
           <Route path="/databank">
             <BancodeDatos />

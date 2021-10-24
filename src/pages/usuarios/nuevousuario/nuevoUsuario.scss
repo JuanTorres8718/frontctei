@@ -32,8 +32,10 @@
       }
 
       .contentNewUserSelect {
-        width: 17rem;
+        width: 51%;
         height: 2rem;
+        max-width: 21rem;
+        min-width: 11rem;
         border-radius: 10px;
         padding-left: 13px;
         border: none;
@@ -42,7 +44,9 @@
       }
 
       .contentNewUserInput {
-        width: 16rem;
+        width: 50%;
+        max-width: 20rem;
+        min-width: 11rem;
         height: 2rem;
         border-radius: 10px;
         padding-left: 13px;

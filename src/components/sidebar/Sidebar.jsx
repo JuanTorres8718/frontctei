@@ -75,12 +75,17 @@ export default function Sidebar() {
             </li>
             <div id="options" className="options displayOptions">
               <Link to="/chartfinanciero" className="link">
-                
-              <span>-Financiero</span>
-            </Link>
-              <span>-Talento Humano</span>
-              <span>-Maquinaria y equipos</span>
-              <span>-Productos</span>
+                <span>-Financiero</span>
+              </Link>
+              <Link to="/charttalentohumano" className="link">
+                <span>-Talento Humano</span>
+              </Link>
+              <Link to="/chartmaquinaria" className="link">
+                <span>-Maquinaria y equipos</span>
+              </Link>
+              <Link to="/chartproductos" className="link">
+                <span>-Productos</span>
+              </Link>
             </div>
             <Link to="/databank" className="link">
               <li className="sidebarListItem">

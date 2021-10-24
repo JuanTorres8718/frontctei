@@ -1,21 +1,23 @@
-.editTalent {
-  flex: 4;
-  padding: 20px;
+.createTalent {
+  padding: 10px;
+  height: 75vh;
+  overflow: auto;
 
-  .editTalentTitle {
+  .createTalentTitle {
     text-align: center;
   }
 
-  .contentEditTalent {
+  .contentCreateTalent {
     background-color: var(--border-color);
     border-radius: 7px;
     padding: 8px;
     text-align: center;
     padding: 15px;
-    max-width: 80%;
+    max-width: 800px;
+    width: 90%;
     margin: auto;
 
-    .contentEditTalentGroup {
+    .contentCreateTalentGroup {
       margin: 25px 35px;
       display: flex;
       justify-content: space-between;
@@ -31,7 +33,7 @@
         width: 50%;
       }
 
-      .contentEditTalentSelect {
+      .contentCreateTalentSelect {
         width: 51%;
         height: 2rem;
         max-width: 21rem;
@@ -43,7 +45,7 @@
         background-color: white;
       }
 
-      .contentEditTalentInput {
+      .contentCreateTalentInput {
         width: 50%;
         max-width: 20rem;
         min-width: 11rem;
@@ -56,7 +58,7 @@
       }
     }
 
-    .contentEditTalentButton {
+    .contentCreateTalentButton {
       width: 10rem;
       height: 2rem;
       border-radius: 9px;

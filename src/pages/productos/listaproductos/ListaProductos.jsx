@@ -16,7 +16,7 @@ export default function ListaProductos() {
     {
       field: "id",
       headerName: "ID",
-      width: 110
+      width: 110,
     },
     {
       field: "nombre_producto",

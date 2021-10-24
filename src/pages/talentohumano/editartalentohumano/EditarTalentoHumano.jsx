@@ -23,8 +23,8 @@ export default function EditarTalentoHumano() {
               className="contentEditTalentInput"
               placeholder="Ingresar el correo electrónico SENA"
             />
-            </div>
-            <div className="contentEditTalentGroup">
+          </div>
+          <div className="contentEditTalentGroup">
             <p className="pLetter">Valor del contrato</p>
             <input
               type="text"
@@ -56,15 +56,9 @@ export default function EditarTalentoHumano() {
               name="centro_formacion"
               id="centro_formacion"
             >
-              <option value="antiquia">
-                Planta
-              </option>
-              <option value="antiquia">
-                Contratista
-              </option>
-              <option value="antiquia">
-                Auxiliar
-              </option>
+              <option value="antiquia">Planta</option>
+              <option value="antiquia">Contratista</option>
+              <option value="antiquia">Auxiliar</option>
             </select>
           </div>
           <button className="contentEditTalentButton">Editar</button>

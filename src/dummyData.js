@@ -367,28 +367,51 @@ export const productRows = [
     fecha_registro: "02/02/2020",
     semillero: "Investigacion",
     talento_humano: "Pepe Fdez",
-  }
+  },
 ];
 
 export const finanzaData = [
   {
     name: "2017",
-    "Inversion": 4000,
+    Inversion: 4000,
   },
   {
     name: "2018",
-    "Inversion": 2113,
+    Inversion: 2113,
   },
   {
     name: "2019",
-    "Inversion": 3653,
+    Inversion: 3653,
   },
   {
     name: "2020",
-    "Inversion": 5832,
+    Inversion: 5832,
   },
   {
     name: "2021",
-    "Inversion": 2454,
+    Inversion: 2454,
+  },
+];
+
+export const talentData = [
+  {
+    name: "2017",
+    Contratados: 25,
+  },
+  {
+    name: "2018",
+    Contratados: 10,
+  },
+  {
+    name: "2019",
+    Contratados: 14,
+  },
+  {
+    name: "2020",
+    Contratados: 45,
+  },
+  {
+    name: "2021",
+    Contratados: 10,
   },
 ];

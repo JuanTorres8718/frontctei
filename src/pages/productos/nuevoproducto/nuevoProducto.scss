@@ -12,7 +12,8 @@
     padding: 8px;
     text-align: center;
     padding: 15px;
-    max-width: 80%;
+    max-width: 800px;
+    width: 80%;
     margin: auto;
 
     .contentNewProductGroup {
@@ -20,6 +21,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+
+      &.TextArea {
+        flex-direction: column;
+        align-items: unset;
+      }
 
       .pLetter {
         font-size: 18px;
@@ -32,8 +38,10 @@
       }
 
       .contentNewProductSelect {
-        width: 17rem;
+        width: 51%;
         height: 2rem;
+        max-width: 21rem;
+        min-width: 11rem;
         border-radius: 10px;
         padding-left: 13px;
         border: none;
@@ -42,7 +50,9 @@
       }
 
       .contentNewProductInput {
-        width: 16rem;
+        width: 50%;
+        max-width: 20rem;
+        min-width: 11rem;
         height: 2rem;
         border-radius: 10px;
         padding-left: 13px;
@@ -51,6 +61,55 @@
         background-color: white;
       }
     }
+
+    .displayOptions {
+      display: none;
+    }
+
+    .contentDataBankCheckAll {
+      .pLetter {
+        font-size: 18px;
+        margin-bottom: 15px;
+      }
+      .contentRadioButtons {
+        display: flex;
+        justify-content: center;
+
+        .contentRadio {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100px;
+
+          .radio {
+            width: 23px;
+            height: 23px;
+          }
+
+          p {
+            margin-left: 5px;
+            font-size: 18px;
+          }
+        }
+      }
+    }
+
+    // .contentAutores{
+    //   .pLetter{
+
+    //   }
+
+    //   .contentContAutores{
+    //     .ModalShow{
+    //       position: absolute;
+    //       width: 400;
+    //       background-color: theme.palette.background.paper;
+    //       border: 2px solid #000;
+    //       box-shadow;: theme.shadows[5],
+    //       padding: theme.spacing(2, 4, 3),
+    //     }
+    //   }
+    // }
 
     .contentNewProductButton {
       width: 10rem;
