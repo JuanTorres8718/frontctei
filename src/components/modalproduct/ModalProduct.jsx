@@ -69,7 +69,7 @@ export default function ModalProduct({
                   <p className="pLetter">Nombre Completo</p>
                   <input
                     type="text"
-                    name="nombre_completo"
+                    name="nombre_persona"
                     className="contentCreateTalentInput"
                     placeholder="Ingresar el nombre completo"
                     onChange={handleChange}
@@ -79,19 +79,29 @@ export default function ModalProduct({
                   <p className="pLetter">Objeto del contrato</p>
                   <input
                     type="text"
-                    name="correo_electronico"
+                    name="objeto_contrato"
                     className="contentCreateTalentInput"
-                    placeholder="Ingresar el correo electrónico SENA"
+                    placeholder="Ingresar el objeto del contrato"
                     onChange={handleChange}
                   />
                 </div>
                 <div className="contentCreateTalentGroup">
-                  <p className="pLetter">Valor del contrato</p>
+                  <p className="pLetter">Valor Total del contrato</p>
                   <input
                     type="text"
-                    name="correo_respaldo"
+                    name="valor_total_contrato"
                     className="contentCreateTalentInput"
-                    placeholder="Ingresar un correo electrónico de respaldo"
+                    placeholder="Ingresar el valor total del contrato"
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="contentCreateTalentGroup">
+                  <p className="pLetter">Tiempo de dedicación semanal</p>
+                  <input
+                    type="text"
+                    name="tiempo_dedicacion_semanal"
+                    className="contentCreateTalentInput"
+                    placeholder="Ingresar el tiempo dedicado semanal por la persona"
                     onChange={handleChange}
                   />
                 </div>
@@ -99,8 +109,9 @@ export default function ModalProduct({
                   <p className="pLetter">Fecha de inicio del contrato</p>
                   <input
                     type="date"
-                    name="fecha_fin_contrato"
+                    name="fecha_inicio_contrato"
                     className="contentCreateTalentInput"
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="contentCreateTalentGroup">
@@ -109,42 +120,46 @@ export default function ModalProduct({
                     type="date"
                     name="fecha_fin_contrato"
                     className="contentCreateTalentInput"
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="contentCreateTalentGroup">
                   <p className="pLetter">Tipo de contrato</p>
                   <select
                     className="contentCreateTalentSelect"
-                    name="centro_formacion"
-                    id="centro_formacion"
+                    name="tipo_contrato"
+                    id="tipo_contrato"
+                    onChange={handleChange}
                   >
-                    <option value="antiquia">Planta</option>
-                    <option value="antiquia">Contratista</option>
-                    <option value="antiquia">Auxiliar</option>
+                    <option value="planta">Planta</option>
+                    <option value="Contratista">Contratista</option>
+                    <option value="auxiliar">Auxiliar</option>
                   </select>
                 </div>
                 <div className="contentCreateTalentGroup">
                   <p className="pLetter">Nivel Academico</p>
                   <select
                     className="contentCreateTalentSelect"
-                    name="centro_formacion"
-                    id="centro_formacion"
+                    name="nivel_academico"
+                    id="nivel_academico"
+                    onChange={handleChange}
                   >
-                    <option value="antiquia">Ingeniero</option>
-                    <option value="antiquia">Tecnologo</option>
-                    <option value="antiquia">Tecnico</option>
+                    <option value="ingeniero">Ingeniero</option>
+                    <option value="tecnologo">Tecnologo</option>
+                    <option value="tecnico">Tecnico</option>
                   </select>
                 </div>
                 <div className="contentCreateTalentGroup">
                   <p className="pLetter">Rol de proyectos</p>
                   <select
                     className="contentCreateTalentSelect"
-                    name="centro_formacion"
-                    id="centro_formacion"
+                    name="rol_de_proyectos"
+                    id="rol_de_proyectos"
+                    onChange={handleChange}
                   >
-                    <option value="antiquia">Lider</option>
-                    <option value="antiquia">Investigador</option>
-                    <option value="antiquia">Desarrollador</option>
+                    <option value="lider">Lider</option>
+                    <option value="investigador">Investigador</option>
+                    <option value="desarrollador">Desarrollador</option>
                   </select>
                 </div>
                 <button

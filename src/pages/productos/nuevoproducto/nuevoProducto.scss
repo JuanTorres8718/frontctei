@@ -94,22 +94,56 @@
       }
     }
 
-    // .contentAutores{
-    //   .pLetter{
+    .contentAutores {
+      .pLetter {
+        font-size: 18px;
+        margin-bottom: 15px;
+      }
 
-    //   }
+      .contentContAutores {
+        .contentAutorButton {
+          width: 3rem;
+          height: 3rem;
+          border-radius: 50%;
+          border-style: none;
+          color: white;
+          background-color: var(--main-color);
+          cursor: pointer;
+          margin: 20px 0px;
 
-    //   .contentContAutores{
-    //     .ModalShow{
-    //       position: absolute;
-    //       width: 400;
-    //       background-color: theme.palette.background.paper;
-    //       border: 2px solid #000;
-    //       box-shadow;: theme.shadows[5],
-    //       padding: theme.spacing(2, 4, 3),
-    //     }
-    //   }
-    // }
+          .addButton {
+            font-size: 2rem;
+          }
+        }
+      }
+
+      .rowContentAutores {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        .row {
+          border-radius: 15px;
+          background-color: white;
+          width: 250px;
+          height: 150px;
+          margin: 20px;
+          padding: 20px;
+          -webkit-box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.15);
+          box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.15);
+
+          .rowColumn {
+            margin-bottom: 5px;
+            p {
+              color: #706d6d;
+            }
+            &.rowDate {
+              display: flex;
+              flex-wrap: nowrap;
+            }
+          }
+        }
+      }
+    }
 
     .contentNewProductButton {
       width: 10rem;

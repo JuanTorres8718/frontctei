@@ -1,12 +1,12 @@
-import "./listaProductos.scss";
+import "./listaProyecto.scss";
 // import { useState } from 'react'
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
-import { userRows } from "../../dummyData";
+import { proyectRows } from "../../../dummyData";
 import { Link } from "react-router-dom";
 
-export default function ListaUsuarios() {
-  const data = userRows;
+export default function ListaProyecto() {
+  const data = proyectRows;
 
   //   const handleDelete = (id) => {
   //     setData(data.filter((item) => item.id !== id));
@@ -15,28 +15,38 @@ export default function ListaUsuarios() {
   const columns = [
     { field: "id", headerName: "ID", width: 110 },
     {
-      field: "nombre_completo",
-      headerName: "Nombre Completo",
+      field: "nombre_proyecto",
+      headerName: "Nombre Proyecto",
       width: 190,
     },
     {
-      field: "correo_electronico",
-      headerName: "Correo Electrónico",
-      width: 190,
+      field: "valor_proyecto",
+      headerName: "Valor del proyecto",
+      width: 160,
     },
     {
-      field: "centro_formacion",
-      headerName: "Centro de Formación",
-      width: 170,
+      field: "valor_servicios_personales",
+      headerName: "Valor de servicios personales",
+      width: 160,
     },
     {
-      field: "rol",
-      headerName: "Rol",
+      field: "valor_compra_equipos",
+      headerName: "Valor de compra de equipos",
+      width: 150,
+    },
+    {
+      field: "valor_software",
+      headerName: "Valor del software",
       width: 130,
     },
     {
-      field: "estado",
-      headerName: "Estado",
+      field: "fecha_cierre_proyecto",
+      headerName: "Fecha de cierre del proyecto",
+      width: 130,
+    },
+    {
+      field: "estado_proyecto",
+      headerName: "Valor del software",
       width: 130,
     },
     {
@@ -46,7 +56,7 @@ export default function ListaUsuarios() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/user/" + params.row.id}>
+            <Link to={"/project/" + params.row.id}>
               <button className="productListEdit">Editar</button>
             </Link>
             <DeleteOutline
@@ -61,8 +71,8 @@ export default function ListaUsuarios() {
   return (
     <div className="productList" style={{ height: "75vh", width: "100%" }}>
       <div className="productListContainer">
-        <h1 className="productTitle">Usuarios Registrados</h1>
-        <Link to="/newProduct">
+        <h1 className="productTitle">Proyectos Registrados</h1>
+        <Link to="/newProject">
           <button className="productAddButton">Registrar</button>
         </Link>
       </div>

@@ -1,12 +1,12 @@
-.editProduct {
+.editProject {
   flex: 4;
   padding: 20px;
 
-  .editProductTitle {
+  .editProjectTitle {
     text-align: center;
   }
 
-  .contentEditProduct {
+  .contentEditProject {
     background-color: var(--border-color);
     border-radius: 7px;
     padding: 8px;
@@ -16,7 +16,7 @@
     width: 80%;
     margin: auto;
 
-    .contentEditProductGroup {
+    .contentEditProjectGroup {
       margin: 25px 35px;
       display: flex;
       justify-content: space-between;
@@ -37,7 +37,7 @@
         width: 50%;
       }
 
-      .contentEditProductSelect {
+      .contentEditProjectSelect {
         width: 51%;
         height: 2rem;
         max-width: 21rem;
@@ -49,7 +49,7 @@
         background-color: white;
       }
 
-      .contentEditProductInput {
+      .contentEditProjectInput {
         width: 50%;
         max-width: 20rem;
         min-width: 11rem;
@@ -64,34 +64,6 @@
 
     .displayOptions {
       display: none;
-    }
-
-    .contentDataBankCheckAll {
-      .pLetter {
-        font-size: 18px;
-        margin-bottom: 15px;
-      }
-      .contentRadioButtons {
-        display: flex;
-        justify-content: center;
-
-        .contentRadio {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 100px;
-
-          .radio {
-            width: 23px;
-            height: 23px;
-          }
-
-          p {
-            margin-left: 5px;
-            font-size: 18px;
-          }
-        }
-      }
     }
 
     .contentAutores {
@@ -145,7 +117,7 @@
       }
     }
 
-    .contentEditProductButton {
+    .contentEditProjectButton {
       width: 10rem;
       height: 2rem;
       border-radius: 9px;

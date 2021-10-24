@@ -18,6 +18,9 @@ import ChartFinanciero from "./components/charts/ChartFinanciero";
 import ChartTalentoHumano from "./components/charts/ChartTalentHumano";
 import ChartMaquinaria from "./components/charts/ChartMaquinaria";
 import ChartProductos from "./components/charts/ChartProductos";
+import ListaProyecto from "./pages/proyectos/listaproyecto/ListaProyecto";
+import NuevoProyecto from "./pages/proyectos/nuevoproyecto/NuevoProyecto";
+import EditarProyecto from "./pages/proyectos/editarproyecto/EditarProyecto";
 
 function App() {
   return (
@@ -43,8 +46,14 @@ function App() {
           <Route path="/user/:id">
             <EditarUsuario />
           </Route>
-          <Route path="/proyects">
-            <Home />
+          <Route path="/projects">
+            <ListaProyecto />
+          </Route>
+          <Route path="/newProject">
+            <NuevoProyecto />
+          </Route>
+          <Route path="/project/:id">
+            <EditarProyecto />
           </Route>
           <Route path="/talents">
             <ListaTalentoHumano />

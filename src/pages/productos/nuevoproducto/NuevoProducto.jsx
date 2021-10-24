@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./nuevoProducto.scss";
 import ModalProduct from "../../../components/modalproduct/ModalProduct";
+import { Add } from "@material-ui/icons";
 
 export default function NuevoProducto() {
   const [autores, setAutores] = useState([]);
@@ -38,24 +39,24 @@ export default function NuevoProducto() {
             <p className="pLetter">Codigo del Producto</p>
             <input
               type="text"
-              name="nombre_completo"
+              name="codigo_producto"
               className="contentNewProductInput"
-              placeholder="Ingresar el nombre completo"
+              placeholder="Ingresar el codigo del producto"
             />
           </div>
           <div className="contentNewProductGroup">
             <p className="pLetter">Nombre del producto</p>
             <input
               type="text"
-              name="correo_electronico"
+              name="nombre_producto"
               className="contentNewProductInput"
-              placeholder="Ingresar el correo electrónico SENA"
+              placeholder="Ingresar el nombre del producto"
             />
           </div>
           <div className="contentNewProductGroup TextArea">
             <p className="pLetter">Descripción del producto</p>
             <textarea
-              name="descripcion"
+              name="descripcion_producto"
               id=""
               cols="10"
               rows="5"
@@ -68,8 +69,8 @@ export default function NuevoProducto() {
             <p className="pLetter">Tipologia del producto</p>
             <select
               className="contentNewProductSelect"
-              name="centro_formacion"
-              id="centro_formacion"
+              name="tipologia_productos"
+              id="tipologia_productos"
             >
               <option value="antiquia">
                 Seleccione la tipologia del producto
@@ -138,8 +139,12 @@ export default function NuevoProducto() {
           <div className="contentAutores displayOptions" id="autores">
             <p className="pLetter">Agrega a los Autores del producto</p>
             <div className="contentContAutores">
-              <button type="button" onClick={handleOpen}>
-                Open Modal
+              <button
+                className="contentAutorButton"
+                type="button"
+                onClick={handleOpen}
+              >
+                <Add className="addButton" />
               </button>
               <ModalProduct
                 open={open}
@@ -148,16 +153,29 @@ export default function NuevoProducto() {
                 autores={autores}
               />
             </div>
-            <div className="container-fluid bg-dark">
-              <div className="row ">
-                {autores.map((data, id) => (
-                  <div key={id} style={{ border: "1px black solid" }}>
-                    <p>{data.nombre_completo}</p>
-                    <p>{data.correo_electronico}</p>
-                    <p>{data.correo_respaldo}</p>
+            <div className="rowContentAutores">
+              {autores.map((data, id) => (
+                <div className="row" key={id}>
+                  <div className="rowColumn">
+                    <h3>Autor</h3>
+                    <p>{data.nombre_persona}</p>
                   </div>
-                ))}
-              </div>
+                  <div className="rowColumn">
+                    <h3>Tipo de contrato</h3>
+                    <p>{data.tipo_contrato}</p>
+                  </div>
+                  <div className="rowColumn rowDate">
+                    <div className="columnDate">
+                      <h4>Fecha de inicio del contrato</h4>
+                      <p>{data.fecha_inicio_contrato}</p>
+                    </div>
+                    <div className="columnDate">
+                      <h4>Fecha de final del contrato</h4>
+                      <p>{data.fecha_fin_contrato}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
           <button className="contentNewProductButton">Registrar</button>
