@@ -22,12 +22,12 @@ export default function NuevoProyecto() {
       <div className="contentNewProject">
         <form action="">
           <div className="contentNewProjectGroup">
-            <p className="pLetter">Codigo del Proyecto</p>
+            <p className="pLetter">Código del Proyecto</p>
             <input
               type="text"
               name="codigo_Proyecto"
               className="contentNewProjectInput"
-              placeholder="Ingresar el codigo del Projecto"
+              placeholder="Ingresar el código del Proyecto"
             />
           </div>
           <div className="contentNewProjectGroup">
@@ -36,7 +36,7 @@ export default function NuevoProyecto() {
               type="text"
               name="nombre_Proyecto"
               className="contentNewProjectInput"
-              placeholder="Ingresar el nombre del Projecto"
+              placeholder="Ingresar el nombre del Proyecto"
             />
           </div>
           <div className="contentNewProjectGroup">
@@ -128,7 +128,7 @@ export default function NuevoProyecto() {
             </select>
           </div>
           <div className="contentAutores" id="autores">
-            <p className="pLetter">Agrega a los Autores del Projecto</p>
+            <p className="pLetter">Agrega a los Responsables del Proyecto</p>
             <div className="contentContAutores">
               <button
                 className="contentAutorButton"
@@ -148,7 +148,7 @@ export default function NuevoProyecto() {
               {autores.map((data, id) => (
                 <div className="row" key={id}>
                   <div className="rowColumn">
-                    <h3>Autor</h3>
+                    <h3>Responsable</h3>
                     <p>{data.nombre_persona}</p>
                   </div>
                   <div className="rowColumn">
@@ -171,6 +171,9 @@ export default function NuevoProyecto() {
           </div>
           <button className="contentNewProjectButton">Registrar</button>
         </form>
+      </div>
+      <div className="containerFooter">
+        <small>Derechos de autor ©2021 SENNOVA</small>
       </div>
     </div>
   );

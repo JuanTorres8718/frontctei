@@ -72,6 +72,9 @@ export default function ListaMaquinaria() {
         pageSize={8}
         disableSelectionOnClick
       />
+      <div className="containerFooter">
+        <small>Derechos de autor ©2021 SENNOVA</small>
+      </div>
     </div>
   );
 }

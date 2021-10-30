@@ -40,6 +40,9 @@ export default function ChartFinanciero() {
         </p>
         <button className="chartButton">Visualizar indicadores</button>
       </div>
+      <div className="containerFooter">
+        <small>Derechos de autor ©2021 SENNOVA</small>
+      </div>
     </div>
   );
 }

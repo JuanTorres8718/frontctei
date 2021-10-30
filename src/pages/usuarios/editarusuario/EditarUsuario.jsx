@@ -75,6 +75,9 @@ export default function EditarUsuario() {
           <button className="contentEditUserButton">Editar</button>
         </form>
       </div>
+      <div className="containerFooter">
+        <small>Derechos de autor ©2021 SENNOVA</small>
+      </div>
     </div>
   );
 }

@@ -5,6 +5,15 @@
     display: flex;
     flex: 2;
     height: 75%;
+
+    .contentLogoSena {
+      width: 70px;
+      height: 70px;
+      position: absolute;
+      right: 50px;
+      top: 16px;
+    }
+
     .contentLoginTitle {
       flex: 1;
       display: flex;
@@ -15,8 +24,8 @@
 
       .imgGraf {
         position: absolute;
-        width: 42rem;
-        left: 10%;
+        width: 40%;
+        left: 15%;
         top: -3%;
         z-index: -999;
       }
@@ -100,6 +109,25 @@
     align-items: center;
     height: 20%;
 
+    .containerLogos {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+
+      .contentLogo {
+        width: 232px;
+        height: 76px;
+
+        &.Centro {
+          height: 60px;
+        }
+      }
+
+      .contentLogoGrupo {
+        width: 71px;
+        height: 91px;
+      }
+    }
     img {
       width: 25%;
     }

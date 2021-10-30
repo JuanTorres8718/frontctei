@@ -64,6 +64,9 @@ export default function EditarTalentoHumano() {
           <button className="contentEditTalentButton">Editar</button>
         </form>
       </div>
+      <div className="containerFooter">
+        <small>Derechos de autor ©2021 SENNOVA</small>
+      </div>
     </div>
   );
 }

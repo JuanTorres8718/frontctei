@@ -75,6 +75,9 @@ export default function NuevoUsuario() {
           <button className="contentNewUserButton">Registrar</button>
         </form>
       </div>
+      <div className="containerFooter">
+        <small>Derechos de autor ©2021 SENNOVA</small>
+      </div>
     </div>
   );
 }

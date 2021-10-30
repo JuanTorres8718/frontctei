@@ -86,10 +86,10 @@ export default function BancodeDatos() {
                   name="rubro"
                   id="rubro"
                 >
-                  <option value="antiquia">66 - Investigación aplicada</option>
-                  <option value="antiquia">66 - Investigación aplicada</option>
-                  <option value="antiquia">66 - Investigación aplicada</option>
-                  <option value="antiquia">66 - Investigación aplicada</option>
+                  <option value="antiquia">66 - Investigación</option>
+                  <option value="antiquia">66 - Investigación</option>
+                  <option value="antiquia">66 - Investigación</option>
+                  <option value="antiquia">66 - Investigación</option>
                 </select>
               </div>
               <button className="contentDataBankButton">Descargar</button>
@@ -104,15 +104,18 @@ export default function BancodeDatos() {
                 name="rubro"
                 id="rubro"
               >
-                <option value="antiquia">66 - Investigación aplicada</option>
-                <option value="antiquia">66 - Investigación aplicada</option>
-                <option value="antiquia">66 - Investigación aplicada</option>
-                <option value="antiquia">66 - Investigación aplicada</option>
+                <option value="antiquia">66 - Investigación</option>
+                <option value="antiquia">66 - Investigación</option>
+                <option value="antiquia">66 - Investigación</option>
+                <option value="antiquia">66 - Investigación</option>
               </select>
             </div>
             <button className="contentDataBankButton">Descargar</button>
           </>
         )}
+      </div>
+      <div className="containerFooter">
+        <small>Derechos de autor ©2021 SENNOVA</small>
       </div>
     </div>
   );

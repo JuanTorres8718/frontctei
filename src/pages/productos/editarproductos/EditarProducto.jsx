@@ -137,7 +137,7 @@ export default function EditarProducto() {
             </select>
           </div>
           <div className="contentAutores displayOptions" id="autores">
-            <p className="pLetter">Agrega a los Autores del producto</p>
+            <p className="pLetter">Agrega a los Responsables del producto</p>
             <div className="contentContAutores">
               <button
                 className="contentAutorButton"
@@ -157,7 +157,7 @@ export default function EditarProducto() {
               {autores.map((data, id) => (
                 <div className="row" key={id}>
                   <div className="rowColumn">
-                    <h3>Autor</h3>
+                    <h3>Responsable</h3>
                     <p>{data.nombre_persona}</p>
                   </div>
                   <div className="rowColumn">
@@ -180,6 +180,9 @@ export default function EditarProducto() {
           </div>
           <button className="contentEditProductButton">Editar</button>
         </form>
+      </div>
+      <div className="containerFooter">
+        <small>Derechos de autor ©2021 SENNOVA</small>
       </div>
     </div>
   );

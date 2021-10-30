@@ -5,13 +5,19 @@
 }
 
 .container {
-
-  
   display: flex;
   margin-top: 10px;
 
   .link {
     color: inherit;
     text-decoration: none;
+  }
+
+  .containerFooter {
+    small {
+      position: absolute;
+      left: 50%;
+      bottom: 15px;
+    }
   }
 }

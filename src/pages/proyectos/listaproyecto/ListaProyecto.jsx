@@ -82,6 +82,9 @@ export default function ListaProyecto() {
         pageSize={9}
         disableSelectionOnClick
       />
+      <div className="containerFooter">
+        <small>Derechos de autor ©2021 SENNOVA</small>
+      </div>
     </div>
   );
 }
