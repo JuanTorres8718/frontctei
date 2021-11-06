@@ -39,6 +39,12 @@
         width: 50%;
       }
 
+      .pLetterQuestion {
+        font-size: 17px;
+        margin-left: 5px;
+        text-align: left;
+      }
+
       .contentNewProjectSelect {
         width: 51%;
         height: 2rem;
@@ -64,8 +70,37 @@
       }
     }
 
-    .displayOptions {
+    .displayText {
       display: none;
+    }
+
+    .contentDataBankCheckAll {
+      margin-bottom: 10px;
+      .pLetter {
+        font-size: 18px;
+        margin-bottom: 15px;
+      }
+      .contentRadioButtons {
+        display: flex;
+        justify-content: center;
+
+        .contentRadio {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100px;
+
+          .radio {
+            width: 23px;
+            height: 23px;
+          }
+
+          p {
+            margin-left: 5px;
+            font-size: 18px;
+          }
+        }
+      }
     }
 
     .contentAutores {

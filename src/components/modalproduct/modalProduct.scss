@@ -68,6 +68,11 @@
       background-color: var(--main-color);
       cursor: pointer;
       margin: 20px 0px;
+
+      &.registro {
+        width: 14rem;
+        margin: 20px 21px;
+      }
     }
   }
 }

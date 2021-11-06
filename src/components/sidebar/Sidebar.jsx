@@ -86,6 +86,9 @@ export default function Sidebar() {
               <Link to="/chartproductos" className="link">
                 <span>-Productos</span>
               </Link>
+              <Link to="/chartformacion" className="link">
+                <span>-Formación</span>
+              </Link>
             </div>
             <Link to="/databank" className="link">
               <li className="sidebarListItem">

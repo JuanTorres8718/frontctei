@@ -5,7 +5,7 @@ import { Add } from "@material-ui/icons";
 
 export default function NuevoProducto() {
   const [autores, setAutores] = useState([]);
-
+  const [product, setProduct] = useState({});
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -17,17 +17,39 @@ export default function NuevoProducto() {
   };
 
   const hoverInfoProduct = (e) => {
-    if (e.target.value === "0") {
+    if (e.target.name === "asociado" && e.target.value === "0") {
       document.getElementById("proyect").classList.remove("displayOptions");
       document.getElementById("autores").classList.add("displayOptions");
       setAutores([]);
       // options.classList.remove("displayOptions");
-    } else if (e.target.value === "1") {
+    } else if (e.target.name === "asociado" && e.target.value === "1") {
       document.getElementById("autores").classList.remove("displayOptions");
       document.getElementById("proyect").classList.add("displayOptions");
-      document.getElementById("proyecto_asociar").value = "";
+      document.getElementById("codigo_proyecto").value = "";
       // options.classList.add("displayOptions");
+    } else if (e.target.name === "intangible" && e.target.value === "0") {
+      document
+        .getElementById("tipo_intangible")
+        .classList.remove("displayOptions");
+    } else if (e.target.name === "intangible" && e.target.value === "1") {
+      document
+        .getElementById("tipo_intangible")
+        .classList.add("displayOptions");
     }
+  };
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setProduct({ ...product, [e.target.name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      product: product,
+      talent: autores,
+    };
+    console.log(data);
   };
 
   return (
@@ -38,19 +60,21 @@ export default function NuevoProducto() {
           <div className="contentNewProductGroup">
             <p className="pLetter">Codigo del Producto</p>
             <input
-              type="text"
-              name="codigo_producto"
+              type="number"
+              name="codigo_productos"
               className="contentNewProductInput"
               placeholder="Ingresar el codigo del producto"
+              onChange={handleChange}
             />
           </div>
           <div className="contentNewProductGroup">
             <p className="pLetter">Nombre del producto</p>
             <input
               type="text"
-              name="nombre_producto"
+              name="nombre_productos"
               className="contentNewProductInput"
               placeholder="Ingresar el nombre del producto"
+              onChange={handleChange}
             />
           </div>
           <div className="contentNewProductGroup TextArea">
@@ -63,14 +87,110 @@ export default function NuevoProducto() {
               maxLength="250"
               placeholder="Escribe aquí la descripción del producto..."
               style={{ fontSize: "16px" }}
+              onChange={handleChange}
+            ></textarea>
+          </div>
+          <div className="contentNewProductGroup">
+            <p className="pLetter">Fecha de registro de producto</p>
+            <input
+              type="date"
+              name="fecha_registro_producto"
+              className="contentNewProductInput"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="contentNewProductGroup">
+            <p className="pLetter">Link de acceso del producto terminado</p>
+            <input
+              type="text"
+              name="link_producto"
+              className="contentNewProductInput"
+              placeholder="Ingresar el nombre del producto"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="contentDataBankCheckAll">
+            <p className="pLetter">
+              ¿Tiene el aval del autor para divulgar el producto final de
+              investigación?
+            </p>
+            <div className="contentRadioButtons">
+              <div className="contentRadio">
+                <input
+                  className="radio"
+                  name="aval_autor"
+                  id="aval_autor"
+                  type="radio"
+                  value="0"
+                  onChange={handleChange}
+                />
+                <p>Si</p>
+              </div>
+              <div className="contentRadio">
+                <input
+                  className="radio"
+                  name="aval_autor"
+                  id="aval_autor"
+                  type="radio"
+                  value="1"
+                  onChange={handleChange}
+                />
+                <p>No</p>
+              </div>
+            </div>
+          </div>
+          <div className="contentDataBankCheckAll">
+            <p className="pLetter">¿El producto es un intangible?</p>
+            <div className="contentRadioButtons">
+              <div className="contentRadio">
+                <input
+                  className="radio"
+                  name="intangible"
+                  id="intangible"
+                  type="radio"
+                  value="0"
+                  onChange={hoverInfoProduct}
+                />
+                <p>Si</p>
+              </div>
+              <div className="contentRadio">
+                <input
+                  className="radio"
+                  name="intangible"
+                  id="intangible"
+                  type="radio"
+                  value="1"
+                  onChange={hoverInfoProduct}
+                />
+                <p>No</p>
+              </div>
+            </div>
+          </div>
+          <div
+            className="contentNewProductGroup displayOptions TextArea"
+            id="tipo_intangible"
+          >
+            <p className="pLetterQuestion">
+              Describe porque el producto es intangible
+            </p>
+            <textarea
+              name="tipo_intangible"
+              id="text_tipo_intangible"
+              cols="10"
+              rows="5"
+              maxLength="250"
+              placeholder="Escribe aquí porque el producto es intangible..."
+              style={{ fontSize: "16px" }}
+              onChange={handleChange}
             ></textarea>
           </div>
           <div className="contentNewProductGroup">
             <p className="pLetter">Tipologia del producto</p>
             <select
               className="contentNewProductSelect"
-              name="tipologia_productos"
-              id="tipologia_productos"
+              name="codigo_tipologia"
+              id="codigo_tipologia"
+              onChange={handleChange}
             >
               <option value="antiquia">
                 Seleccione la tipologia del producto
@@ -90,6 +210,19 @@ export default function NuevoProducto() {
               <option value="antiquia">
                 Seleccione la tipologia del producto
               </option>
+            </select>
+          </div>
+          <div className="contentNewProductGroup">
+            <p className="pLetter">Semillero</p>
+            <select
+              className="contentNewProductSelect"
+              name="codigo_semillero"
+              id="codigo_semillero"
+              onChange={handleChange}
+            >
+              <option value="antiquia">Semillero 1</option>
+              <option value="antiquia">Semillero 2</option>
+              <option value="antiquia">Semillero 3</option>
             </select>
           </div>
           <div className="contentDataBankCheckAll">
@@ -125,8 +258,9 @@ export default function NuevoProducto() {
             <p className="pLetter">Proyecto asociado</p>
             <select
               className="contentNewProductSelect"
-              name="centro_formacion"
-              id="proyecto_asociar"
+              name="codigo_proyecto"
+              id="codigo_proyecto"
+              onChange={handleChange}
             >
               <option value="">Seleccione el proyecto a asociar</option>
               <option value="2">Seleccione el proyecto a asociar 2</option>
@@ -178,7 +312,9 @@ export default function NuevoProducto() {
               ))}
             </div>
           </div>
-          <button className="contentNewProductButton">Registrar</button>
+          <button className="contentNewProductButton" onClick={handleSubmit}>
+            Registrar
+          </button>
         </form>
       </div>
       <div className="containerFooter">

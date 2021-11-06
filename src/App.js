@@ -21,6 +21,7 @@ import ChartProductos from "./components/charts/ChartProductos";
 import ListaProyecto from "./pages/proyectos/listaproyecto/ListaProyecto";
 import NuevoProyecto from "./pages/proyectos/nuevoproyecto/NuevoProyecto";
 import EditarProyecto from "./pages/proyectos/editarproyecto/EditarProyecto";
+import ChartFormacion from "./components/charts/ChartFormacion";
 
 function App() {
   return (
@@ -84,6 +85,9 @@ function App() {
           </Route>
           <Route path="/chartproductos">
             <ChartProductos />
+          </Route>
+          <Route path="/chartformacion">
+            <ChartFormacion />
           </Route>
           <Route path="/databank">
             <BancodeDatos />
