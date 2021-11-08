@@ -1,7 +1,27 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import "./maquinary.scss";
 
-export default function Maquinary({ maquinary, setMaquinary }) {
+export default function Maquinary({
+  maquinary,
+  setMaquinary,
+  errores,
+  setErrores,
+}) {
+  const mounted = useRef(false);
+
+  useEffect(() => {
+    mounted.current = true;
+    setMaquinary({
+      descripcion_equipo: undefined,
+      valor_equipo: undefined,
+      fecha_compra: undefined,
+      codigo_tipo_equipo: undefined,
+    });
+    return () => {
+      mounted.current = false;
+    };
+  }, [setMaquinary]);
+
   const handleChange = (e) => {
     const value = e.target.value;
     setMaquinary({ ...maquinary, [e.target.name]: value });
@@ -27,6 +47,9 @@ export default function Maquinary({ maquinary, setMaquinary }) {
           onChange={handleChange}
         ></textarea>
       </div>
+      {errores.path === "descripcion_equipo" && (
+        <p className="error">{errores.message}*</p>
+      )}
       <div className="contentNewProjectGroup">
         <p className="pLetter">Valor total del equipo*</p>
         <input
@@ -37,15 +60,21 @@ export default function Maquinary({ maquinary, setMaquinary }) {
           onChange={handleChangeInt}
         />
       </div>
+      {errores.path === "valor_equipo" && (
+        <p className="error">{errores.message}*</p>
+      )}
       <div className="contentNewProjectGroup">
         <p className="pLetter">Fecha de compra del equipo*</p>
         <input
           type="date"
-          name="fecha_comprar"
+          name="fecha_compra"
           className="contentNewProjectInput"
           onChange={handleChange}
         />
       </div>
+      {errores.path === "fecha_compra" && (
+        <p className="error">{errores.message}*</p>
+      )}
       <div className="contentNewProjectGroup">
         <p className="pLetter">Tipo de equipo*</p>
         <select
@@ -54,10 +83,14 @@ export default function Maquinary({ maquinary, setMaquinary }) {
           id="codigo_tipo_equipo"
           onChange={handleChangeInt}
         >
+          <option value="">Seleccione el tipo de equipo</option>
           <option value={1}>Maquinaria</option>
           <option value={2}>Equipo de Computo</option>
         </select>
       </div>
+      {errores.path === "codigo_tipo_equipo" && (
+        <p className="error">{errores.message}*</p>
+      )}
     </>
   );
 }

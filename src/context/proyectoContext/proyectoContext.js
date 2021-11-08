@@ -1,27 +1,29 @@
 import { createContext, useReducer } from "react";
-import ProjectReducer from "./proyectoReducer";
+import ProyectoReducer from "./proyectoReducer";
 
 const INITIAL_STATE = {
   projects: [],
   isFetching: false,
   error: false,
+  message: "",
 };
 
-export const ProjectContext = createContext(INITIAL_STATE);
+export const ProyectoContext = createContext(INITIAL_STATE);
 
-export const ProjectContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(ProjectReducer, INITIAL_STATE);
+export const ProyectoContextProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(ProyectoReducer, INITIAL_STATE);
 
   return (
-    <ProjectContext.Provider
+    <ProyectoContext.Provider
       value={{
         projects: state.projects,
         isFetching: state.isFetching,
         error: state.error,
+        message: state.message,
         dispatch,
       }}
     >
       {children}
-    </ProjectContext.Provider>
+    </ProyectoContext.Provider>
   );
 };

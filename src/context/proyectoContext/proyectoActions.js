@@ -24,8 +24,9 @@ export const createProjectSuccess = (project) => ({
   payload: project,
 });
 
-export const createProjectFailure = () => ({
+export const createProjectFailure = (error) => ({
   type: "CREATE_PROJECT_FAILURE",
+  error: error,
 });
 
 //Actualizar proyecto

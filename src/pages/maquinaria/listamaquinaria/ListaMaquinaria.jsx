@@ -2,15 +2,20 @@ import "./listaMaquinaria.scss";
 // import { useState } from 'react'
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
-import { maquinaryRows } from "../../../dummyData";
 import { Link } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { MaquinaryContext } from "../../../context/maquinariaContext/MaquinaryContext";
+import { getMaquinarys } from "../../../context/maquinariaContext/apiCalls";
 
 export default function ListaMaquinaria() {
-  const data = maquinaryRows;
+  const { maquinarys, dispatch } = useContext(MaquinaryContext);
 
   //   const handleDelete = (id) => {
   //     setData(data.filter((item) => item.id !== id));
   //   };
+  useEffect(() => {
+    getMaquinarys(dispatch);
+  }, [dispatch]);
 
   const columns = [
     { field: "id", headerName: "ID", width: 110 },
@@ -25,7 +30,7 @@ export default function ListaMaquinaria() {
       width: 190,
     },
     {
-      field: "fecha_compra",
+      field: "fecha",
       headerName: "Fecha de Compra",
       width: 170,
     },
@@ -35,7 +40,7 @@ export default function ListaMaquinaria() {
       width: 130,
     },
     {
-      field: "proyecto_principal",
+      field: "codigo_proyecto",
       headerName: "Proyecto Asociado",
       width: 130,
     },
@@ -58,6 +63,21 @@ export default function ListaMaquinaria() {
       },
     },
   ];
+
+  // eslint-disable-next-line array-callback-return
+  maquinarys.map((maquinary) => {
+    maquinary["id"] = maquinary.codigo_equipo;
+    let dateCompra = maquinary.fecha_compra.split("T");
+    maquinary["fecha"] = dateCompra[0];
+    let tipoEquipo = "";
+    if (maquinary.codigo_tipo_equipo === 1) {
+      tipoEquipo = "Maquinaria";
+    } else {
+      tipoEquipo = "Equipo de Computo";
+    }
+    maquinary["tipo_de_equipo"] = tipoEquipo;
+  });
+
   return (
     <div className="maquinaryList" style={{ height: "75vh", width: "100%" }}>
       <div className="maquinaryListContainer">
@@ -67,7 +87,7 @@ export default function ListaMaquinaria() {
         </Link> */}
       </div>
       <DataGrid
-        rows={data}
+        rows={maquinarys}
         columns={columns}
         pageSize={8}
         disableSelectionOnClick

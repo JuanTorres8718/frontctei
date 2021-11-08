@@ -15,6 +15,9 @@ import {
   getNivelFailure,
   getNivelStart,
   getNivelSuccess,
+  getProjectFailure,
+  getProjectStart,
+  getProjectSuccess,
   getRedFailure,
   getRedStart,
   getRedSuccess,
@@ -24,6 +27,9 @@ import {
   getRolSennovaFailure,
   getRolSennovaStart,
   getRolSennovaSuccess,
+  getRubroFailure,
+  getRubroStart,
+  getRubroSuccess,
   getSemilleroFailure,
   getSemilleroStart,
   getSemilleroSuccess,
@@ -175,5 +181,32 @@ export const getAllRolSennova = async (dispatch) => {
     dispatch(getRolSennovaSuccess(res.data));
   } catch (err) {
     dispatch(getRolSennovaFailure());
+  }
+};
+
+//Obtener todos los rubros
+export const getAllRubros = async (dispatch) => {
+  dispatch(getRubroStart());
+  try {
+    const res = await axios.get(
+      process.env.REACT_APP_API_URL + "/table/rubros"
+    );
+    dispatch(getRubroSuccess(res.data));
+  } catch (err) {
+    dispatch(getRubroFailure());
+  }
+};
+
+//Obtener todos los proyectos
+export const getAllProjects = async (dispatch) => {
+  dispatch(getProjectStart());
+  try {
+    const res = await axios.get(
+      process.env.REACT_APP_API_URL + "/table/proyectos"
+    );
+
+    dispatch(getProjectSuccess(res.data));
+  } catch (err) {
+    dispatch(getProjectFailure());
   }
 };

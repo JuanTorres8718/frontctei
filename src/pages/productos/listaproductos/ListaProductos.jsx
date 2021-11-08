@@ -2,15 +2,20 @@ import "./listaProductos.scss";
 // import { useState } from 'react'
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
-import { productRows } from "../../../dummyData";
 import { Link } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { ProductoContext } from "../../../context/productoContext/ProductoContext";
+import { getProducts } from "../../../context/productoContext/apiCalls";
 
 export default function ListaProductos() {
-  const data = productRows;
-
+  const { products, dispatch } = useContext(ProductoContext);
   //   const handleDelete = (id) => {
   //     setData(data.filter((item) => item.id !== id));
   //   };
+
+  useEffect(() => {
+    getProducts(dispatch);
+  }, [dispatch]);
 
   const columns = [
     {
@@ -19,12 +24,12 @@ export default function ListaProductos() {
       width: 110,
     },
     {
-      field: "nombre_producto",
+      field: "nombre_productos",
       headerName: "Nombre del Producto",
       width: 190,
     },
     {
-      field: "tipologia_producto",
+      field: "descripcion_producto",
       headerName: "Descripción del Producto",
       width: 190,
     },
@@ -34,13 +39,13 @@ export default function ListaProductos() {
       width: 130,
     },
     {
-      field: "semillero",
-      headerName: "Semillero",
+      field: "link_producto",
+      headerName: "link donde se encuentra el producto",
       width: 130,
     },
     {
-      field: "talento_humano",
-      headerName: "Talento Humano",
+      field: "aval_autor",
+      headerName: "Aval del autor",
       width: 160,
     },
     {
@@ -62,6 +67,14 @@ export default function ListaProductos() {
       },
     },
   ];
+
+  // eslint-disable-next-line array-callback-return
+  products.map((product) => {
+    product["id"] = product.codigo_productos;
+    let dateFecha = product.fecha_registro_producto.split("T");
+    product["fecha_registro"] = dateFecha[0];
+  });
+
   return (
     <div className="productList" style={{ height: "75vh", width: "100%" }}>
       <div className="productListContainer">
@@ -71,7 +84,7 @@ export default function ListaProductos() {
         </Link>
       </div>
       <DataGrid
-        rows={data}
+        rows={products}
         columns={columns}
         pageSize={9}
         disableSelectionOnClick

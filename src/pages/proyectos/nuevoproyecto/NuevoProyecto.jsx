@@ -6,18 +6,53 @@ import Maquinary from "../../../components/maquinaryComponent/Maquinary";
 import { TsContext } from "../../../context/tableSecundaryContext/TsContext";
 import {
   getAllCentros,
+  getAllNivel,
   getAllRed,
+  getAllRolSennova,
+  getAllRubros,
   getAllSemilleros,
   getAllSubareas,
 } from "../../../context/tableSecundaryContext/apiCalls";
+import { createProject } from "../../../context/proyectoContext/apiCalls";
+import ModalOtrosGastos from "../../../components/otrosGastosComponent/OtrosGastos";
+import {
+  schemaMaquinary,
+  schemaProject,
+} from "../../../context/proyectoContext/validateForm";
+import { useHistory } from "react-router-dom";
 
 export default function NuevoProyecto() {
-  const [project, setProject] = useState({});
+  let history = useHistory();
+
+  const [project, setProject] = useState({
+    codigo_proyecto: undefined,
+    nombre_proyecto: undefined,
+    presupuesto_asignado: undefined,
+    fecha_inicio_proyecto: undefined,
+    fecha_cierre_proyecto: undefined,
+    archivo_proyecto: undefined,
+    industria_4_0: undefined,
+    economia_naranja: undefined,
+    politica_institucional: undefined,
+    codigo_linea_programatica: undefined,
+    codigo_area_ocde: undefined,
+    codigo_subarea_conocimiento: undefined,
+    codigo_red_conocimiento: undefined,
+    codigo_estado_proyecto: undefined,
+    codigo_centro: undefined,
+    codigo_semillero: undefined,
+  });
   const [autores, setAutores] = useState([]);
-  const [maquinary, setMaquinary] = useState({});
+  const [rubros, setRubros] = useState([]);
+  const [maquinary, setMaquinary] = useState();
 
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(false);
+  const [openRubro, setOpenRubro] = useState(false);
+  const [errores, setErrores] = useState({
+    path: "",
+    message: "",
+  });
 
   const { tables, dispatch } = useContext(TsContext);
 
@@ -26,6 +61,9 @@ export default function NuevoProyecto() {
     getAllSemilleros(dispatch);
     getAllSubareas(dispatch);
     getAllRed(dispatch);
+    getAllNivel(dispatch);
+    getAllRolSennova(dispatch);
+    getAllRubros(dispatch);
   }, [dispatch]);
 
   const handleOpen = () => {
@@ -36,13 +74,21 @@ export default function NuevoProyecto() {
     setOpen(false);
   };
 
+  const handleOpenRubro = () => {
+    setOpenRubro(true);
+  };
+
+  const handleCloseRubro = () => {
+    setOpenRubro(false);
+  };
+
   const handleCheckedOpen = () => {
     setChecked(true);
   };
 
   const handleChekedClose = () => {
     setChecked(false);
-    setMaquinary({});
+    setMaquinary();
   };
 
   const hoverInfoProject = (e) => {
@@ -83,18 +129,57 @@ export default function NuevoProyecto() {
     setProject({ ...project, [e.target.name]: value });
   };
 
+  const handleChangeFile = (e) => {
+    const value = e.target.files[0].name;
+    setProject({ ...project, [e.target.name]: value });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
       project: project,
       talent: autores,
       maquinary: maquinary,
+      rubros: rubros,
     };
-    console.log(data);
+    schemaProject
+      .validate(data.project)
+      .then(() => {
+        if (data.rubros.length === 0) {
+          setErrores({
+            path: "button_rubros",
+            message: "Agrega los rubros invertidos en el proyecto",
+          });
+        } else if (data.talent.length === 0) {
+          setErrores({
+            path: "button_talent",
+            message: "Agrega los responsables que participan en el proyecto",
+          });
+        } else if (maquinary) {
+          schemaMaquinary
+            .validate(data.maquinary)
+            .then(() => {
+              createProject(data, dispatch);
+              history.push("/projects");
+            })
+            .catch((error) => {
+              setErrores({
+                path: error.path,
+                message: error.errors[0],
+              });
+            });
+        } else {
+          createProject(data, dispatch);
+          history.push("/projects");
+        }
+      })
+      .catch((error) => {
+        setErrores({
+          path: error.path,
+          message: error.errors[0],
+        });
+      });
   };
-
-  // console.log(tables);
-  // console.log(project);
 
   return (
     <div className="newProject">
@@ -111,6 +196,9 @@ export default function NuevoProyecto() {
               onChange={handleChangeInt}
             />
           </div>
+          {errores.path === "codigo_proyecto" && (
+            <p className="error">{errores.message}*</p>
+          )}
           <div className="contentNewProjectGroup">
             <p className="pLetter">Nombre del Proyecto*</p>
             <input
@@ -121,6 +209,9 @@ export default function NuevoProyecto() {
               onChange={handleChange}
             />
           </div>
+          {errores.path === "nombre_proyecto" && (
+            <p className="error">{errores.message}*</p>
+          )}
           <div className="contentNewProjectGroup">
             <p className="pLetter">Presupuesto asignado*</p>
             <input
@@ -131,6 +222,54 @@ export default function NuevoProyecto() {
               onChange={handleChangeInt}
             />
           </div>
+          {errores.path === "presupuesto_asignado" && (
+            <p className="error">{errores.message}*</p>
+          )}
+          <div className="contentAutores" id="autores">
+            <p className="pLetter">
+              Agregar los rubros generados por el proyecto*
+            </p>
+            <div className="contentContAutores">
+              <button
+                className="contentAutorButton"
+                name="button_rubros"
+                type="button"
+                onClick={handleOpenRubro}
+              >
+                <Add className="addButton" />
+              </button>
+              <ModalOtrosGastos
+                open={openRubro}
+                handleClose={handleCloseRubro}
+                setRubros={setRubros}
+                rubros={rubros}
+                tables={tables}
+              />
+            </div>
+            {errores.path === "button_rubros" && (
+              <p className="errorTalentRubro">{errores.message}*</p>
+            )}
+            <div className="rowContentAutores rowContentRubro">
+              {rubros.map((data, id) => (
+                <div className="rowRubro" key={id}>
+                  <div className="rowColumn">
+                    {tables.rubros
+                      .filter(
+                        (rubro) => rubro.codigo_rubro === data.codigo_rubro
+                      )
+                      .map((rubroFilter) => (
+                        <p key={rubroFilter.codigo_rubro}>
+                          {rubroFilter.nombre_rubro}
+                        </p>
+                      ))}
+                  </div>
+                  <div className="rowColumn">
+                    <p className="pvalue">${data.valor_rubro}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
           <div className="contentNewProjectGroup">
             <p className="pLetter">Fecha de inicio del proyecto*</p>
             <input
@@ -140,6 +279,9 @@ export default function NuevoProyecto() {
               onChange={handleChange}
             />
           </div>
+          {errores.path === "fecha_inicio_proyecto" && (
+            <p className="error">{errores.message}*</p>
+          )}
           <div className="contentNewProjectGroup">
             <p className="pLetter">Fecha de cierre del proyecto*</p>
             <input
@@ -149,16 +291,11 @@ export default function NuevoProyecto() {
               onChange={handleChange}
             />
           </div>
+          {errores.path === "fecha_cierre_proyecto" && (
+            <p className="error">{errores.message}*</p>
+          )}
           <div className="contentNewProjectGroup">
-            <p className="pLetter">Subir Archivo de Acta de Cierre*</p>
-            <input
-              type="file"
-              name="archivo_proyecto"
-              className="contentNewProjectInput"
-            />
-          </div>
-          <div className="contentNewProjectGroup">
-            <p className="pLetter">Centro de formación</p>
+            <p className="pLetter">Centro de formación*</p>
             <select
               className="contentNewProjectSelect"
               name="codigo_centro"
@@ -174,8 +311,11 @@ export default function NuevoProyecto() {
                 ))}
             </select>
           </div>
+          {errores.path === "codigo_centro" && (
+            <p className="error">{errores.message}*</p>
+          )}
           <div className="contentNewProjectGroup">
-            <p className="pLetter">Línea programática</p>
+            <p className="pLetter">Línea programática*</p>
             <select
               className="contentNewProjectSelect"
               name="codigo_linea_programatica"
@@ -189,8 +329,11 @@ export default function NuevoProyecto() {
               <option value={82}>Innovación</option>
             </select>
           </div>
+          {errores.path === "codigo_linea_programatica" && (
+            <p className="error">{errores.message}*</p>
+          )}
           <div className="contentNewProjectGroup">
-            <p className="pLetter">Semillero</p>
+            <p className="pLetter">Semillero*</p>
             <select
               className="contentNewProjectSelect"
               name="codigo_semillero"
@@ -206,6 +349,29 @@ export default function NuevoProyecto() {
                 ))}
             </select>
           </div>
+          {errores.path === "codigo_semillero" && (
+            <p className="error">{errores.message}*</p>
+          )}
+          <div className="contentNewProjectGroup">
+            <p className="pLetter">Red de conocimiento sectorial*</p>
+            <select
+              className="contentNewProjectSelect"
+              name="codigo_red_conocimiento"
+              id="codigo_red_conocimiento"
+              onChange={handleChangeInt}
+            >
+              <option value="">Selecciona una red de conocimiento</option>
+              {tables.redes &&
+                tables.redes.map((red, id) => (
+                  <option key={id} value={red.codigo_red}>
+                    {red.nombre_red}
+                  </option>
+                ))}
+            </select>
+          </div>
+          {errores.path === "codigo_red_conocimiento" && (
+            <p className="error">{errores.message}*</p>
+          )}
           <div className="contentNewProjectGroup">
             <p className="pLetter">Area de conocimiento OCDE</p>
             <select
@@ -253,11 +419,11 @@ export default function NuevoProyecto() {
             </select>
           </div>
           <div className="contentNewProjectGroup">
-            <p className="pLetter">Estado del proyecto</p>
+            <p className="pLetter">Estado del proyecto*</p>
             <select
               className="contentNewProjectSelect"
-              name="estado_proyecto"
-              id="estado_proyecto"
+              name="codigo_estado_proyecto"
+              id="codigo_estado_proyecto"
               onChange={handleChangeInt}
             >
               <option value="">Selecciona el estado del proyecto</option>
@@ -267,6 +433,28 @@ export default function NuevoProyecto() {
               <option value={4}>Suspendido</option>
             </select>
           </div>
+          {errores.path === "codigo_estado_proyecto" && (
+            <p className="error">{errores.message}*</p>
+          )}
+          <div className="contentNewProjectGroup">
+            <p className="pLetter">Subir Archivo de Acta de Cierre en PDF*</p>
+            <div className="contentNewProjectInput">
+              <input
+                type="file"
+                name="archivo_proyecto"
+                className="inputfile"
+                onChange={handleChangeFile}
+              />
+              <label className="labelFile">
+                {project.archivo_proyecto
+                  ? project.archivo_proyecto
+                  : "Subir archivo.."}
+              </label>
+            </div>
+          </div>
+          {errores.path === "archivo_proyecto" && (
+            <p className="error">{errores.message}*</p>
+          )}
           <div className="contentDataBankCheckAll">
             <p className="pLetter">
               ¿El proyecto pertenece a la industria 4.0?*
@@ -439,7 +627,12 @@ export default function NuevoProyecto() {
             </div>
           </div>
           {checked && (
-            <Maquinary maquinary={maquinary} setMaquinary={setMaquinary} />
+            <Maquinary
+              maquinary={maquinary}
+              setMaquinary={setMaquinary}
+              errores={errores}
+              setErrores={setErrores}
+            />
           )}
           <div className="contentAutores" id="autores">
             <p className="pLetter">Agrega a los Responsables del Proyecto</p>
@@ -447,6 +640,7 @@ export default function NuevoProyecto() {
               <button
                 className="contentAutorButton"
                 type="button"
+                name="button_talent"
                 onClick={handleOpen}
               >
                 <Add className="addButton" />
@@ -456,8 +650,12 @@ export default function NuevoProyecto() {
                 handleClose={handleClose}
                 setAutores={setAutores}
                 autores={autores}
+                tables={tables}
               />
             </div>
+            {errores.path === "button_talent" && (
+              <p className="errorTalentRubro">{errores.message}*</p>
+            )}
             <div className="rowContentAutores">
               {autores.map((data, id) => (
                 <div className="row" key={id}>
@@ -466,8 +664,8 @@ export default function NuevoProyecto() {
                     <p>{data.nombre_persona}</p>
                   </div>
                   <div className="rowColumn">
-                    <h3>Tipo de contrato</h3>
-                    <p>{data.tipo_contrato}</p>
+                    <h3>Rol en el proyecto</h3>
+                    <p>{data.codigo_rol_proyecto}</p>
                   </div>
                   <div className="rowColumn rowDate">
                     <div className="columnDate">

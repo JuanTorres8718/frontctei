@@ -1,12 +1,53 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./nuevoProducto.scss";
 import ModalProduct from "../../../components/modalproduct/ModalProduct";
 import { Add } from "@material-ui/icons";
+import { schemaProduct } from "../../../context/productoContext/validateForm";
+import { TsContext } from "../../../context/tableSecundaryContext/TsContext";
+import {
+  getAllNivel,
+  getAllProjects,
+  getAllRolSennova,
+  getAllSemilleros,
+  getAllTipologia,
+} from "../../../context/tableSecundaryContext/apiCalls";
+import { ProductoContext } from "../../../context/productoContext/ProductoContext";
+import { createProduct } from "../../../context/productoContext/apiCalls";
+import { useHistory } from "react-router-dom";
 
 export default function NuevoProducto() {
   const [autores, setAutores] = useState([]);
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState({
+    codigo_productos: undefined,
+    nombre_productos: undefined,
+    descripcion_producto: undefined,
+    fecha_registro_producto: undefined,
+    link_producto: undefined,
+    aval_autor: undefined,
+    tipo_intangible: undefined,
+    intangible: undefined,
+    codigo_tipologia: undefined,
+    codigo_semillero: undefined,
+    codigo_proyecto: undefined,
+  });
   const [open, setOpen] = useState(false);
+  const [errores, setErrores] = useState({
+    path: "",
+    message: "",
+  });
+
+  let history = useHistory();
+
+  const { tables, dispatch } = useContext(TsContext);
+  const { dispatch: dispatchProducto } = useContext(ProductoContext);
+
+  useEffect(() => {
+    getAllSemilleros(dispatch);
+    getAllTipologia(dispatch);
+    getAllProjects(dispatch);
+    getAllRolSennova(dispatch);
+    getAllNivel(dispatch);
+  }, [dispatch]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -21,25 +62,32 @@ export default function NuevoProducto() {
       document.getElementById("proyect").classList.remove("displayOptions");
       document.getElementById("autores").classList.add("displayOptions");
       setAutores([]);
-      // options.classList.remove("displayOptions");
+      const value = parseInt(e.target.value);
+      setProduct({ ...product, [e.target.name]: value });
     } else if (e.target.name === "asociado" && e.target.value === "1") {
       document.getElementById("autores").classList.remove("displayOptions");
       document.getElementById("proyect").classList.add("displayOptions");
       document.getElementById("codigo_proyecto").value = "";
-      // options.classList.add("displayOptions");
-    } else if (e.target.name === "intangible" && e.target.value === "0") {
-      document
-        .getElementById("tipo_intangible")
-        .classList.remove("displayOptions");
-    } else if (e.target.name === "intangible" && e.target.value === "1") {
-      document
-        .getElementById("tipo_intangible")
-        .classList.add("displayOptions");
+      const value = parseInt(e.target.value);
+      setProduct({
+        ...product,
+        [e.target.name]: value,
+        codigo_proyecto: undefined,
+      });
+    } else if (e.target.name === "tipo_intangible") {
+      const value = parseInt(e.target.value);
+      setProduct({ ...product, [e.target.name]: value });
+      document.getElementById("intangible").classList.remove("displayOptions");
     }
   };
 
   const handleChange = (e) => {
     const value = e.target.value;
+    setProduct({ ...product, [e.target.name]: value });
+  };
+
+  const handleChangeInt = (e) => {
+    const value = parseInt(e.target.value);
     setProduct({ ...product, [e.target.name]: value });
   };
 
@@ -49,7 +97,18 @@ export default function NuevoProducto() {
       product: product,
       talent: autores,
     };
-    console.log(data);
+    schemaProduct
+      .validate(data.product)
+      .then(() => {
+        createProduct(data, dispatchProducto);
+        history.push("/products");
+      })
+      .catch((error) => {
+        setErrores({
+          path: error.path,
+          message: error.errors,
+        });
+      });
   };
 
   return (
@@ -58,17 +117,20 @@ export default function NuevoProducto() {
       <div className="contentNewProduct">
         <form action="">
           <div className="contentNewProductGroup">
-            <p className="pLetter">Codigo del Producto</p>
+            <p className="pLetter">Codigo del Producto*</p>
             <input
               type="number"
               name="codigo_productos"
               className="contentNewProductInput"
               placeholder="Ingresar el codigo del producto"
-              onChange={handleChange}
+              onChange={handleChangeInt}
             />
           </div>
+          {errores.path === "codigo_productos" && (
+            <p className="error">{errores.message}*</p>
+          )}
           <div className="contentNewProductGroup">
-            <p className="pLetter">Nombre del producto</p>
+            <p className="pLetter">Nombre del producto*</p>
             <input
               type="text"
               name="nombre_productos"
@@ -77,8 +139,11 @@ export default function NuevoProducto() {
               onChange={handleChange}
             />
           </div>
+          {errores.path === "nombre_productos" && (
+            <p className="error">{errores.message}*</p>
+          )}
           <div className="contentNewProductGroup TextArea">
-            <p className="pLetter">Descripción del producto</p>
+            <p className="pLetter">Descripción del producto*</p>
             <textarea
               name="descripcion_producto"
               id=""
@@ -90,8 +155,11 @@ export default function NuevoProducto() {
               onChange={handleChange}
             ></textarea>
           </div>
+          {errores.path === "descripcion_producto" && (
+            <p className="error">{errores.message}*</p>
+          )}
           <div className="contentNewProductGroup">
-            <p className="pLetter">Fecha de registro de producto</p>
+            <p className="pLetter">Fecha de registro de producto*</p>
             <input
               type="date"
               name="fecha_registro_producto"
@@ -99,8 +167,11 @@ export default function NuevoProducto() {
               onChange={handleChange}
             />
           </div>
+          {errores.path === "fecha_registro_producto" && (
+            <p className="error">{errores.message}*</p>
+          )}
           <div className="contentNewProductGroup">
-            <p className="pLetter">Link de acceso del producto terminado</p>
+            <p className="pLetter">Link de acceso del producto terminado*</p>
             <input
               type="text"
               name="link_producto"
@@ -109,10 +180,13 @@ export default function NuevoProducto() {
               onChange={handleChange}
             />
           </div>
+          {errores.path === "link_producto" && (
+            <p className="error">{errores.message}*</p>
+          )}
           <div className="contentDataBankCheckAll">
             <p className="pLetter">
               ¿Tiene el aval del autor para divulgar el producto final de
-              investigación?
+              investigación?*
             </p>
             <div className="contentRadioButtons">
               <div className="contentRadio">
@@ -122,7 +196,7 @@ export default function NuevoProducto() {
                   id="aval_autor"
                   type="radio"
                   value="0"
-                  onChange={handleChange}
+                  onChange={handleChangeInt}
                 />
                 <p>Si</p>
               </div>
@@ -133,20 +207,23 @@ export default function NuevoProducto() {
                   id="aval_autor"
                   type="radio"
                   value="1"
-                  onChange={handleChange}
+                  onChange={handleChangeInt}
                 />
                 <p>No</p>
               </div>
             </div>
           </div>
+          {errores.path === "aval_autor" && (
+            <p className="errorTalentRubro">{errores.message}*</p>
+          )}
           <div className="contentDataBankCheckAll">
-            <p className="pLetter">¿El producto es un intangible?</p>
+            <p className="pLetter">¿El producto es un intangible?*</p>
             <div className="contentRadioButtons">
               <div className="contentRadio">
                 <input
                   className="radio"
-                  name="intangible"
-                  id="intangible"
+                  name="tipo_intangible"
+                  id="tipo_intangible"
                   type="radio"
                   value="0"
                   onChange={hoverInfoProduct}
@@ -156,8 +233,8 @@ export default function NuevoProducto() {
               <div className="contentRadio">
                 <input
                   className="radio"
-                  name="intangible"
-                  id="intangible"
+                  name="tipo_intangible"
+                  id="tipo_intangible"
                   type="radio"
                   value="1"
                   onChange={hoverInfoProduct}
@@ -166,65 +243,78 @@ export default function NuevoProducto() {
               </div>
             </div>
           </div>
+          {errores.path === "tipo_intangible" && (
+            <p className="errorTalentRubro">{errores.message}*</p>
+          )}
           <div
             className="contentNewProductGroup displayOptions TextArea"
-            id="tipo_intangible"
+            id="intangible"
           >
-            <p className="pLetterQuestion">
-              Describe porque el producto es intangible
-            </p>
+            <p className="pLetterQuestion">Describe porque:</p>
             <textarea
-              name="tipo_intangible"
+              name="intangible"
               id="text_tipo_intangible"
               cols="10"
               rows="5"
               maxLength="250"
-              placeholder="Escribe aquí porque el producto es intangible..."
+              placeholder="Escribe aquí porque a tú respuesta..."
               style={{ fontSize: "16px" }}
               onChange={handleChange}
             ></textarea>
           </div>
+          {errores.path === "intangible" && (
+            <p className="error">{errores.message}*</p>
+          )}
           <div className="contentNewProductGroup">
-            <p className="pLetter">Tipologia del producto</p>
+            <p className="pLetter">Tipologia del producto*</p>
             <select
               className="contentNewProductSelect"
               name="codigo_tipologia"
               id="codigo_tipologia"
-              onChange={handleChange}
+              onChange={handleChangeInt}
             >
-              <option value="antiquia">
+              <option value="option-semillero">
                 Seleccione la tipologia del producto
               </option>
-              <option value="antiquia">
-                Seleccione la tipologia del producto
-              </option>
-              <option value="antiquia">
-                Seleccione la tipologia del producto
-              </option>
-              <option value="antiquia">
-                Seleccione la tipologia del producto
-              </option>
-              <option value="antiquia">
-                Seleccione la tipologia del producto
-              </option>
-              <option value="antiquia">
-                Seleccione la tipologia del producto
-              </option>
+              {tables.tipologias &&
+                tables.tipologias.map((tipologia, id) => (
+                  <option
+                    className="option-semillero"
+                    key={id}
+                    value={tipologia.codigo_tipologia}
+                  >
+                    {tipologia.nombre_tipologia.slice(0, 50)}...
+                  </option>
+                ))}
             </select>
           </div>
+          {errores.path === "codigo_tipologia" && (
+            <p className="error">{errores.message}*</p>
+          )}
           <div className="contentNewProductGroup">
-            <p className="pLetter">Semillero</p>
+            <p className="pLetter">Semillero*</p>
             <select
               className="contentNewProductSelect"
               name="codigo_semillero"
               id="codigo_semillero"
-              onChange={handleChange}
+              onChange={handleChangeInt}
             >
-              <option value="antiquia">Semillero 1</option>
-              <option value="antiquia">Semillero 2</option>
-              <option value="antiquia">Semillero 3</option>
+              <option value="option_semillero">Selecciona un semillero</option>
+              {tables.semilleros &&
+                tables.semilleros.map((semillero, id) => (
+                  <option
+                    className="option_semillero"
+                    key={id}
+                    value={semillero.codigo_semillero}
+                  >
+                    {semillero.nombre_semillero.slice(0, 50)}...
+                  </option>
+                ))}
             </select>
           </div>
+          {errores.path === "codigo_semillero" && (
+            <p className="error">{errores.message}*</p>
+          )}
           <div className="contentDataBankCheckAll">
             <p className="pLetter">
               ¿El producto esta asociado algún proyecto?
@@ -254,6 +344,9 @@ export default function NuevoProducto() {
               </div>
             </div>
           </div>
+          {errores.path === "asociado" && (
+            <p className="error">{errores.message}*</p>
+          )}
           <div className="contentNewProductGroup displayOptions" id="proyect">
             <p className="pLetter">Proyecto asociado</p>
             <select
@@ -263,11 +356,12 @@ export default function NuevoProducto() {
               onChange={handleChange}
             >
               <option value="">Seleccione el proyecto a asociar</option>
-              <option value="2">Seleccione el proyecto a asociar 2</option>
-              <option value="3">Seleccione el proyecto a asociar 3</option>
-              <option value="4">Seleccione el proyecto a asociar 4</option>
-              <option value="5">Seleccione el proyecto a asociar 5</option>
-              <option value="6">Seleccione el proyecto a asociar 6</option>
+              {tables.proyectos &&
+                tables.proyectos.map((proyecto, id) => (
+                  <option key={id} value={proyecto.codigo_proyecto}>
+                    {proyecto.nombre_proyecto}
+                  </option>
+                ))}
             </select>
           </div>
           <div className="contentAutores displayOptions" id="autores">
@@ -285,6 +379,7 @@ export default function NuevoProducto() {
                 handleClose={handleClose}
                 setAutores={setAutores}
                 autores={autores}
+                tables={tables}
               />
             </div>
             <div className="rowContentAutores">

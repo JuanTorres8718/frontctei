@@ -1,12 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import "./modalProduct.scss";
-import { TsContext } from "../../context/tableSecundaryContext/TsContext";
-import {
-  getAllNivel,
-  getAllRolSennova,
-} from "../../context/tableSecundaryContext/apiCalls";
+import { schemaTalent } from "../../context/proyectoContext/validateForm";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -28,20 +24,37 @@ export default function ModalProduct({
   handleClose,
   setAutores,
   autores,
+  tables,
 }) {
   const classes = useStyles();
-  const [register, setRegister] = useState({});
+  const [register, setRegister] = useState({
+    nombre_persona: undefined,
+    objeto_contrato: undefined,
+    fecha_inicio_contrato: undefined,
+    fecha_fin_contrato: undefined,
+    tiempo_dedicacion_semanal: undefined,
+    valor_mensual_contrato: undefined,
+    valor_total_contrato: undefined,
+    sena_sennova: undefined,
+    codigo_nivel: undefined,
+    codigo_tipo_contrato: undefined,
+    codigo_rol_sennova: undefined,
+    codigo_rol_proyecto: undefined,
+  });
 
-  const { tables, dispatch } = useContext(TsContext);
-
-  useEffect(() => {
-    getAllNivel(dispatch);
-    getAllRolSennova(dispatch);
-  }, [dispatch]);
+  const [errores, setErrores] = useState({
+    path: "",
+    message: "",
+  });
 
   const handleChange = (e) => {
-    if (e.target.name === "sena_sennova" && e.target.value === "sennova") {
-      setRegister({ ...register, valor_total_contrato: 0 });
+    const value = e.target.value;
+    if (value === "sennova") {
+      setRegister({
+        ...register,
+        valor_total_contrato: 0,
+        [e.target.name]: value,
+      });
       document.getElementById("valor_total_contrato").value = 0;
       document.getElementById("valor_total_contrato").disabled = true;
       document.getElementById("valor_mensual_contrato").value = 0;
@@ -49,8 +62,6 @@ export default function ModalProduct({
     } else {
       document.getElementById("valor_total_contrato").disabled = false;
       document.getElementById("valor_mensual_contrato").disabled = false;
-
-      const value = e.target.value;
       setRegister({ ...register, [e.target.name]: value });
     }
   };
@@ -62,11 +73,33 @@ export default function ModalProduct({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setAutores([...autores, register]);
-    handleClose();
+    schemaTalent
+      .validate(register)
+      .then(() => {
+        setAutores([...autores, register]);
+        setRegister({
+          nombre_persona: undefined,
+          objeto_contrato: undefined,
+          fecha_inicio_contrato: undefined,
+          fecha_fin_contrato: undefined,
+          tiempo_dedicacion_semanal: undefined,
+          valor_mensual_contrato: undefined,
+          valor_total_contrato: undefined,
+          sena_sennova: undefined,
+          codigo_nivel: undefined,
+          codigo_tipo_contrato: undefined,
+          codigo_rol_sennova: undefined,
+          codigo_rol_proyecto: undefined,
+        });
+        handleClose();
+      })
+      .catch((error) => {
+        setErrores({
+          path: error.path,
+          message: error.errors[0],
+        });
+      });
   };
-
-  console.log(register);
 
   return (
     <div>
@@ -92,6 +125,9 @@ export default function ModalProduct({
                     onChange={handleChange}
                   />
                 </div>
+                {errores.path === "nombre_persona" && (
+                  <p className="error">{errores.message}*</p>
+                )}
                 <div className="contentCreateTalentGroup">
                   <p className="pLetter">Objeto del contrato</p>
                   <input
@@ -102,6 +138,27 @@ export default function ModalProduct({
                     onChange={handleChange}
                   />
                 </div>
+                {errores.path === "objeto_contrato" && (
+                  <p className="error">{errores.message}*</p>
+                )}
+                <div className="contentCreateTalentGroup">
+                  <p className="pLetter">SENA SENNOVA*</p>
+                  <select
+                    className="contentCreateTalentSelect"
+                    name="sena_sennova"
+                    id="sena_sennova"
+                    onChange={handleChange}
+                  >
+                    <option value="">
+                      Selecciones si pertenece a SENA o SENNOVA
+                    </option>
+                    <option value="sena">SENA</option>
+                    <option value="sennova">SENNOVA</option>
+                  </select>
+                </div>
+                {errores.path === "sena_sennova" && (
+                  <p className="error">{errores.message}*</p>
+                )}
                 <div className="contentCreateTalentGroup">
                   <p className="pLetter">Valor mensual del contrato</p>
                   <input
@@ -113,6 +170,9 @@ export default function ModalProduct({
                     onChange={handleChangeInt}
                   />
                 </div>
+                {errores.path === "valor_mensual_contrato" && (
+                  <p className="error">{errores.message}*</p>
+                )}
                 <div className="contentCreateTalentGroup">
                   <p className="pLetter">Valor Total del contrato*</p>
                   <input
@@ -124,6 +184,9 @@ export default function ModalProduct({
                     onChange={handleChangeInt}
                   />
                 </div>
+                {errores.path === "valor_total_contrato" && (
+                  <p className="error">{errores.message}*</p>
+                )}
                 <div className="contentCreateTalentGroup">
                   <p className="pLetter">Tiempo de dedicación semanal</p>
                   <input
@@ -134,6 +197,9 @@ export default function ModalProduct({
                     onChange={handleChange}
                   />
                 </div>
+                {errores.path === "tiempo_dedicacion_semanal" && (
+                  <p className="error">{errores.message}*</p>
+                )}
                 <div className="contentCreateTalentGroup">
                   <p className="pLetter">Fecha de inicio del contrato*</p>
                   <input
@@ -143,6 +209,9 @@ export default function ModalProduct({
                     onChange={handleChange}
                   />
                 </div>
+                {errores.path === "fecha_inicio_contrato" && (
+                  <p className="error">{errores.message}*</p>
+                )}
                 <div className="contentCreateTalentGroup">
                   <p className="pLetter">Fecha de finalización del contrato*</p>
                   <input
@@ -152,18 +221,9 @@ export default function ModalProduct({
                     onChange={handleChange}
                   />
                 </div>
-                <div className="contentCreateTalentGroup">
-                  <p className="pLetter">SENA SENNOVA*</p>
-                  <select
-                    className="contentCreateTalentSelect"
-                    name="sena_sennova"
-                    id="sena_sennova"
-                    onChange={handleChange}
-                  >
-                    <option value="sena">SENA</option>
-                    <option value="sennova">SENNOVA</option>
-                  </select>
-                </div>
+                {errores.path === "fecha_fin_contrato" && (
+                  <p className="error">{errores.message}*</p>
+                )}
                 <div className="contentCreateTalentGroup">
                   <p className="pLetter">Tipo de contrato*</p>
                   <select
@@ -172,6 +232,7 @@ export default function ModalProduct({
                     id="codigo_tipo_contrato"
                     onChange={handleChangeInt}
                   >
+                    <option value="">Seleccione el tip de contrato</option>
                     <option value={2001}>Aprendiz</option>
                     <option value={2002}>Contratista</option>
                     <option value={2003}>Planta</option>
@@ -179,6 +240,9 @@ export default function ModalProduct({
                     <option value={2005}>Provisional</option>
                   </select>
                 </div>
+                {errores.path === "codigo_tipo_contrato" && (
+                  <p className="error">{errores.message}*</p>
+                )}
                 <div className="contentCreateTalentGroup">
                   <p className="pLetter">Nivel Academico</p>
                   <select
@@ -229,6 +293,9 @@ export default function ModalProduct({
                     <option value={10005}>Monitor</option>
                   </select>
                 </div>
+                {errores.path === "codigo_rol_proyecto" && (
+                  <p className="error">{errores.message}*</p>
+                )}
                 <div className="contentCreateTalentGroup">
                   <p className="pLetter">Estado del contrato*</p>
                   <select
@@ -237,12 +304,16 @@ export default function ModalProduct({
                     id="codigo_estado_contrato"
                     onChange={handleChangeInt}
                   >
+                    <option value="">Seleccione el estado del contrato</option>
                     <option value={1}>Sin iniciar</option>
                     <option value={2}>Ejecución</option>
                     <option value={3}>Terminado</option>
                     <option value={4}>Suspendido</option>
                   </select>
                 </div>
+                {errores.path === "codigo_estado_contrato" && (
+                  <p className="error">{errores.message}*</p>
+                )}
                 <button
                   className="contentCreateTalentButton registro"
                   onClick={handleClose}

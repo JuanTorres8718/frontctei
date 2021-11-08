@@ -162,3 +162,33 @@ export const getRolSennovaSuccess = (rolSenova) => ({
 export const getRolSennovaFailure = () => ({
   type: "GET_ROLSENNOVA_FAILURE",
 });
+
+//Obtener todos los rubros
+
+export const getRubroStart = () => ({
+  type: "GET_RUBRO_START",
+});
+
+export const getRubroSuccess = (rubro) => ({
+  type: "GET_RUBRO_SUCCESS",
+  payload: rubro,
+});
+
+export const getRubroFailure = () => ({
+  type: "GET_RUBRO_FAILURE",
+});
+
+//Obtener todos los proyectos
+
+export const getProjectStart = () => ({
+  type: "GET_PROJECT_START",
+});
+
+export const getProjectSuccess = (proyecto) => ({
+  type: "GET_PROJECT_SUCCESS",
+  payload: proyecto,
+});
+
+export const getProjectFailure = () => ({
+  type: "GET_PROJECT_FAILURE",
+});

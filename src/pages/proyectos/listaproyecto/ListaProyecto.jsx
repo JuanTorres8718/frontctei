@@ -2,11 +2,17 @@ import "./listaProyecto.scss";
 // import { useState } from 'react'
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
-import { proyectRows } from "../../../dummyData";
 import { Link } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { ProyectoContext } from "../../../context/proyectoContext/proyectoContext";
+import { getProjects } from "../../../context/proyectoContext/apiCalls";
 
 export default function ListaProyecto() {
-  const data = proyectRows;
+  const { projects, dispatch } = useContext(ProyectoContext);
+
+  useEffect(() => {
+    getProjects(dispatch);
+  }, [dispatch]);
 
   //   const handleDelete = (id) => {
   //     setData(data.filter((item) => item.id !== id));
@@ -40,13 +46,13 @@ export default function ListaProyecto() {
       width: 130,
     },
     {
-      field: "fecha_cierre_proyecto",
+      field: "fecha_cierre",
       headerName: "Fecha de cierre del proyecto",
       width: 130,
     },
     {
       field: "estado_proyecto",
-      headerName: "Valor del software",
+      headerName: "Estado del proyecto",
       width: 130,
     },
     {
@@ -56,7 +62,7 @@ export default function ListaProyecto() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/project/" + params.row.id}>
+            <Link to={"/project/" + params.row.codigo_proyecto}>
               <button className="productListEdit">Editar</button>
             </Link>
             <DeleteOutline
@@ -68,6 +74,14 @@ export default function ListaProyecto() {
       },
     },
   ];
+
+  // eslint-disable-next-line array-callback-return
+  projects.map((project) => {
+    project["id"] = project.codigo_proyecto;
+    let dateFecha = project.fecha_cierre_proyecto.split("T");
+    project["fecha_cierre"] = dateFecha[0];
+  });
+
   return (
     <div className="productList" style={{ height: "75vh", width: "100%" }}>
       <div className="productListContainer">
@@ -77,9 +91,9 @@ export default function ListaProyecto() {
         </Link>
       </div>
       <DataGrid
-        rows={data}
+        rows={projects}
         columns={columns}
-        pageSize={9}
+        pageSize={8}
         disableSelectionOnClick
       />
       <div className="containerFooter">

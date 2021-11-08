@@ -2,11 +2,17 @@ import "./listaTalentoHumano.scss";
 // import { useState } from 'react'
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
-import { talentRows } from "../../../dummyData";
 import { Link } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { getTalents } from "../../../context/talentoContext/apiCalls";
+import { TalentContext } from "../../../context/talentoContext/TalentContext";
 
 export default function ListaTalentoHumano() {
-  const data = talentRows;
+  const { talents, dispatch } = useContext(TalentContext);
+
+  useEffect(() => {
+    getTalents(dispatch);
+  }, [dispatch]);
 
   //   const handleDelete = (id) => {
   //     setData(data.filter((item) => item.id !== id));
@@ -20,18 +26,18 @@ export default function ListaTalentoHumano() {
       width: 190,
     },
     {
-      field: "nivel_academico",
-      headerName: "Nivel academico",
+      field: "fecha_inicio",
+      headerName: "Fecha de inicio del contrato",
       width: 190,
     },
     {
-      field: "tipo_contrato",
-      headerName: "Tipo de contrato",
+      field: "fecha_fin",
+      headerName: "Fecha final del contrato",
       width: 150,
     },
     {
-      field: "estado_contrato",
-      headerName: "Estado del contrato",
+      field: "valor_total_contrato",
+      headerName: "Valor total del contrato",
       width: 150,
     },
     {
@@ -53,6 +59,15 @@ export default function ListaTalentoHumano() {
       },
     },
   ];
+  // eslint-disable-next-line array-callback-return
+  talents.map((talent) => {
+    talent["id"] = talent.codigo_talento;
+    let dateInicio = talent.fecha_fin_contrato.split("T");
+    talent["fecha_inicio"] = dateInicio[0];
+    let dateFin = talent.fecha_fin_contrato.split("T");
+    talent["fecha_fin"] = dateFin[0];
+  });
+
   return (
     <div className="productList" style={{ height: "75vh", width: "100%" }}>
       <div className="productListContainer">
@@ -62,9 +77,9 @@ export default function ListaTalentoHumano() {
         </Link> */}
       </div>
       <DataGrid
-        rows={data}
+        rows={talents}
         columns={columns}
-        pageSize={9}
+        pageSize={8}
         disableSelectionOnClick
       />
       <div className="containerFooter">

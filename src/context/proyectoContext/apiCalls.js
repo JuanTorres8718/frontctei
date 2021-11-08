@@ -1,4 +1,5 @@
 import axios from "axios";
+import Swal from "sweetalert2";
 import {
   createProjectFailure,
   createProjectStart,
@@ -12,20 +13,35 @@ import {
 export const getProjects = async (dispatch) => {
   dispatch(getProjecstStart());
   try {
-    const res = await axios.get(process.env.URL + "/projects");
+    const res = await axios.get(process.env.REACT_APP_API_URL + "/projects");
     dispatch(getProjectsSuccess(res.data));
   } catch (err) {
-    dispatch(getProjectsFailure());
+    dispatch(getProjectsFailure(err));
   }
 };
 
 //crear proyecto
-export const createProject = async (movie, dispatch) => {
+export const createProject = async (data, dispatch) => {
   dispatch(createProjectStart());
   try {
-    const res = await axios.post(process.env.URL + "/projects");
+    const res = await axios.post(
+      process.env.REACT_APP_API_URL + "/projects",
+      data
+    );
     dispatch(createProjectSuccess(res.data));
-  } catch (err) {
+    Swal.fire({
+      title: "Guardado!",
+      text: "Proyecto guardado correctamente",
+      icon: "success",
+      confirmButtonText: "Cerrar",
+    });
+  } catch (error) {
+    Swal.fire({
+      title: "Error!",
+      text: "Sucedio algún problema con la base de datos",
+      icon: "error",
+      confirmButtonText: "Cerrar",
+    });
     dispatch(createProjectFailure());
   }
 };

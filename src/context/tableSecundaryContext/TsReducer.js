@@ -220,6 +220,46 @@ const TsReducer = (state, action) => {
         error: true,
       };
 
+    case "GET_RUBRO_START":
+      return {
+        tables: {},
+        isFetching: true,
+        error: false,
+      };
+    case "GET_RUBRO_SUCCESS":
+      return {
+        tables: { ...state.tables, rubros: action.payload },
+        isFetching: false,
+        error: false,
+      };
+
+    case "GET_RUBRO_FAILURE":
+      return {
+        tables: {},
+        isFetching: false,
+        error: true,
+      };
+
+    case "GET_PROJECT_START":
+      return {
+        tables: {},
+        isFetching: true,
+        error: false,
+      };
+    case "GET_PROJECT_SUCCESS":
+      return {
+        tables: { ...state.tables, proyectos: action.payload },
+        isFetching: false,
+        error: false,
+      };
+
+    case "GET_PROJECT_FAILURE":
+      return {
+        tables: {},
+        isFetching: false,
+        error: true,
+      };
+
     default:
       return { ...state };
   }
