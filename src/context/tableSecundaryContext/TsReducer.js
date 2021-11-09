@@ -260,6 +260,26 @@ const TsReducer = (state, action) => {
         error: true,
       };
 
+    case "GET_USERMAIL_START":
+      return {
+        tables: {},
+        isFetching: true,
+        error: false,
+      };
+    case "GET_USERMAIL_SUCCESS":
+      return {
+        tables: { ...state.tables, emails: action.payload },
+        isFetching: false,
+        error: false,
+      };
+
+    case "GET_USERMAIL_FAILURE":
+      return {
+        tables: {},
+        isFetching: false,
+        error: true,
+      };
+
     default:
       return { ...state };
   }

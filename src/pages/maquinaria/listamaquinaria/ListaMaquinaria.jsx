@@ -64,8 +64,7 @@ export default function ListaMaquinaria() {
     },
   ];
 
-  // eslint-disable-next-line array-callback-return
-  maquinarys.map((maquinary) => {
+  maquinarys.forEach((maquinary) => {
     maquinary["id"] = maquinary.codigo_equipo;
     let dateCompra = maquinary.fecha_compra.split("T");
     maquinary["fecha"] = dateCompra[0];

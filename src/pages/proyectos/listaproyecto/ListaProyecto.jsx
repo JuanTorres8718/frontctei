@@ -75,8 +75,7 @@ export default function ListaProyecto() {
     },
   ];
 
-  // eslint-disable-next-line array-callback-return
-  projects.map((project) => {
+  projects.forEach((project) => {
     project["id"] = project.codigo_proyecto;
     let dateFecha = project.fecha_cierre_proyecto.split("T");
     project["fecha_cierre"] = dateFecha[0];

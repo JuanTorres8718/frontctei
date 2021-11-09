@@ -59,8 +59,8 @@ export default function ListaTalentoHumano() {
       },
     },
   ];
-  // eslint-disable-next-line array-callback-return
-  talents.map((talent) => {
+
+  talents.forEach((talent) => {
     talent["id"] = talent.codigo_talento;
     let dateInicio = talent.fecha_fin_contrato.split("T");
     talent["fecha_inicio"] = dateInicio[0];

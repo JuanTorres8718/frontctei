@@ -192,3 +192,18 @@ export const getProjectSuccess = (proyecto) => ({
 export const getProjectFailure = () => ({
   type: "GET_PROJECT_FAILURE",
 });
+
+//Obtener todos los proyectos
+
+export const getUserEmailStart = () => ({
+  type: "GET_USERMAIL_START",
+});
+
+export const getUserEmailSuccess = (email) => ({
+  type: "GET_USERMAIL_SUCCESS",
+  payload: email,
+});
+
+export const getUserEmailFailure = () => ({
+  type: "GET_USERMAIL_FAILURE",
+});

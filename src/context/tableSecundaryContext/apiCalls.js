@@ -39,6 +39,9 @@ import {
   getTipologiasFailure,
   getTipologiasStart,
   getTipologiasSuccess,
+  getUserEmailFailure,
+  getUserEmailStart,
+  getUserEmailSuccess,
 } from "./TsActions";
 
 //Obtener todas las redes de conocimientos
@@ -208,5 +211,17 @@ export const getAllProjects = async (dispatch) => {
     dispatch(getProjectSuccess(res.data));
   } catch (err) {
     dispatch(getProjectFailure());
+  }
+};
+
+//Obtener todos los email
+export const getAllEmail = async (dispatch) => {
+  dispatch(getUserEmailStart());
+  try {
+    const res = await axios.get(process.env.REACT_APP_API_URL + "/users_email");
+
+    dispatch(getUserEmailSuccess(res.data));
+  } catch (err) {
+    dispatch(getUserEmailFailure());
   }
 };

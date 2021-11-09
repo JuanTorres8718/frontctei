@@ -1,25 +1,31 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
+import { AuthContextProvider } from "./context/authContext/AuthContext";
 import { MaquinaryContextProvider } from "./context/maquinariaContext/MaquinaryContext";
 import { ProductoContextProvider } from "./context/productoContext/ProductoContext";
 import { ProyectoContextProvider } from "./context/proyectoContext/proyectoContext";
 import { TsContextProvider } from "./context/tableSecundaryContext/TsContext";
 import { TalentContextProvider } from "./context/talentoContext/TalentContext";
+import { UsuarioContextProvider } from "./context/usuarioContext/UsuarioContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ProyectoContextProvider>
-      <ProductoContextProvider>
-        <TalentContextProvider>
-          <MaquinaryContextProvider>
-            <TsContextProvider>
-              <App />
-            </TsContextProvider>
-          </MaquinaryContextProvider>
-        </TalentContextProvider>
-      </ProductoContextProvider>
-    </ProyectoContextProvider>
+    <AuthContextProvider>
+      <UsuarioContextProvider>
+        <ProyectoContextProvider>
+          <ProductoContextProvider>
+            <TalentContextProvider>
+              <MaquinaryContextProvider>
+                <TsContextProvider>
+                  <App />
+                </TsContextProvider>
+              </MaquinaryContextProvider>
+            </TalentContextProvider>
+          </ProductoContextProvider>
+        </ProyectoContextProvider>
+      </UsuarioContextProvider>
+    </AuthContextProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -1,4 +1,8 @@
 import { Link } from "react-router-dom";
+import imgUser from "../../images/imagen-2.png";
+import imgProduct from "../../images/imagen-3.jpg";
+import imgProyect from "../../images/imagen_1.jpg";
+
 import "./home.scss";
 
 export default function Home() {
@@ -18,24 +22,24 @@ export default function Home() {
         <div className="containerHomeRegisters">
           <h3>Acontinuación encontrará atajo a las siguientes opciones</h3>
           <div className="containerHomeSelect">
-            <Link to="/newUser">
-              <div className="containerHomeOption">
-                <img src="" alt="" />
-                <p>Registrar Usuario</p>
-              </div>
-            </Link>
-            <Link to="/newProject">
-              <div className="containerHomeOption">
-                <img src="" alt="" />
-                <p>Registrar Proyecto</p>
-              </div>
-            </Link>
-            <Link to="/newProduct">
-              <div className="containerHomeOption">
-                <img src="" alt="" />
-                <p>Registrar Producto</p>
-              </div>
-            </Link>
+            <div className="containerHomeOption">
+              <Link to="/newUser">
+                <img src={imgUser} alt="registro-usuario" />
+              </Link>
+              <p>Registrar Usuario</p>
+            </div>
+            <div className="containerHomeOption">
+              <Link to="/newProject">
+                <img src={imgProyect} alt="proyecto" />
+              </Link>
+              <p>Registrar Proyecto</p>
+            </div>
+            <div className="containerHomeOption">
+              <Link to="/newProduct">
+                <img src={imgProduct} alt="Producto" />
+              </Link>
+              <p>Registrar Producto</p>
+            </div>
           </div>
         </div>
       </div>

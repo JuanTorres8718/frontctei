@@ -68,8 +68,7 @@ export default function ListaProductos() {
     },
   ];
 
-  // eslint-disable-next-line array-callback-return
-  products.map((product) => {
+  products.forEach((product) => {
     product["id"] = product.codigo_productos;
     let dateFecha = product.fecha_registro_producto.split("T");
     product["fecha_registro"] = dateFecha[0];
