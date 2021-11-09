@@ -29,6 +29,12 @@ import EditarProyecto from "./pages/proyectos/editarproyecto/EditarProyecto";
 import ChartFormacion from "./components/charts/ChartFormacion";
 import { useContext } from "react";
 import { AuthContext } from "./context/authContext/AuthContext";
+import { TsContextProvider } from "./context/tableSecundaryContext/TsContext";
+import { MaquinaryContextProvider } from "./context/maquinariaContext/MaquinaryContext";
+import { TalentContextProvider } from "./context/talentoContext/TalentContext";
+import { ProductoContextProvider } from "./context/productoContext/ProductoContext";
+import { ProyectoContextProvider } from "./context/proyectoContext/proyectoContext";
+import { UsuarioContextProvider } from "./context/usuarioContext/UsuarioContext";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -39,67 +45,79 @@ function App() {
         <Route path="/login">{user ? <Redirect to="/" /> : <Login />}</Route>
         {user ? (
           <>
-            <Topbar />
-            <div className="container">
-              <Sidebar />
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route path="/users">
-                <ListaUsuarios />
-              </Route>
-              <Route path="/newUser">
-                <NuevoUsuario />
-              </Route>
-              <Route path="/user/:id">
-                <EditarUsuario />
-              </Route>
-              <Route path="/projects">
-                <ListaProyecto />
-              </Route>
-              <Route path="/newProject">
-                <NuevoProyecto />
-              </Route>
-              <Route path="/project/:id">
-                <EditarProyecto />
-              </Route>
-              <Route path="/talents">
-                <ListaTalentoHumano />
-              </Route>
-              <Route path="/talent/:id">
-                <EditarTalentoHumano />
-              </Route>
-              <Route path="/products">
-                <ListaProductos />
-              </Route>
-              <Route path="/newProduct">
-                <NuevoProducto />
-              </Route>
-              <Route path="/product/:id">
-                <EditarProducto />
-              </Route>
-              <Route path="/machinery">
-                <ListaMaquinaria />
-              </Route>
-              <Route path="/chartfinanciero">
-                <ChartFinanciero />
-              </Route>
-              <Route path="/charttalentohumano">
-                <ChartTalentoHumano />
-              </Route>
-              <Route path="/chartmaquinaria">
-                <ChartMaquinaria />
-              </Route>
-              <Route path="/chartproductos">
-                <ChartProductos />
-              </Route>
-              <Route path="/chartformacion">
-                <ChartFormacion />
-              </Route>
-              <Route path="/databank">
-                <BancodeDatos />
-              </Route>
-            </div>
+            <UsuarioContextProvider>
+              <ProyectoContextProvider>
+                <ProductoContextProvider>
+                  <TalentContextProvider>
+                    <MaquinaryContextProvider>
+                      <TsContextProvider>
+                        <Topbar />
+                        <div className="container">
+                          <Sidebar />
+                          <Route exact path="/">
+                            <Home />
+                          </Route>
+                          <Route path="/users">
+                            <ListaUsuarios />
+                          </Route>
+                          <Route path="/newUser">
+                            <NuevoUsuario />
+                          </Route>
+                          <Route path="/user/:id">
+                            <EditarUsuario />
+                          </Route>
+                          <Route path="/projects">
+                            <ListaProyecto />
+                          </Route>
+                          <Route path="/newProject">
+                            <NuevoProyecto />
+                          </Route>
+                          <Route path="/project/:id">
+                            <EditarProyecto />
+                          </Route>
+                          <Route path="/talents">
+                            <ListaTalentoHumano />
+                          </Route>
+                          <Route path="/talent/:id">
+                            <EditarTalentoHumano />
+                          </Route>
+                          <Route path="/products">
+                            <ListaProductos />
+                          </Route>
+                          <Route path="/newProduct">
+                            <NuevoProducto />
+                          </Route>
+                          <Route path="/product/:id">
+                            <EditarProducto />
+                          </Route>
+                          <Route path="/machinery">
+                            <ListaMaquinaria />
+                          </Route>
+                          <Route path="/chartfinanciero">
+                            <ChartFinanciero />
+                          </Route>
+                          <Route path="/charttalentohumano">
+                            <ChartTalentoHumano />
+                          </Route>
+                          <Route path="/chartmaquinaria">
+                            <ChartMaquinaria />
+                          </Route>
+                          <Route path="/chartproductos">
+                            <ChartProductos />
+                          </Route>
+                          <Route path="/chartformacion">
+                            <ChartFormacion />
+                          </Route>
+                          <Route path="/databank">
+                            <BancodeDatos />
+                          </Route>
+                        </div>
+                      </TsContextProvider>
+                    </MaquinaryContextProvider>
+                  </TalentContextProvider>
+                </ProductoContextProvider>
+              </ProyectoContextProvider>
+            </UsuarioContextProvider>
           </>
         ) : (
           <Redirect to="/login" />
