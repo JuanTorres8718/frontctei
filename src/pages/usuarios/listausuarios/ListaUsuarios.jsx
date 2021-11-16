@@ -4,15 +4,13 @@ import { DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useContext, useEffect, useRef } from "react";
 import { UsuarioContext } from "../../../context/usuarioContext/UsuarioContext";
-import { getUsers } from "../../../context/usuarioContext/apiCalls";
+import { deleteUser, getUsers } from "../../../context/usuarioContext/apiCalls";
+import Swal from "sweetalert2";
 
 export default function ListaUsuarios() {
   const { users, dispatch } = useContext(UsuarioContext);
   const mounted = useRef(false);
 
-  //   const handleDelete = (id) => {
-  //     setData(data.filter((item) => item.id !== id));
-  //   };
   useEffect(() => {
     mounted.current = true;
     getUsers(dispatch);
@@ -20,6 +18,23 @@ export default function ListaUsuarios() {
       mounted.current = false;
     };
   }, [dispatch]);
+
+  const handleDelete = (codigo_usuario) => {
+    Swal.fire({
+      title: "Esta seguro?",
+      text: "Si pulsa en Eliminar, será borrado de la base de datos",
+      icon: "warning",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Eliminar",
+      cancelButtonText: "Cancelar",
+      showCancelButton: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteUser(codigo_usuario, dispatch);
+      }
+    });
+  };
 
   const columns = [
     { field: "id", headerName: "ID", width: 110 },
@@ -55,12 +70,12 @@ export default function ListaUsuarios() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/user/" + params.row.id}>
+            <Link to={{ pathname: "/user/" + params.row.id, user: params.row }}>
               <button className="userListEdit">Editar</button>
             </Link>
             <DeleteOutline
               className="userListDelete"
-              //   onClick={() => handleDelete(params.row.id)}
+              onClick={() => handleDelete(params.row.id)}
             />
           </>
         );

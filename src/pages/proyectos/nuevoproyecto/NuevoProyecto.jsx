@@ -27,13 +27,20 @@ export default function NuevoProyecto() {
   const [project, setProject] = useState({
     codigo_proyecto: undefined,
     nombre_proyecto: undefined,
+    presupuesto_solicitado: undefined,
+    presupuesto_aprobado: undefined,
     presupuesto_asignado: undefined,
+    observacion_general: undefined,
     fecha_inicio_proyecto: undefined,
     fecha_cierre_proyecto: undefined,
-    archivo_proyecto: undefined,
     industria_4_0: undefined,
     economia_naranja: undefined,
     politica_institucional: undefined,
+    proyecto_financiado: 1,
+    resumen_proyecto: undefined,
+    video_proyecto: undefined,
+    archivo_proyecto: undefined,
+    informe_investigacion: undefined,
     codigo_linea_programatica: undefined,
     codigo_area_ocde: undefined,
     codigo_subarea_conocimiento: undefined,
@@ -82,40 +89,38 @@ export default function NuevoProyecto() {
     setOpenRubro(false);
   };
 
-  const handleCheckedOpen = () => {
-    setChecked(true);
+  const handleChecked = (e) => {
+    if (checked) {
+      setChecked(false);
+      setMaquinary();
+    } else {
+      setChecked(true);
+    }
   };
 
-  const handleChekedClose = () => {
-    setChecked(false);
-    setMaquinary();
-  };
-
-  const hoverInfoProject = (e) => {
-    if (e.target.name === "industria" && e.target.value === "0") {
-      document.getElementById("industria_4_0").classList.remove("displayText");
-    } else if (e.target.name === "industria" && e.target.value === "1") {
-      document.getElementById("industria_4_0").classList.add("displayText");
-      setProject({ ...project, industria_4_0: "" });
+  const hoverSwitch = (e) => {
+    if (e.target.name === "industria") {
+      document.getElementById("industria_4_0").classList.toggle("displayText");
       document.getElementById("text_industria_4_0").value = "";
-    } else if (e.target.name === "economia" && e.target.value === "0") {
+      setProject({ ...project, industria_4_0: "" });
+    } else if (e.target.name === "economia") {
       document
         .getElementById("economia_naranja")
-        .classList.remove("displayText");
-    } else if (e.target.name === "economia" && e.target.value === "1") {
-      document.getElementById("economia_naranja").classList.add("displayText");
-      setProject({ ...project, economia_naranja: "" });
+        .classList.toggle("displayText");
       document.getElementById("text_economia_naranja").value = "";
-    } else if (e.target.name === "politica" && e.target.value === "0") {
+      setProject({ ...project, economia_naranja: "" });
+    } else if (e.target.name === "politica") {
       document
         .getElementById("politica_institucional")
-        .classList.remove("displayText");
-    } else if (e.target.name === "politica" && e.target.value === "1") {
-      document
-        .getElementById("politica_institucional")
-        .classList.add("displayText");
-      setProject({ ...project, politica_institucional: "" });
+        .classList.toggle("displayText");
       document.getElementById("text_politica_institucional").value = "";
+      setProject({ ...project, politica_institucional: "" });
+    } else if (e.target.name === "proyecto_financiado") {
+      if (project.proyecto_financiado === 1) {
+        setProject({ ...project, [e.target.name]: 0 });
+      } else {
+        setProject({ ...project, [e.target.name]: 1 });
+      }
     }
   };
 
@@ -130,8 +135,39 @@ export default function NuevoProyecto() {
   };
 
   const handleChangeFile = (e) => {
-    const value = e.target.files[0].name;
-    setProject({ ...project, [e.target.name]: value });
+    if (e.target.id === "acta") {
+      if (e.target.files[0]) {
+        if (e.target.files[0].type === "application/pdf") {
+          const value = e.target.files[0].name;
+          setProject({ ...project, archivo_proyecto: value });
+          setErrores({
+            path: "",
+            message: "",
+          });
+        } else {
+          setErrores({
+            path: "archivo_proyecto",
+            message: "Solo se permiten archivos PDF",
+          });
+        }
+      }
+    } else {
+      if (e.target.files[0]) {
+        if (e.target.files[0].type === "application/pdf") {
+          const value = e.target.files[0].name;
+          setProject({ ...project, informe_investigacion: value });
+          setErrores({
+            path: "",
+            message: "",
+          });
+        } else {
+          setErrores({
+            path: "informe_investigacion",
+            message: "Solo se permiten archivos PDF",
+          });
+        }
+      }
+    }
   };
 
   const handleSubmit = (e) => {
@@ -213,6 +249,32 @@ export default function NuevoProyecto() {
             <p className="error">{errores.message}*</p>
           )}
           <div className="contentNewProjectGroup">
+            <p className="pLetter">Presupuesto solicitado*</p>
+            <input
+              type="number"
+              name="presupuesto_solicitado"
+              className="contentNewProjectInput"
+              placeholder="Ingresar el valor del presupuesto solicitado"
+              onChange={handleChangeInt}
+            />
+          </div>
+          {errores.path === "presupuesto_solicitado" && (
+            <p className="error">{errores.message}*</p>
+          )}
+          <div className="contentNewProjectGroup">
+            <p className="pLetter">Presupuesto aprobado*</p>
+            <input
+              type="number"
+              name="presupuesto_aprobado"
+              className="contentNewProjectInput"
+              placeholder="Ingresar el valor del presupuesto aprobado"
+              onChange={handleChangeInt}
+            />
+          </div>
+          {errores.path === "presupuesto_aprobado" && (
+            <p className="error">{errores.message}*</p>
+          )}
+          <div className="contentNewProjectGroup">
             <p className="pLetter">Presupuesto asignado*</p>
             <input
               type="number"
@@ -223,6 +285,22 @@ export default function NuevoProyecto() {
             />
           </div>
           {errores.path === "presupuesto_asignado" && (
+            <p className="error">{errores.message}*</p>
+          )}
+          <div className="contentNewProjectGroup TextArea" id="industria_4_0">
+            <p className="pLetterQuestion">Observación General*</p>
+            <textarea
+              name="observacion_general"
+              id="text_observacion_general"
+              cols="9"
+              rows="5"
+              maxLength="250"
+              placeholder="Escribe aquí la observación del proyecto..."
+              style={{ fontSize: "16px" }}
+              onChange={handleChange}
+            ></textarea>
+          </div>
+          {errores.path === "observacion_general" && (
             <p className="error">{errores.message}*</p>
           )}
           <div className="contentAutores" id="autores">
@@ -418,6 +496,101 @@ export default function NuevoProyecto() {
                   ))}
             </select>
           </div>
+          <div className="contentDataBankCheckAll">
+            <p className="pLetter">¿El proyecto esta financiado?</p>
+            <div className="contentRadioButtons">
+              <p>Si</p>
+              <label className="switch">
+                <input
+                  className="radio"
+                  name="proyecto_financiado"
+                  id="proyecto_financiado"
+                  type="checkbox"
+                  onClick={hoverSwitch}
+                />
+                <div className="slider round"></div>
+              </label>
+              <p>No</p>
+            </div>
+          </div>
+          {errores.path === "proyecto_financiado" && (
+            <p className="error">{errores.message}*</p>
+          )}
+          <div className="contentNewProjectGroup TextArea" id="industria_4_0">
+            <p className="pLetterQuestion">Resumen del proyecto*</p>
+            <textarea
+              name="resumen_proyecto"
+              id="text_resumen_proyecto"
+              cols="9"
+              rows="5"
+              maxLength="250"
+              placeholder="Escribe aquí el resumen del proyecto..."
+              style={{ fontSize: "16px" }}
+              onChange={handleChange}
+            ></textarea>
+          </div>
+          {errores.path === "resumen_proyecto" && (
+            <p className="error">{errores.message}*</p>
+          )}
+          <div className="contentNewProjectGroup">
+            <p className="pLetter">Video del Proyecto*</p>
+            <input
+              type="text"
+              name="video_proyecto"
+              className="contentNewProjectInput"
+              placeholder="Ingresar el link del video del Proyecto"
+              onChange={handleChange}
+            />
+          </div>
+          {errores.path === "video_proyecto" && (
+            <p className="error">{errores.message}*</p>
+          )}
+          <div className="contentNewProjectGroup">
+            <p className="pLetter">Subir Archivo de Acta de Cierre en PDF*</p>
+            <div
+              className="file-upload-wrapper"
+              data-text={
+                project.archivo_proyecto
+                  ? project.archivo_proyecto
+                  : "Selecciona el Acta en pdf"
+              }
+            >
+              <input
+                name="file-upload-field"
+                type="file"
+                id="acta"
+                className="file-upload-field"
+                onChange={handleChangeFile}
+              />
+            </div>
+          </div>
+          {errores.path === "archivo_proyecto" && (
+            <p className="error">{errores.message}*</p>
+          )}
+          <div className="contentNewProjectGroup">
+            <p className="pLetter">
+              Subir Archivo de informe de investigación en PDF*
+            </p>
+            <div
+              className="file-upload-wrapper"
+              data-text={
+                project.informe_investigacion
+                  ? project.informe_investigacion
+                  : "Selecciona el Acta en pdf"
+              }
+            >
+              <input
+                name="file-upload-field"
+                type="file"
+                id="informe"
+                className="file-upload-field"
+                onChange={handleChangeFile}
+              />
+            </div>
+          </div>
+          {errores.path === "informe_investigacion" && (
+            <p className="error">{errores.message}*</p>
+          )}
           <div className="contentNewProjectGroup">
             <p className="pLetter">Estado del proyecto*</p>
             <select
@@ -436,52 +609,23 @@ export default function NuevoProyecto() {
           {errores.path === "codigo_estado_proyecto" && (
             <p className="error">{errores.message}*</p>
           )}
-          <div className="contentNewProjectGroup">
-            <p className="pLetter">Subir Archivo de Acta de Cierre en PDF*</p>
-            <div className="contentNewProjectInput">
-              <input
-                type="file"
-                name="archivo_proyecto"
-                className="inputfile"
-                onChange={handleChangeFile}
-              />
-              <label className="labelFile">
-                {project.archivo_proyecto
-                  ? project.archivo_proyecto
-                  : "Subir archivo.."}
-              </label>
-            </div>
-          </div>
-          {errores.path === "archivo_proyecto" && (
-            <p className="error">{errores.message}*</p>
-          )}
           <div className="contentDataBankCheckAll">
             <p className="pLetter">
-              ¿El proyecto pertenece a la industria 4.0?*
+              ¿El proyecto pertenece a la industria 4.0?
             </p>
             <div className="contentRadioButtons">
-              <div className="contentRadio">
+              <p>Si</p>
+              <label className="switch">
                 <input
                   className="radio"
                   name="industria"
                   id="industria"
-                  type="radio"
-                  value="0"
-                  onChange={hoverInfoProject}
+                  type="checkbox"
+                  onClick={hoverSwitch}
                 />
-                <p>Si</p>
-              </div>
-              <div className="contentRadio">
-                <input
-                  className="radio"
-                  name="industria"
-                  id="industria"
-                  type="radio"
-                  value="1"
-                  onChange={hoverInfoProject}
-                />
-                <p>No</p>
-              </div>
+                <div className="slider round"></div>
+              </label>
+              <p>No</p>
             </div>
           </div>
           <div
@@ -504,31 +648,21 @@ export default function NuevoProyecto() {
           </div>
           <div className="contentDataBankCheckAll">
             <p className="pLetter">
-              ¿El proyecto pertenece a la economía naranja?*
+              ¿El proyecto pertenece a la economía naranja?
             </p>
             <div className="contentRadioButtons">
-              <div className="contentRadio">
+              <p>Si</p>
+              <label className="switch">
                 <input
                   className="radio"
                   name="economia"
                   id="economia"
-                  type="radio"
-                  value="0"
-                  onChange={hoverInfoProject}
+                  type="checkbox"
+                  onClick={hoverSwitch}
                 />
-                <p>Si</p>
-              </div>
-              <div className="contentRadio">
-                <input
-                  className="radio"
-                  name="economia"
-                  id="economia"
-                  type="radio"
-                  value="1"
-                  onChange={hoverInfoProject}
-                />
-                <p>No</p>
-              </div>
+                <div className="slider round"></div>
+              </label>
+              <p>No</p>
             </div>
           </div>
           <div
@@ -552,31 +686,21 @@ export default function NuevoProyecto() {
           <div className="contentDataBankCheckAll">
             <p className="pLetter">
               ¿El proyecto aporta a la política institucional para la atención a
-              las personas con discapacidad?*
+              las personas con discapacidad?
             </p>
             <div className="contentRadioButtons">
-              <div className="contentRadio">
+              <p>Si</p>
+              <label className="switch">
                 <input
                   className="radio"
                   name="politica"
                   id="politica"
-                  type="radio"
-                  value="0"
-                  onChange={hoverInfoProject}
+                  type="checkbox"
+                  onClick={hoverSwitch}
                 />
-                <p>Si</p>
-              </div>
-              <div className="contentRadio">
-                <input
-                  className="radio"
-                  name="politica"
-                  id="politica"
-                  type="radio"
-                  value="1"
-                  onChange={hoverInfoProject}
-                />
-                <p>No</p>
-              </div>
+                <div className="slider round"></div>
+              </label>
+              <p>No</p>
             </div>
           </div>
           <div
@@ -599,31 +723,21 @@ export default function NuevoProyecto() {
           </div>
           <div className="contentDataBankCheckAll">
             <p className="pLetter">
-              ¿Se compro equipos de computo o maquinaria?*
+              ¿Se compro equipos de computo o maquinaria?
             </p>
             <div className="contentRadioButtons">
-              <div className="contentRadio">
+              <p>Si</p>
+              <label className="switch">
                 <input
                   className="radio"
                   name="maquinaria"
                   id="maquinaria"
-                  type="radio"
-                  value="0"
-                  onChange={handleCheckedOpen}
+                  type="checkbox"
+                  onClick={handleChecked}
                 />
-                <p>Si</p>
-              </div>
-              <div className="contentRadio">
-                <input
-                  className="radio"
-                  name="maquinaria"
-                  id="maquinaria"
-                  type="radio"
-                  value="1"
-                  onChange={handleChekedClose}
-                />
-                <p>No</p>
-              </div>
+                <div className="slider round"></div>
+              </label>
+              <p>No</p>
             </div>
           </div>
           {checked && (

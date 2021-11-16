@@ -33,6 +33,7 @@ export default function ModalProduct({
     fecha_inicio_contrato: undefined,
     fecha_fin_contrato: undefined,
     tiempo_dedicacion_semanal: undefined,
+    genero: undefined,
     valor_mensual_contrato: undefined,
     valor_total_contrato: undefined,
     sena_sennova: undefined,
@@ -185,6 +186,23 @@ export default function ModalProduct({
                   />
                 </div>
                 {errores.path === "valor_total_contrato" && (
+                  <p className="error">{errores.message}*</p>
+                )}
+                <div className="contentCreateTalentGroup">
+                  <p className="pLetter">Género*</p>
+                  <select
+                    className="contentCreateTalentSelect"
+                    name="genero"
+                    id="genero"
+                    onChange={handleChangeInt}
+                  >
+                    <option value="">Selecciona tu género</option>
+                    <option value="masculino">Masculino</option>
+                    <option value="femenino">Femenino</option>
+                    <option value="otro">Otro</option>
+                  </select>
+                </div>
+                {errores.path === "genero" && (
                   <p className="error">{errores.message}*</p>
                 )}
                 <div className="contentCreateTalentGroup">

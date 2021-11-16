@@ -95,13 +95,74 @@
 
     .contentDataBankCheckAll {
       margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 30px 35px;
+
       .pLetter {
         font-size: 18px;
-        margin-bottom: 15px;
+        width: 50%;
+        text-align: initial;
       }
       .contentRadioButtons {
         display: flex;
-        justify-content: center;
+        justify-content: space-around;
+        align-items: center;
+        width: 24%;
+
+        .switch {
+          position: relative;
+          display: inline-block;
+          width: 60px;
+          height: 34px;
+
+          input {
+            display: none;
+          }
+
+          .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #9b9b9b;
+            -webkit-transition: 0.4s;
+            transition: 0.4s;
+          }
+
+          .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 29px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: 0.4s;
+            transition: 0.4s;
+          }
+
+          input:checked + .slider {
+            background-color: #fc7323;
+          }
+
+          input:checked + .slider:before {
+            -webkit-transform: translateX(-25px);
+            -ms-transform: translateX(-25px);
+            transform: translateX(-25px);
+          }
+
+          .slider.round {
+            border-radius: 34px;
+          }
+
+          .slider.round:before {
+            border-radius: 50%;
+          }
+        }
 
         .contentRadio {
           display: flex;

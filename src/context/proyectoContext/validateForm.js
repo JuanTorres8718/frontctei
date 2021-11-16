@@ -1,14 +1,25 @@
 const yup = require("yup");
 
 export const schemaProject = yup.object().shape({
-  archivo_proyecto: yup
-    .string()
-    .typeError("Solo se permite el tipo de dato string")
-    .required("El campo es obligatorio")
-    .max(255, "Solo se permite un máximo de 255 caracteres"),
   codigo_estado_proyecto: yup
     .number()
     .typeError("Solo se permite datos númericos")
+    .required("El campo es obligatorio"),
+  informe_investigacion: yup
+    .mixed()
+    .typeError("Solo se permite el tipo de dato string")
+    .required("El archivo PDF es obligatorio"),
+  archivo_proyecto: yup
+    .mixed()
+    .typeError("Solo se permite el tipo de dato string")
+    .required("El archivo PDF es obligatorio"),
+  video_proyecto: yup
+    .string()
+    .typeError("Solo se permite el tipo de dato string")
+    .required("El campo es obligatorio"),
+  resumen_proyecto: yup
+    .string()
+    .typeError("Solo se permite el tipo de dato string")
     .required("El campo es obligatorio"),
   codigo_red_conocimiento: yup
     .number()
@@ -34,7 +45,19 @@ export const schemaProject = yup.object().shape({
     .date()
     .typeError("Solo se permite enviar el campo en fecha")
     .required("El campo es obligatorio"),
+  observacion_general: yup
+    .string()
+    .typeError("Solo se permite el tipo de dato string")
+    .required("El campo es obligatorio"),
   presupuesto_asignado: yup
+    .number()
+    .typeError("Solo se permite datos númericos")
+    .required("El campo es obligatorio"),
+  presupuesto_aprobado: yup
+    .number()
+    .typeError("Solo se permite datos númericos")
+    .required("El campo es obligatorio"),
+  presupuesto_solicitado: yup
     .number()
     .typeError("Solo se permite datos númericos")
     .required("El campo es obligatorio"),
@@ -44,8 +67,11 @@ export const schemaProject = yup.object().shape({
     .required("El campo es obligatorio")
     .max(255, "Solo se permite un máximo de 255 caracteres"),
   codigo_proyecto: yup
-    .number()
-    .typeError("Solo se permite datos númericos")
+    .string()
+    .required()
+    .matches(/^[0-9]+$/, "Solo se permite números")
+    .min(4, "El codigo es de 4 digitos exactamente")
+    .max(4, "El codigo es de 4 digitos exactamente")
     .required("El campo es obligatorio"),
 });
 
@@ -101,6 +127,10 @@ export const schemaTalent = yup.object().shape({
     .string()
     .typeError("Solo se permite el tipo de dato string")
     .nullable(),
+  genero: yup
+    .string()
+    .typeError("Solo se permite el tipo de dato string")
+    .required("El campo es obligatorio"),
   valor_total_contrato: yup
     .number()
     .typeError("Solo se permite datos númericos")

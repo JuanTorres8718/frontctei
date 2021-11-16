@@ -73,14 +73,14 @@ export default function ModalOtrosGastos({
         aria-describedby="simple-modal-description"
       >
         <div className={classes.paper}>
-          <div className="createTalent">
-            <h1 className="createTalentTitle">Agrega un rubro</h1>
-            <div className="contentCreateTalent">
+          <div className="createGastos">
+            <h1 className="createGastosTitle">Agrega un rubro</h1>
+            <div className="contentCreateGastos">
               <form action="">
-                <div className="contentCreateTalentGroup">
+                <div className="contentCreateGastosGroup">
                   <p className="pLetter">Nombre del rubro*</p>
                   <select
-                    className="contentCreateTalentSelect"
+                    className="contentCreateGastosSelect"
                     name="codigo_rubro"
                     id="codigo_rubro"
                     onChange={handleChangeInt}
@@ -97,12 +97,12 @@ export default function ModalOtrosGastos({
                 {errores.path === "codigo_rubro" && (
                   <p className="error">{errores.message}*</p>
                 )}
-                <div className="contentCreateTalentGroup">
+                <div className="contentCreateGastosGroup">
                   <p className="pLetter">Valor del rubro*</p>
                   <input
                     type="number"
                     name="valor_rubro"
-                    className="contentCreateTalentInput"
+                    className="contentCreateGastosInput"
                     placeholder="Ingresar el valor del rubro"
                     onChange={handleChangeInt}
                   />
@@ -111,13 +111,13 @@ export default function ModalOtrosGastos({
                   <p className="error">{errores.message}*</p>
                 )}
                 <button
-                  className="contentCreateTalentButton registro"
+                  className="contentCreateGastosButton registro"
                   onClick={handleClose}
                 >
                   Cancelar
                 </button>
                 <button
-                  className="contentCreateTalentButton registro"
+                  className="contentCreateGastosButton registro"
                   onClick={handleSubmit}
                 >
                   Agregar Rubro

@@ -23,8 +23,8 @@ export default function NuevoProducto() {
     descripcion_producto: undefined,
     fecha_registro_producto: undefined,
     link_producto: undefined,
-    aval_autor: undefined,
-    tipo_intangible: undefined,
+    aval_autor: 1,
+    tipo_intangible: 1,
     intangible: undefined,
     codigo_tipologia: undefined,
     codigo_semillero: undefined,
@@ -75,9 +75,23 @@ export default function NuevoProducto() {
         codigo_proyecto: undefined,
       });
     } else if (e.target.name === "tipo_intangible") {
-      const value = parseInt(e.target.value);
-      setProduct({ ...product, [e.target.name]: value });
-      document.getElementById("intangible").classList.remove("displayOptions");
+      if (product.tipo_intangible === 1) {
+        document
+          .getElementById("intangible")
+          .classList.toggle("displayOptions");
+        setProduct({ ...product, [e.target.name]: 0 });
+      } else {
+        document
+          .getElementById("intangible")
+          .classList.toggle("displayOptions");
+        setProduct({ ...product, [e.target.name]: 1 });
+      }
+    } else if (e.target.name === "aval_autor") {
+      if (product.aval_autor === 1) {
+        setProduct({ ...product, [e.target.name]: 0 });
+      } else {
+        setProduct({ ...product, [e.target.name]: 1 });
+      }
     }
   };
 
@@ -110,6 +124,8 @@ export default function NuevoProducto() {
         });
       });
   };
+
+  console.log(product);
 
   return (
     <div className="newProduct">
@@ -189,28 +205,18 @@ export default function NuevoProducto() {
               investigación?*
             </p>
             <div className="contentRadioButtons">
-              <div className="contentRadio">
+              <p>Si</p>
+              <label className="switch">
                 <input
                   className="radio"
                   name="aval_autor"
                   id="aval_autor"
-                  type="radio"
-                  value="0"
-                  onChange={handleChangeInt}
+                  type="checkbox"
+                  onClick={hoverInfoProduct}
                 />
-                <p>Si</p>
-              </div>
-              <div className="contentRadio">
-                <input
-                  className="radio"
-                  name="aval_autor"
-                  id="aval_autor"
-                  type="radio"
-                  value="1"
-                  onChange={handleChangeInt}
-                />
-                <p>No</p>
-              </div>
+                <div className="slider round"></div>
+              </label>
+              <p>No</p>
             </div>
           </div>
           {errores.path === "aval_autor" && (
@@ -219,28 +225,18 @@ export default function NuevoProducto() {
           <div className="contentDataBankCheckAll">
             <p className="pLetter">¿El producto es un intangible?*</p>
             <div className="contentRadioButtons">
-              <div className="contentRadio">
+              <p>Si</p>
+              <label className="switch">
                 <input
                   className="radio"
                   name="tipo_intangible"
                   id="tipo_intangible"
-                  type="radio"
-                  value="0"
-                  onChange={hoverInfoProduct}
+                  type="checkbox"
+                  onClick={hoverInfoProduct}
                 />
-                <p>Si</p>
-              </div>
-              <div className="contentRadio">
-                <input
-                  className="radio"
-                  name="tipo_intangible"
-                  id="tipo_intangible"
-                  type="radio"
-                  value="1"
-                  onChange={hoverInfoProduct}
-                />
-                <p>No</p>
-              </div>
+                <div className="slider round"></div>
+              </label>
+              <p>No</p>
             </div>
           </div>
           {errores.path === "tipo_intangible" && (
