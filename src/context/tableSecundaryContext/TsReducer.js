@@ -280,6 +280,46 @@ const TsReducer = (state, action) => {
         error: true,
       };
 
+    case "GET_CIIU_START":
+      return {
+        tables: {},
+        isFetching: true,
+        error: false,
+      };
+    case "GET_CIIU_SUCCESS":
+      return {
+        tables: { ...state.tables, ciiu: action.payload },
+        isFetching: false,
+        error: false,
+      };
+
+    case "GET_CIIU_FAILURE":
+      return {
+        tables: {},
+        isFetching: false,
+        error: true,
+      };
+
+    case "GET_DISCIPLINA_START":
+      return {
+        tables: {},
+        isFetching: true,
+        error: false,
+      };
+    case "GET_DISCIPLINA_SUCCESS":
+      return {
+        tables: { ...state.tables, disciplinas: action.payload },
+        isFetching: false,
+        error: false,
+      };
+
+    case "GET_DISCIPLINA_FAILURE":
+      return {
+        tables: {},
+        isFetching: false,
+        error: true,
+      };
+
     default:
       return { ...state };
   }

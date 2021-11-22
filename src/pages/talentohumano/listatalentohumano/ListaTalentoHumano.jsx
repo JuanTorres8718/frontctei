@@ -6,9 +6,12 @@ import { Link } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { getTalents } from "../../../context/talentoContext/apiCalls";
 import { TalentContext } from "../../../context/talentoContext/TalentContext";
+import { AuthContext } from "../../../context/authContext/AuthContext";
 
 export default function ListaTalentoHumano() {
   const { talents, dispatch } = useContext(TalentContext);
+
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     getTalents(dispatch);
@@ -23,24 +26,27 @@ export default function ListaTalentoHumano() {
     {
       field: "nombre_persona",
       headerName: "Nombre Completo",
-      width: 190,
+      width: 220,
     },
     {
       field: "fecha_inicio",
       headerName: "Fecha de inicio del contrato",
-      width: 190,
+      width: 250,
     },
     {
       field: "fecha_fin",
       headerName: "Fecha final del contrato",
-      width: 150,
+      width: 250,
     },
     {
       field: "valor_total_contrato",
       headerName: "Valor total del contrato",
-      width: 150,
+      width: 250,
     },
-    {
+  ];
+
+  if (user.codigo_rol === 3 || user.codigo_rol === 1) {
+    columns.push({
       field: "action",
       headerName: "Acciones",
       width: 160,
@@ -57,8 +63,8 @@ export default function ListaTalentoHumano() {
           </>
         );
       },
-    },
-  ];
+    });
+  }
 
   talents.forEach((talent) => {
     talent["id"] = talent.codigo_talento;

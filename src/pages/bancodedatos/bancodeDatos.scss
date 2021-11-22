@@ -1,5 +1,5 @@
 .dataBank {
-  flex: 3;
+  flex: 4;
   margin-top: 25px;
 
   .dataBankTitle {
@@ -56,6 +56,109 @@
           text-align: left;
           text-overflow: ellipsis;
           width: 90%;
+        }
+      }
+    }
+
+    .contentDataBankCheckAll {
+      display: flex;
+      align-items: center;
+      width: 38%;
+      height: 35px;
+      margin: auto;
+      justify-content: center;
+
+      .checkbox {
+        width: 22px;
+        height: 18px;
+        border: 2px solid var(--border-color);
+      }
+
+      .checkboxLetter {
+        font-size: 18px;
+        margin-left: 5px;
+      }
+    }
+
+    .contentDataBankRubro {
+      margin: 15px 0px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
+      .contentDataBankRubroSelect {
+        width: 15rem;
+        height: 2.5rem;
+        border-radius: 10px;
+        padding-left: 13px;
+        font-size: 15px;
+        background-color: white;
+      }
+    }
+
+    .contentDataBankButton {
+      width: 10rem;
+      height: 2rem;
+      border-radius: 9px;
+      font-size: 21px;
+      border-style: none;
+      color: white;
+      background-color: var(--main-color);
+      cursor: pointer;
+      margin: 20px 0px;
+    }
+  }
+
+  .contentDataBankUser {
+    background-color: var(--border-color);
+    border-radius: 7px;
+    padding: 8px;
+    text-align: center;
+    height: 55vh;
+    overflow: auto;
+    width: 57%;
+    margin: auto;
+
+    h2 {
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+
+    .contentDataBankRegional {
+      width: 15rem;
+      height: 2.5rem;
+      border-radius: 10px;
+      padding-left: 13px;
+      font-size: 15px;
+      background-color: white;
+      margin: 20px 0px;
+    }
+
+    .contentDataBankInfoCheck {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .contentDataBankCheck {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 39px;
+
+        .checkbox {
+          width: 22px;
+          height: 18px;
+          border: 2px solid var(--border-color);
+        }
+
+        .checkboxLetter {
+          font-size: 18px;
+          margin-left: 5px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-align: left;
+          text-overflow: ellipsis;
         }
       }
     }

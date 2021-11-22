@@ -6,9 +6,11 @@ import { Link } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { ProyectoContext } from "../../../context/proyectoContext/proyectoContext";
 import { getProjects } from "../../../context/proyectoContext/apiCalls";
+import { AuthContext } from "../../../context/authContext/AuthContext";
 
 export default function ListaProyecto() {
   const { projects, dispatch } = useContext(ProyectoContext);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     getProjects(dispatch);
@@ -28,34 +30,37 @@ export default function ListaProyecto() {
     {
       field: "valor_proyecto",
       headerName: "Valor del proyecto",
-      width: 160,
+      width: 200,
     },
     {
       field: "valor_servicios_personales",
       headerName: "Valor de servicios personales",
-      width: 160,
+      width: 200,
     },
     {
       field: "valor_compra_equipos",
       headerName: "Valor de compra de equipos",
-      width: 150,
+      width: 200,
     },
     {
       field: "valor_software",
       headerName: "Valor del software",
-      width: 130,
+      width: 200,
     },
     {
       field: "fecha_cierre",
       headerName: "Fecha de cierre del proyecto",
-      width: 130,
+      width: 200,
     },
     {
       field: "estado_proyecto",
       headerName: "Estado del proyecto",
-      width: 130,
+      width: 200,
     },
-    {
+  ];
+
+  if (user.codigo_rol === 3 || user.codigo_rol === 1) {
+    columns.push({
       field: "action",
       headerName: "Acciones",
       width: 160,
@@ -72,8 +77,8 @@ export default function ListaProyecto() {
           </>
         );
       },
-    },
-  ];
+    });
+  }
 
   projects.forEach((project) => {
     project["id"] = project.codigo_proyecto;

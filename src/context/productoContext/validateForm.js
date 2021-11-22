@@ -5,10 +5,6 @@ export const schemaProduct = yup.object().shape({
     .number()
     .typeError("Solo se permite datos númericos")
     .required("El campo es obligatorio"),
-  codigo_semillero: yup
-    .number()
-    .typeError("Solo se permite datos númericos")
-    .required("El campo es obligatorio"),
   codigo_tipologia: yup
     .number()
     .typeError("Solo se permite datos númericos")

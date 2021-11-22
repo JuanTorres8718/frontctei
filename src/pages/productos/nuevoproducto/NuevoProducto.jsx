@@ -14,6 +14,7 @@ import {
 import { ProductoContext } from "../../../context/productoContext/ProductoContext";
 import { createProduct } from "../../../context/productoContext/apiCalls";
 import { useHistory } from "react-router-dom";
+import Select from "react-select";
 
 export default function NuevoProducto() {
   const [autores, setAutores] = useState([]);
@@ -39,6 +40,7 @@ export default function NuevoProducto() {
   let history = useHistory();
 
   const { tables, dispatch } = useContext(TsContext);
+  const [semilleros, setSemilleros] = useState([]);
   const { dispatch: dispatchProducto } = useContext(ProductoContext);
 
   useEffect(() => {
@@ -76,14 +78,8 @@ export default function NuevoProducto() {
       });
     } else if (e.target.name === "tipo_intangible") {
       if (product.tipo_intangible === 1) {
-        document
-          .getElementById("intangible")
-          .classList.toggle("displayOptions");
         setProduct({ ...product, [e.target.name]: 0 });
       } else {
-        document
-          .getElementById("intangible")
-          .classList.toggle("displayOptions");
         setProduct({ ...product, [e.target.name]: 1 });
       }
     } else if (e.target.name === "aval_autor") {
@@ -105,17 +101,29 @@ export default function NuevoProducto() {
     setProduct({ ...product, [e.target.name]: value });
   };
 
+  const handleChangeSelect = (e) => {
+    setSemilleros(e);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
       product: product,
       talent: autores,
+      semilleros: semilleros,
     };
     schemaProduct
       .validate(data.product)
       .then(() => {
-        createProduct(data, dispatchProducto);
-        history.push("/products");
+        if (semilleros.length === 0) {
+          setErrores({
+            path: "semilleros",
+            message: "Agrega los semilleros",
+          });
+        } else {
+          createProduct(data, dispatchProducto);
+          history.push("/products");
+        }
       })
       .catch((error) => {
         setErrores({
@@ -124,8 +132,6 @@ export default function NuevoProducto() {
         });
       });
   };
-
-  console.log(product);
 
   return (
     <div className="newProduct">
@@ -242,10 +248,7 @@ export default function NuevoProducto() {
           {errores.path === "tipo_intangible" && (
             <p className="errorTalentRubro">{errores.message}*</p>
           )}
-          <div
-            className="contentNewProductGroup displayOptions TextArea"
-            id="intangible"
-          >
+          <div className="contentNewProductGroup TextArea" id="intangible">
             <p className="pLetterQuestion">Describe porque:</p>
             <textarea
               name="intangible"
@@ -287,28 +290,20 @@ export default function NuevoProducto() {
           {errores.path === "codigo_tipologia" && (
             <p className="error">{errores.message}*</p>
           )}
-          <div className="contentNewProductGroup">
-            <p className="pLetter">Semillero*</p>
-            <select
-              className="contentNewProductSelect"
-              name="codigo_semillero"
-              id="codigo_semillero"
-              onChange={handleChangeInt}
-            >
-              <option value="option_semillero">Selecciona un semillero</option>
-              {tables.semilleros &&
-                tables.semilleros.map((semillero, id) => (
-                  <option
-                    className="option_semillero"
-                    key={id}
-                    value={semillero.codigo_semillero}
-                  >
-                    {semillero.nombre_semillero.slice(0, 50)}...
-                  </option>
-                ))}
-            </select>
+          <div className="contentNewSelectGroup">
+            <p className="pLetter">Semilleros*</p>
+            {tables.semilleros && (
+              <Select
+                placeholder="Selecciona los semilleros"
+                closeMenuOnSelect={false}
+                // defaultValue="Selecciona un semillero"
+                isMulti
+                options={tables.semilleros}
+                onChange={handleChangeSelect}
+              />
+            )}
           </div>
-          {errores.path === "codigo_semillero" && (
+          {errores.path === "semilleros" && (
             <p className="error">{errores.message}*</p>
           )}
           <div className="contentDataBankCheckAll">
@@ -387,7 +382,11 @@ export default function NuevoProducto() {
                   </div>
                   <div className="rowColumn">
                     <h3>Tipo de contrato</h3>
-                    <p>{data.tipo_contrato}</p>
+                    {data.codigo_tipo_contrato === 2001 && <p>Aprendíz</p>}
+                    {data.codigo_tipo_contrato === 2002 && <p>Contratista</p>}
+                    {data.codigo_tipo_contrato === 2003 && <p>Planta</p>}
+                    {data.codigo_tipo_contrato === 2004 && <p>Temporal</p>}
+                    {data.codigo_tipo_contrato === 2005 && <p>Provisional</p>}
                   </div>
                   <div className="rowColumn rowDate">
                     <div className="columnDate">

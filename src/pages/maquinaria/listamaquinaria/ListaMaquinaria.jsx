@@ -6,9 +6,11 @@ import { Link } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { MaquinaryContext } from "../../../context/maquinariaContext/MaquinaryContext";
 import { getMaquinarys } from "../../../context/maquinariaContext/apiCalls";
+import { AuthContext } from "../../../context/authContext/AuthContext";
 
 export default function ListaMaquinaria() {
   const { maquinarys, dispatch } = useContext(MaquinaryContext);
+  const { user } = useContext(AuthContext);
 
   //   const handleDelete = (id) => {
   //     setData(data.filter((item) => item.id !== id));
@@ -32,19 +34,22 @@ export default function ListaMaquinaria() {
     {
       field: "fecha",
       headerName: "Fecha de Compra",
-      width: 170,
+      width: 190,
     },
     {
       field: "tipo_de_equipo",
       headerName: "Tipo de equipo",
-      width: 130,
+      width: 170,
     },
     {
       field: "codigo_proyecto",
       headerName: "Proyecto Asociado",
-      width: 130,
+      width: 170,
     },
-    {
+  ];
+
+  if (user.codigo_rol === 3 || user.codigo_rol === 1) {
+    columns.push({
       field: "action",
       headerName: "Acciones",
       width: 160,
@@ -61,8 +66,8 @@ export default function ListaMaquinaria() {
           </>
         );
       },
-    },
-  ];
+    });
+  }
 
   maquinarys.forEach((maquinary) => {
     maquinary["id"] = maquinary.codigo_equipo;

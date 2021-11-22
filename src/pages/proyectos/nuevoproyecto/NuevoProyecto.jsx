@@ -6,6 +6,9 @@ import Maquinary from "../../../components/maquinaryComponent/Maquinary";
 import { TsContext } from "../../../context/tableSecundaryContext/TsContext";
 import {
   getAllCentros,
+  getAllCiiu,
+  getAllDisciplina,
+  getAllMunicipios,
   getAllNivel,
   getAllRed,
   getAllRolSennova,
@@ -20,6 +23,7 @@ import {
   schemaProject,
 } from "../../../context/proyectoContext/validateForm";
 import { useHistory } from "react-router-dom";
+import Select from "react-select";
 
 export default function NuevoProyecto() {
   let history = useHistory();
@@ -42,16 +46,19 @@ export default function NuevoProyecto() {
     archivo_proyecto: undefined,
     informe_investigacion: undefined,
     codigo_linea_programatica: undefined,
+    codigo_ciiu: undefined,
     codigo_area_ocde: undefined,
     codigo_subarea_conocimiento: undefined,
+    codigo_disciplina: undefined,
     codigo_red_conocimiento: undefined,
     codigo_estado_proyecto: undefined,
     codigo_centro: undefined,
-    codigo_semillero: undefined,
   });
   const [autores, setAutores] = useState([]);
   const [rubros, setRubros] = useState([]);
   const [maquinary, setMaquinary] = useState();
+  const [municipios, setMunicipios] = useState([]);
+  const [semilleros, setSemilleros] = useState([]);
 
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -68,9 +75,12 @@ export default function NuevoProyecto() {
     getAllSemilleros(dispatch);
     getAllSubareas(dispatch);
     getAllRed(dispatch);
+    getAllMunicipios(dispatch);
     getAllNivel(dispatch);
     getAllRolSennova(dispatch);
     getAllRubros(dispatch);
+    getAllCiiu(dispatch);
+    getAllDisciplina(dispatch);
   }, [dispatch]);
 
   const handleOpen = () => {
@@ -130,16 +140,39 @@ export default function NuevoProyecto() {
   };
 
   const handleChangeInt = (e) => {
-    const value = parseInt(e.target.value);
-    setProject({ ...project, [e.target.name]: value });
+    if (e.target.name === "codigo_area_ocde") {
+      const value = parseInt(e.target.value);
+      setProject({ ...project, [e.target.name]: value });
+      tables["filter_subarea"] = tables.subareas.filter(
+        (subarea) => subarea.codigo_area_conocimiento === value
+      );
+    } else if (e.target.name === "codigo_subarea_conocimiento") {
+      const value = parseInt(e.target.value);
+      setProject({ ...project, [e.target.name]: value });
+      tables["filter_disciplina"] = tables.disciplinas.filter(
+        (disciplina) => disciplina.codigo_subarea === value
+      );
+    } else {
+      const value = parseInt(e.target.value);
+      setProject({ ...project, [e.target.name]: value });
+    }
   };
 
   const handleChangeFile = (e) => {
+    console.log(e.target.name);
     if (e.target.id === "acta") {
       if (e.target.files[0]) {
         if (e.target.files[0].type === "application/pdf") {
           const value = e.target.files[0].name;
-          setProject({ ...project, archivo_proyecto: value });
+          const file = e.target.files[0];
+          const form = new FormData();
+          form.append("name", e.target.name);
+          form.append("file", file, "form-data");
+          setProject({
+            ...project,
+            archivo_proyecto: value,
+            file_proyecto: file,
+          });
           setErrores({
             path: "",
             message: "",
@@ -155,7 +188,15 @@ export default function NuevoProyecto() {
       if (e.target.files[0]) {
         if (e.target.files[0].type === "application/pdf") {
           const value = e.target.files[0].name;
-          setProject({ ...project, informe_investigacion: value });
+          const file = e.target.files[0];
+          const form = new FormData();
+          form.append("name", "mierda");
+          form.append("file", file);
+          setProject({
+            ...project,
+            informe_investigacion: value,
+            file_investigacion: file,
+          });
           setErrores({
             path: "",
             message: "",
@@ -170,6 +211,15 @@ export default function NuevoProyecto() {
     }
   };
 
+  const handleChangeSemillero = (e) => {
+    console.log(e);
+    setSemilleros(e);
+  };
+
+  const handleChangeMunicipios = (e) => {
+    setMunicipios(e);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
@@ -177,7 +227,13 @@ export default function NuevoProyecto() {
       talent: autores,
       maquinary: maquinary,
       rubros: rubros,
+      semilleros: semilleros,
+      municipios: municipios,
     };
+    // const images = [
+    //   data.project.file_proyecto,
+    //   data.project.file_investigacion,
+    // ];
     schemaProject
       .validate(data.project)
       .then(() => {
@@ -191,6 +247,16 @@ export default function NuevoProyecto() {
             path: "button_talent",
             message: "Agrega los responsables que participan en el proyecto",
           });
+        } else if (data.semilleros.length === 0) {
+          setErrores({
+            path: "semilleros",
+            message: "Agrega los semilleros en el proyecto",
+          });
+        } else if (data.municipios.length === 0) {
+          setErrores({
+            path: "municipios",
+            message: "Agrega los municipios beneficiados en el proyecto",
+          });
         } else if (maquinary) {
           schemaMaquinary
             .validate(data.maquinary)
@@ -199,6 +265,7 @@ export default function NuevoProyecto() {
               history.push("/projects");
             })
             .catch((error) => {
+              console.log(error);
               setErrores({
                 path: error.path,
                 message: error.errors[0],
@@ -210,6 +277,7 @@ export default function NuevoProyecto() {
         }
       })
       .catch((error) => {
+        console.log(error);
         setErrores({
           path: error.path,
           message: error.errors[0],
@@ -221,7 +289,7 @@ export default function NuevoProyecto() {
     <div className="newProject">
       <h1 className="newProjectTitle">Registrar Nuevo Proyecto</h1>
       <div className="contentNewProject">
-        <form action="">
+        <form action="" encType="multipart/form-data">
           <div className="contentNewProjectGroup">
             <p className="pLetter">Código del Proyecto*</p>
             <input
@@ -287,7 +355,7 @@ export default function NuevoProyecto() {
           {errores.path === "presupuesto_asignado" && (
             <p className="error">{errores.message}*</p>
           )}
-          <div className="contentNewProjectGroup TextArea" id="industria_4_0">
+          <div className="contentNewProjectGroup TextArea">
             <p className="pLetterQuestion">Observación General*</p>
             <textarea
               name="observacion_general"
@@ -331,15 +399,16 @@ export default function NuevoProyecto() {
               {rubros.map((data, id) => (
                 <div className="rowRubro" key={id}>
                   <div className="rowColumn">
-                    {tables.rubros
-                      .filter(
-                        (rubro) => rubro.codigo_rubro === data.codigo_rubro
-                      )
-                      .map((rubroFilter) => (
-                        <p key={rubroFilter.codigo_rubro}>
-                          {rubroFilter.nombre_rubro}
-                        </p>
-                      ))}
+                    {tables.rubros &&
+                      tables.rubros
+                        .filter(
+                          (rubro) => rubro.codigo_rubro === data.codigo_rubro
+                        )
+                        .map((rubroFilter) => (
+                          <p key={rubroFilter.codigo_rubro}>
+                            {rubroFilter.nombre_rubro}
+                          </p>
+                        ))}
                   </div>
                   <div className="rowColumn">
                     <p className="pvalue">${data.valor_rubro}</p>
@@ -410,24 +479,21 @@ export default function NuevoProyecto() {
           {errores.path === "codigo_linea_programatica" && (
             <p className="error">{errores.message}*</p>
           )}
-          <div className="contentNewProjectGroup">
-            <p className="pLetter">Semillero*</p>
-            <select
-              className="contentNewProjectSelect"
-              name="codigo_semillero"
-              id="codigo_semillero"
-              onChange={handleChangeInt}
-            >
-              <option value="">Selecciona un semillero</option>
-              {tables.semilleros &&
-                tables.semilleros.map((semillero, id) => (
-                  <option key={id} value={semillero.codigo_semillero}>
-                    {semillero.nombre_semillero}
-                  </option>
-                ))}
-            </select>
+          <div className="contentNewSelectGroup">
+            <p className="pLetter">Semilleros*</p>
+            {tables.semilleros && (
+              <Select
+                placeholder="Selecciona los semilleros"
+                closeMenuOnSelect={false}
+                // defaultValue="Selecciona un semillero"
+                isMulti
+                name="semillero"
+                options={tables.semilleros}
+                onChange={handleChangeSemillero}
+              />
+            )}
           </div>
-          {errores.path === "codigo_semillero" && (
+          {errores.path === "semilleros" && (
             <p className="error">{errores.message}*</p>
           )}
           <div className="contentNewProjectGroup">
@@ -448,6 +514,26 @@ export default function NuevoProyecto() {
             </select>
           </div>
           {errores.path === "codigo_red_conocimiento" && (
+            <p className="error">{errores.message}*</p>
+          )}
+          <div className="contentNewProjectGroup">
+            <p className="pLetter">Actividad económica(CIIU)*</p>
+            <select
+              className="contentNewProjectSelect"
+              name="codigo_ciiu"
+              id="codigo_ciiu"
+              onChange={handleChange}
+            >
+              <option value="">Selecciona la actividad económica</option>
+              {tables.ciiu &&
+                tables.ciiu.map((ciiu, id) => (
+                  <option key={id} value={ciiu.codigo_ciiu}>
+                    {ciiu.nombre_ciiu.slice(0, 40) + "..."}
+                  </option>
+                ))}
+            </select>
+          </div>
+          {errores.path === "codigo_ciiu" && (
             <p className="error">{errores.message}*</p>
           )}
           <div className="contentNewProjectGroup">
@@ -478,26 +564,58 @@ export default function NuevoProyecto() {
               <option value="">
                 Selecciona una subarea de conocimiento OCDE
               </option>
-              {tables.subareas &&
-                project.codigo_area_ocde &&
-                tables.subareas
-                  .filter(
-                    (subarea) =>
-                      subarea.codigo_area_conocimiento ===
-                      project.codigo_area_ocde
-                  )
-                  .map((subareaFilter) => (
-                    <option
-                      key={subareaFilter.codigo_subarea}
-                      value={subareaFilter.codigo_subarea}
-                    >
-                      {subareaFilter.nombre_subarea}
-                    </option>
-                  ))}
+              {tables.filter_subarea &&
+                tables.filter_subarea.map((subareaFilter) => (
+                  <option
+                    key={subareaFilter.codigo_subarea}
+                    value={subareaFilter.codigo_subarea}
+                  >
+                    {subareaFilter.nombre_subarea}
+                  </option>
+                ))}
             </select>
           </div>
+          <div className="contentNewProjectGroup">
+            <p className="pLetter">Disciplina</p>
+            <select
+              className="contentNewProjectSelect"
+              name="codigo_disciplina"
+              id="codigo_disciplina"
+              onChange={handleChange}
+            >
+              <option value="">Selecciona la disciplina</option>
+              {tables.filter_disciplina &&
+                tables.filter_disciplina.map((disciplinaFilter) => (
+                  <option
+                    key={disciplinaFilter.codigo_disciplina}
+                    value={disciplinaFilter.codigo_disciplina}
+                  >
+                    {disciplinaFilter.nombre_disciplina.slice(0, 40) + "..."}
+                  </option>
+                ))}
+            </select>
+          </div>
+          <div className="contentNewSelectGroup">
+            <p className="pLetter">
+              ¿Cuales fueron los municipios benificiados con el proyecto?*
+            </p>
+            {tables.municipios && (
+              <Select
+                placeholder="Selecciona los municipios"
+                closeMenuOnSelect={false}
+                // defaultValue="Selecciona un semillero"
+                isMulti
+                name="municipios"
+                options={tables.municipios}
+                onChange={handleChangeMunicipios}
+              />
+            )}
+          </div>
+          {errores.path === "municipios" && (
+            <p className="error">{errores.message}*</p>
+          )}
           <div className="contentDataBankCheckAll">
-            <p className="pLetter">¿El proyecto esta financiado?</p>
+            <p className="pLetter">¿El proyecto esta financiado?*</p>
             <div className="contentRadioButtons">
               <p>Si</p>
               <label className="switch">
@@ -516,7 +634,7 @@ export default function NuevoProyecto() {
           {errores.path === "proyecto_financiado" && (
             <p className="error">{errores.message}*</p>
           )}
-          <div className="contentNewProjectGroup TextArea" id="industria_4_0">
+          <div className="contentNewProjectGroup TextArea">
             <p className="pLetterQuestion">Resumen del proyecto*</p>
             <textarea
               name="resumen_proyecto"
@@ -556,7 +674,7 @@ export default function NuevoProyecto() {
               }
             >
               <input
-                name="file-upload-field"
+                name="file"
                 type="file"
                 id="acta"
                 className="file-upload-field"
@@ -580,7 +698,7 @@ export default function NuevoProyecto() {
               }
             >
               <input
-                name="file-upload-field"
+                name="file"
                 type="file"
                 id="informe"
                 className="file-upload-field"
@@ -779,7 +897,11 @@ export default function NuevoProyecto() {
                   </div>
                   <div className="rowColumn">
                     <h3>Rol en el proyecto</h3>
-                    <p>{data.codigo_rol_proyecto}</p>
+                    {data.codigo_rol_proyecto === 10001 && <p>Líder</p>}
+                    {data.codigo_rol_proyecto === 10002 && <p>Coordinador</p>}
+                    {data.codigo_rol_proyecto === 10003 && <p>Investigador</p>}
+                    {data.codigo_rol_proyecto === 10004 && <p>Aprendíz</p>}
+                    {data.codigo_rol_proyecto === 10005 && <p>Monitor</p>}
                   </div>
                   <div className="rowColumn rowDate">
                     <div className="columnDate">

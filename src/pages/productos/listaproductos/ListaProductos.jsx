@@ -6,9 +6,11 @@ import { Link } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { ProductoContext } from "../../../context/productoContext/ProductoContext";
 import { getProducts } from "../../../context/productoContext/apiCalls";
+import { AuthContext } from "../../../context/authContext/AuthContext";
 
 export default function ListaProductos() {
   const { products, dispatch } = useContext(ProductoContext);
+  const { user } = useContext(AuthContext);
   //   const handleDelete = (id) => {
   //     setData(data.filter((item) => item.id !== id));
   //   };
@@ -31,24 +33,27 @@ export default function ListaProductos() {
     {
       field: "descripcion_producto",
       headerName: "Descripción del Producto",
-      width: 190,
+      width: 200,
     },
     {
       field: "fecha_registro",
       headerName: "Fecha de registro del producto",
-      width: 130,
+      width: 200,
     },
     {
       field: "link_producto",
       headerName: "link donde se encuentra el producto",
-      width: 130,
+      width: 200,
     },
     {
       field: "aval_autor",
       headerName: "Aval del autor",
-      width: 160,
+      width: 200,
     },
-    {
+  ];
+
+  if (user.codigo_rol === 3 || user.codigo_rol === 1) {
+    columns.push({
       field: "action",
       headerName: "Acciones",
       width: 160,
@@ -65,8 +70,8 @@ export default function ListaProductos() {
           </>
         );
       },
-    },
-  ];
+    });
+  }
 
   products.forEach((product) => {
     product["id"] = product.codigo_productos;

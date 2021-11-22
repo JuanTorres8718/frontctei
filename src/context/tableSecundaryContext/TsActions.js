@@ -207,3 +207,33 @@ export const getUserEmailSuccess = (email) => ({
 export const getUserEmailFailure = () => ({
   type: "GET_USERMAIL_FAILURE",
 });
+
+//Obtener todos los ciiu
+
+export const getCiiuStart = () => ({
+  type: "GET_CIIU_START",
+});
+
+export const getCiiuSuccess = (ciiu) => ({
+  type: "GET_CIIU_SUCCESS",
+  payload: ciiu,
+});
+
+export const getCiiuFailure = () => ({
+  type: "GET_CIIU_FAILURE",
+});
+
+//Obtener todos las disciplina
+
+export const getDisciplinaStart = () => ({
+  type: "GET_DISCIPLINA_START",
+});
+
+export const getDisciplinaSuccess = (disciplina) => ({
+  type: "GET_DISCIPLINA_SUCCESS",
+  payload: disciplina,
+});
+
+export const getDisciplinaFailure = () => ({
+  type: "GET_DISCIPLINA_FAILURE",
+});

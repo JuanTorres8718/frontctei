@@ -3,9 +3,15 @@ import {
   getCentrosFailure,
   getCentrosStart,
   getCentrosSuccess,
+  getCiiuFailure,
+  getCiiuStart,
+  getCiiuSuccess,
   getDepartamentosFailure,
   getDepartamentosStart,
   getDepartamentosSuccess,
+  getDisciplinaFailure,
+  getDisciplinaStart,
+  getDisciplinaSuccess,
   getGrupoFailure,
   getGrupoStart,
   getGrupoSuccess,
@@ -113,10 +119,17 @@ export const getAllSubareas = async (dispatch) => {
 export const getAllMunicipios = async (dispatch) => {
   dispatch(getMunicipiosStart());
   try {
+    const array = [];
     const res = await axios.get(
       process.env.REACT_APP_API_URL + "/table/municipios"
     );
-    dispatch(getMunicipiosSuccess(res.data));
+    res.data.forEach((result) => {
+      array.push({
+        label: result.nombre_municipio,
+        value: result.codigo_municipio,
+      });
+    });
+    dispatch(getMunicipiosSuccess(array));
   } catch (err) {
     dispatch(getMunicipiosFailure());
   }
@@ -165,10 +178,19 @@ export const getAllNivel = async (dispatch) => {
 export const getAllSemilleros = async (dispatch) => {
   dispatch(getSemilleroStart());
   try {
+    const array = [];
     const res = await axios.get(
       process.env.REACT_APP_API_URL + "/table/semilleros"
     );
-    dispatch(getSemilleroSuccess(res.data));
+    res.data.forEach((result) => {
+      array.push({
+        label: result.nombre_semillero.split(" ")[0],
+        value: result.codigo_semillero,
+      });
+    });
+    // console.log(array);
+    // console.log(res.data);
+    dispatch(getSemilleroSuccess(array));
   } catch (err) {
     dispatch(getSemilleroFailure());
   }
@@ -223,5 +245,31 @@ export const getAllEmail = async (dispatch) => {
     dispatch(getUserEmailSuccess(res.data));
   } catch (err) {
     dispatch(getUserEmailFailure());
+  }
+};
+
+//Obtener todos los ciiu
+export const getAllCiiu = async (dispatch) => {
+  dispatch(getCiiuStart());
+  try {
+    const res = await axios.get(process.env.REACT_APP_API_URL + "/table/ciiu");
+
+    dispatch(getCiiuSuccess(res.data));
+  } catch (err) {
+    dispatch(getCiiuFailure());
+  }
+};
+
+//Obtener todos los email
+export const getAllDisciplina = async (dispatch) => {
+  dispatch(getDisciplinaStart());
+  try {
+    const res = await axios.get(
+      process.env.REACT_APP_API_URL + "/table/disciplina"
+    );
+
+    dispatch(getDisciplinaSuccess(res.data));
+  } catch (err) {
+    dispatch(getDisciplinaFailure());
   }
 };

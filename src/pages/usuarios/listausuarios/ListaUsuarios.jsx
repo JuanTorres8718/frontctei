@@ -6,10 +6,13 @@ import { useContext, useEffect, useRef } from "react";
 import { UsuarioContext } from "../../../context/usuarioContext/UsuarioContext";
 import { deleteUser, getUsers } from "../../../context/usuarioContext/apiCalls";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../../context/authContext/AuthContext";
 
 export default function ListaUsuarios() {
   const { users, dispatch } = useContext(UsuarioContext);
   const mounted = useRef(false);
+  const { user } = useContext(AuthContext);
+  let user_aux = [];
 
   useEffect(() => {
     mounted.current = true;
@@ -63,7 +66,10 @@ export default function ListaUsuarios() {
       headerName: "Estado",
       width: 130,
     },
-    {
+  ];
+
+  if (user.codigo_rol === 3 || user.codigo_rol === 1) {
+    columns.push({
       field: "action",
       headerName: "Acciones",
       width: 160,
@@ -80,26 +86,47 @@ export default function ListaUsuarios() {
           </>
         );
       },
-    },
-  ];
+    });
+  }
 
-  users.forEach((user) => {
-    user["id"] = user.codigo_usuario;
-    if (user.codigo_rol === 1) {
-      user["rolUser"] = "Administrador";
-    } else if (user.codigo_rol === 2) {
-      user["rolUser"] = "Director";
-    } else if (user.codigo_rol === 3) {
-      user["rolUser"] = "Dinamizador";
-    } else if (user.codigo_rol === 4) {
-      user["rolUser"] = "Auxiliar";
-    }
-    if (user.codigo_estado === 1) {
-      user["estado"] = "Activo";
-    } else {
-      user["estado"] = "Deshabilitado";
-    }
-  });
+  if (user.codigo_rol === 3) {
+    user_aux = users.filter((user) => user.codigo_rol === 4);
+    user_aux.forEach((user) => {
+      user["id"] = user.codigo_usuario;
+      if (user.codigo_rol === 1) {
+        user["rolUser"] = "Administrador";
+      } else if (user.codigo_rol === 2) {
+        user["rolUser"] = "Director";
+      } else if (user.codigo_rol === 3) {
+        user["rolUser"] = "Dinamizador";
+      } else if (user.codigo_rol === 4) {
+        user["rolUser"] = "Auxiliar";
+      }
+      if (user.codigo_estado === 1) {
+        user["estado"] = "Activo";
+      } else {
+        user["estado"] = "Deshabilitado";
+      }
+    });
+  } else {
+    users.forEach((user) => {
+      user["id"] = user.codigo_usuario;
+      if (user.codigo_rol === 1) {
+        user["rolUser"] = "Administrador";
+      } else if (user.codigo_rol === 2) {
+        user["rolUser"] = "Director";
+      } else if (user.codigo_rol === 3) {
+        user["rolUser"] = "Dinamizador";
+      } else if (user.codigo_rol === 4) {
+        user["rolUser"] = "Auxiliar";
+      }
+      if (user.codigo_estado === 1) {
+        user["estado"] = "Activo";
+      } else {
+        user["estado"] = "Deshabilitado";
+      }
+    });
+  }
 
   return (
     <div className="userList" style={{ height: "75vh", width: "100%" }}>
@@ -110,7 +137,7 @@ export default function ListaUsuarios() {
         </Link>
       </div>
       <DataGrid
-        rows={users}
+        rows={user.codigo_rol === 3 ? user_aux : users}
         columns={columns}
         pageSize={8}
         disableSelectionOnClick

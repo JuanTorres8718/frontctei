@@ -84,6 +84,7 @@ export default function ModalProduct({
           fecha_inicio_contrato: undefined,
           fecha_fin_contrato: undefined,
           tiempo_dedicacion_semanal: undefined,
+          genero: undefined,
           valor_mensual_contrato: undefined,
           valor_total_contrato: undefined,
           sena_sennova: undefined,
@@ -194,7 +195,7 @@ export default function ModalProduct({
                     className="contentCreateTalentSelect"
                     name="genero"
                     id="genero"
-                    onChange={handleChangeInt}
+                    onChange={handleChange}
                   >
                     <option value="">Selecciona tu género</option>
                     <option value="masculino">Masculino</option>
@@ -250,7 +251,7 @@ export default function ModalProduct({
                     id="codigo_tipo_contrato"
                     onChange={handleChangeInt}
                   >
-                    <option value="">Seleccione el tip de contrato</option>
+                    <option value="">Seleccione el tipo de contrato</option>
                     <option value={2001}>Aprendiz</option>
                     <option value={2002}>Contratista</option>
                     <option value={2003}>Planta</option>
@@ -304,10 +305,10 @@ export default function ModalProduct({
                     onChange={handleChangeInt}
                   >
                     <option value="">Selecciona el rol en el proyecto</option>
-                    <option value={10001}>Lider</option>
+                    <option value={10001}>Líder</option>
                     <option value={10002}>Coordinador</option>
                     <option value={10003}>Investigador</option>
-                    <option value={10004}>Aprendiz</option>
+                    <option value={10004}>Aprendíz</option>
                     <option value={10005}>Monitor</option>
                   </select>
                 </div>

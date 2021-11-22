@@ -45,39 +45,69 @@ function App() {
               <Route exact path="/">
                 <Home />
               </Route>
-              <Route path="/users">
-                <ListaUsuarios />
-              </Route>
-              <Route path="/newUser">
-                <NuevoUsuario />
-              </Route>
-              <Route path="/user/:id">
-                <EditarUsuario />
-              </Route>
+              {user.codigo_rol !== 4 ? (
+                <>
+                  <Route path="/users">
+                    <ListaUsuarios />
+                  </Route>
+                  <Route path="/newUser">
+                    <NuevoUsuario />
+                  </Route>
+                  <Route path="/user/:id">
+                    <EditarUsuario />
+                  </Route>
+                </>
+              ) : (
+                <Redirect to="/" />
+              )}
               <Route path="/projects">
                 <ListaProyecto />
               </Route>
-              <Route path="/newProject">
-                <NuevoProyecto />
-              </Route>
-              <Route path="/project/:id">
-                <EditarProyecto />
-              </Route>
+              {user.codigo_rol !== 2 ? (
+                <>
+                  <Route path="/newProject">
+                    <NuevoProyecto />
+                  </Route>
+                  {user.codigo_rol === 3 ? (
+                    <Route path="/project/:id">
+                      <EditarProyecto />
+                    </Route>
+                  ) : (
+                    <Redirect to="/" />
+                  )}
+                </>
+              ) : (
+                <Redirect to="/" />
+              )}
               <Route path="/talents">
                 <ListaTalentoHumano />
               </Route>
-              <Route path="/talent/:id">
-                <EditarTalentoHumano />
-              </Route>
+              {user.codigo_rol === 3 ? (
+                <Route path="/talent/:id">
+                  <EditarTalentoHumano />
+                </Route>
+              ) : (
+                <Redirect to="/" />
+              )}
               <Route path="/products">
                 <ListaProductos />
               </Route>
-              <Route path="/newProduct">
-                <NuevoProducto />
-              </Route>
-              <Route path="/product/:id">
-                <EditarProducto />
-              </Route>
+              {user.codigo_rol !== 2 ? (
+                <>
+                  <Route path="/newProduct">
+                    <NuevoProducto />
+                  </Route>
+                  {user.codigo_rol === 3 ? (
+                    <Route path="/product/:id">
+                      <EditarProducto />
+                    </Route>
+                  ) : (
+                    <Redirect to="/" />
+                  )}
+                </>
+              ) : (
+                <Redirect to="/" />
+              )}
               <Route path="/machinery">
                 <ListaMaquinaria />
               </Route>
@@ -96,9 +126,13 @@ function App() {
               <Route path="/chartformacion">
                 <ChartFormacion />
               </Route>
-              <Route path="/databank">
-                <BancodeDatos />
-              </Route>
+              {user.codigo_rol !== 4 ? (
+                <Route path="/databank">
+                  <BancodeDatos />
+                </Route>
+              ) : (
+                <Redirect to="/" />
+              )}
             </div>
           </>
         ) : (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   ArrowDropDown,
   BusinessCenter,
@@ -12,8 +12,11 @@ import {
 } from "@material-ui/icons";
 import "./sidebar.scss";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/authContext/AuthContext";
 
 export default function Sidebar() {
+  const { user } = useContext(AuthContext);
+
   const hoverMenu = () => {
     let options = document.getElementById("options");
     options.classList.toggle("displayOptions");
@@ -25,12 +28,14 @@ export default function Sidebar() {
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Menú Rápido</h3>
           <ul className="sidebarList">
-            <Link to="/users" className="link">
-              <li className="sidebarListItem">
-                <PersonOutline className="sidebarIcon" />
-                Usuarios
-              </li>
-            </Link>
+            {user.codigo_rol !== 4 && (
+              <Link to="/users" className="link">
+                <li className="sidebarListItem">
+                  <PersonOutline className="sidebarIcon" />
+                  Usuarios
+                </li>
+              </Link>
+            )}
             <Link to="/projects" className="link">
               <li className="sidebarListItem">
                 <BusinessCenter className="sidebarIcon" />
@@ -87,15 +92,17 @@ export default function Sidebar() {
                 <span>-Productos</span>
               </Link>
               <Link to="/chartformacion" className="link">
-                <span>-Formación</span>
+                <span>-Formación en CTeI</span>
               </Link>
             </div>
-            <Link to="/databank" className="link">
-              <li className="sidebarListItem">
-                <DataUsage className="sidebarIcon" />
-                Banco de datos
-              </li>
-            </Link>
+            {user.codigo_rol !== 4 && (
+              <Link to="/databank" className="link">
+                <li className="sidebarListItem">
+                  <DataUsage className="sidebarIcon" />
+                  Banco de datos
+                </li>
+              </Link>
+            )}
           </ul>
         </div>
       </div>
