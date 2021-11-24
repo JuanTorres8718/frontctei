@@ -1,7 +1,7 @@
 import "./listaTalentoHumano.scss";
 // import { useState } from 'react'
 import { DataGrid } from "@material-ui/data-grid";
-import { DeleteOutline } from "@material-ui/icons";
+// import { DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { getTalents } from "../../../context/talentoContext/apiCalls";
@@ -53,13 +53,15 @@ export default function ListaTalentoHumano() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/talent/" + params.row.id}>
+            <Link
+              to={{ pathname: "/talent/" + params.row.id, talent: params.row }}
+            >
               <button className="productListEdit">Editar</button>
             </Link>
-            <DeleteOutline
+            {/* <DeleteOutline
               className="productListDelete"
               //   onClick={() => handleDelete(params.row.id)}
-            />
+            /> */}
           </>
         );
       },

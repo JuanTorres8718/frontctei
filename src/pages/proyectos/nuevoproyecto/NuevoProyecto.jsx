@@ -265,7 +265,6 @@ export default function NuevoProyecto() {
               history.push("/projects");
             })
             .catch((error) => {
-              console.log(error);
               setErrores({
                 path: error.path,
                 message: error.errors[0],
@@ -277,7 +276,6 @@ export default function NuevoProyecto() {
         }
       })
       .catch((error) => {
-        console.log(error);
         setErrores({
           path: error.path,
           message: error.errors[0],
@@ -864,6 +862,7 @@ export default function NuevoProyecto() {
               setMaquinary={setMaquinary}
               errores={errores}
               setErrores={setErrores}
+              creation={false}
             />
           )}
           <div className="contentAutores" id="autores">

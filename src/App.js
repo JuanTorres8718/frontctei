@@ -29,6 +29,7 @@ import EditarProyecto from "./pages/proyectos/editarproyecto/EditarProyecto";
 import ChartFormacion from "./components/charts/ChartFormacion";
 import { useContext } from "react";
 import { AuthContext } from "./context/authContext/AuthContext";
+import EditMaquinary from "./pages/maquinaria/editarmaquinaria/EditMaquinary";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -50,12 +51,22 @@ function App() {
                   <Route path="/users">
                     <ListaUsuarios />
                   </Route>
-                  <Route path="/newUser">
-                    <NuevoUsuario />
-                  </Route>
-                  <Route path="/user/:id">
-                    <EditarUsuario />
-                  </Route>
+                  {user.codigo_rol !== 2 ? (
+                    <>
+                      <Route path="/newUser">
+                        <NuevoUsuario />
+                      </Route>
+                      {user.codigo_rol === 3 || user.codigo_rol === 1 ? (
+                        <Route path="/user/:id">
+                          <EditarUsuario />
+                        </Route>
+                      ) : (
+                        <Redirect to="/" />
+                      )}
+                    </>
+                  ) : (
+                    <Redirect to="/" />
+                  )}
                 </>
               ) : (
                 <Redirect to="/" />
@@ -68,7 +79,7 @@ function App() {
                   <Route path="/newProject">
                     <NuevoProyecto />
                   </Route>
-                  {user.codigo_rol === 3 ? (
+                  {user.codigo_rol === 3 || user.codigo_rol === 1 ? (
                     <Route path="/project/:id">
                       <EditarProyecto />
                     </Route>
@@ -82,7 +93,7 @@ function App() {
               <Route path="/talents">
                 <ListaTalentoHumano />
               </Route>
-              {user.codigo_rol === 3 ? (
+              {user.codigo_rol === 3 || user.codigo_rol === 1 ? (
                 <Route path="/talent/:id">
                   <EditarTalentoHumano />
                 </Route>
@@ -97,7 +108,7 @@ function App() {
                   <Route path="/newProduct">
                     <NuevoProducto />
                   </Route>
-                  {user.codigo_rol === 3 ? (
+                  {user.codigo_rol === 3 || user.codigo_rol === 1 ? (
                     <Route path="/product/:id">
                       <EditarProducto />
                     </Route>
@@ -111,6 +122,13 @@ function App() {
               <Route path="/machinery">
                 <ListaMaquinaria />
               </Route>
+              {user.codigo_rol === 3 || user.codigo_rol === 1 ? (
+                <Route path="/editmachinery/:id">
+                  <EditMaquinary />
+                </Route>
+              ) : (
+                <Redirect to="/" />
+              )}
               <Route path="/chartfinanciero">
                 <ChartFinanciero />
               </Route>

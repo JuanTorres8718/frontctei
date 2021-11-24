@@ -1,7 +1,7 @@
 import "./listaProyecto.scss";
 // import { useState } from 'react'
 import { DataGrid } from "@material-ui/data-grid";
-import { DeleteOutline } from "@material-ui/icons";
+// import { DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { ProyectoContext } from "../../../context/proyectoContext/proyectoContext";
@@ -70,10 +70,10 @@ export default function ListaProyecto() {
             <Link to={"/project/" + params.row.codigo_proyecto}>
               <button className="productListEdit">Editar</button>
             </Link>
-            <DeleteOutline
+            {/* <DeleteOutline
               className="productListDelete"
               //   onClick={() => handleDelete(params.row.id)}
-            />
+            /> */}
           </>
         );
       },

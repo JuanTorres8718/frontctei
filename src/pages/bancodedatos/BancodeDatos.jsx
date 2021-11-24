@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { AuthContext } from "../../context/authContext/AuthContext";
+// import { AuthContext } from "../../context/authContext/AuthContext";
 import "./bancodeDatos.scss";
 import { ProyectoContext } from "../../context/proyectoContext/proyectoContext";
 import { getProjects } from "../../context/proyectoContext/apiCalls";
@@ -15,7 +15,7 @@ import { getProducts } from "../../context/productoContext/apiCalls";
 import DownloadProducts from "../../components/downloadData/DownloadProducts";
 
 export default function BancodeDatos() {
-  const { user } = useContext(AuthContext);
+  // const { user } = useContext(AuthContext);
   const { projects, dispatch } = useContext(ProyectoContext);
   const { products, dispatch: dispatchProduct } = useContext(ProductoContext);
   const { talents, dispatch: dispatchTalent } = useContext(TalentContext);
@@ -27,12 +27,13 @@ export default function BancodeDatos() {
     getTalents(dispatchTalent);
     getMaquinarys(dispatchMaquinary);
     getProducts(dispatchProduct);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="dataBank">
       <h1 className="dataBankTitle">Descargar Banco de datos</h1>
-      {user.codigo_rol === 1 ? (
+      {/* {user.codigo_rol === 1 ? (
         <div className="contentDataBank">
           <select
             className="contentDataBankRegional"
@@ -121,25 +122,26 @@ export default function BancodeDatos() {
             <button className="contentDataBankButton">Descargar</button>
           </form>
         </div>
-      ) : (
-        <div className="contentDataBankUser">
-          <h2>Selecciona que datos desea descargar</h2>
-          <div className="contentDataBankInfoCheck">
-            <div className="contentDataBankCheck">
-              <DownloadProject projects={projects} />
-            </div>
-            <div className="contentDataBankCheck">
-              <DownloadProducts products={products} />
-            </div>
-            <div className="contentDataBankCheck">
-              <DownloadTalents talents={talents} />
-            </div>
-            <div className="contentDataBankCheck">
-              <DownloadMaquinary maquinary={maquinarys} />
-            </div>
+      ) : ( */}
+
+      <div className="contentDataBankUser">
+        <h2>Selecciona que datos desea descargar</h2>
+        <div className="contentDataBankInfoCheck">
+          <div className="contentDataBankCheck">
+            <DownloadProject projects={projects} />
+          </div>
+          <div className="contentDataBankCheck">
+            <DownloadProducts products={products} />
+          </div>
+          <div className="contentDataBankCheck">
+            <DownloadTalents talents={talents} />
+          </div>
+          <div className="contentDataBankCheck">
+            <DownloadMaquinary maquinary={maquinarys} />
           </div>
         </div>
-      )}
+      </div>
+      {/* )} */}
       <div className="containerFooter">
         <small>Derechos de autor ©2021 SENNOVA</small>
       </div>

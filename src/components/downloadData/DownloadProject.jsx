@@ -27,7 +27,7 @@ export default function DownloadProject({ projects }) {
     <ExcelFile
       element={
         <button className="contentDataBankButton">
-          Descargar datos de Proyectos
+          Descargar datos de proyectos
         </button>
       }
       filename="Datos Proyectos"

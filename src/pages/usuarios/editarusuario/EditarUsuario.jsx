@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, Redirect } from "react-router-dom";
 import Swal from "sweetalert2";
 import {
   getAllCentros,
@@ -83,112 +83,118 @@ export default function EditarUsuario() {
   };
 
   return (
-    <div className="editUser">
-      <h1 className="editUserTitle">Actualización del Usuario</h1>
-      <div className="contentEditUser">
-        <form action="">
-          <div className="contentEditUserGroup">
-            <p className="pLetter">Nombre Completo</p>
-            <input
-              type="text"
-              name="nombre_usuario"
-              className="contentEditUserInput"
-              placeholder="Ingresar el nombre completo"
-              onChange={handleChange}
-              value={userEdit.nombre_usuario}
-            />
+    <>
+      {userEdit ? (
+        <div className="editUser">
+          <h1 className="editUserTitle">Actualización del Usuario</h1>
+          <div className="contentEditUser">
+            <form action="">
+              <div className="contentEditUserGroup">
+                <p className="pLetter">Nombre Completo</p>
+                <input
+                  type="text"
+                  name="nombre_usuario"
+                  className="contentEditUserInput"
+                  placeholder="Ingresar el nombre completo"
+                  onChange={handleChange}
+                  value={userEdit.nombre_usuario}
+                />
+              </div>
+              {errores.path === "nombre_usuario" && (
+                <p className="error">{errores.message}*</p>
+              )}
+              <div className="contentEditUserGroup">
+                <p className="pLetter">Correo electrónico SENA</p>
+                <input
+                  type="text"
+                  name="correo_electronico"
+                  className="contentEditUserInput"
+                  placeholder="Ingresar el correo electrónico SENA"
+                  onChange={handleChange}
+                  value={userEdit.correo_electronico}
+                />
+              </div>
+              {errores.path === "correo_electronico" && (
+                <p className="error">{errores.message}*</p>
+              )}
+              <div className="contentEditUserGroup">
+                <p className="pLetter">Correo electrónico de respaldo</p>
+                <input
+                  type="text"
+                  name="correo_respaldo"
+                  className="contentEditUserInput"
+                  placeholder="Ingresar un correo electrónico de respaldo"
+                  onChange={handleChange}
+                  value={userEdit.correo_respaldo}
+                />
+              </div>
+              {errores.path === "correo_respaldo" && (
+                <p className="error">{errores.message}*</p>
+              )}
+              <div className="contentEditUserGroup">
+                <p className="pLetter">Centro de formación</p>
+                <select
+                  className="contentEditUserSelect"
+                  name="codigo_centro"
+                  id="codigo_centro"
+                  onChange={handleChangeInt}
+                  value={userEdit.codigo_centro}
+                >
+                  <option value="">Selecciona un centro de formación</option>
+                  {tables.centros &&
+                    tables.centros.map((centro, id) => (
+                      <option key={id} value={centro.codigo_centro}>
+                        {centro.nombre_centro}
+                      </option>
+                    ))}
+                </select>
+              </div>
+              {errores.path === "codigo_centro" && (
+                <p className="error">{errores.message}*</p>
+              )}
+              <div className="contentEditUserGroup">
+                <p className="pLetter">Fecha de finalización del contrato*</p>
+                <input
+                  type="date"
+                  name="fecha_fin_cuenta"
+                  className="contentEditUserInput"
+                  onChange={handleChange}
+                  value={userEdit.fecha_fin_cuenta.split("T", 2)[0]}
+                />
+              </div>
+              {errores.path === "fecha_fin_cuenta" && (
+                <p className="error">{errores.message}*</p>
+              )}
+              <div className="contentEditUserGroup">
+                <p className="pLetter">Rol</p>
+                <select
+                  className="contentEditUserSelect"
+                  onChange={handleChangeInt}
+                  name="codigo_rol"
+                  id="rol"
+                  value={userEdit.codigo_rol}
+                >
+                  <option value="">Seleccione el rol</option>
+                  <option value={2}>Director</option>
+                  <option value={3}>Dinamizador</option>
+                  <option value={4}>Auxiliar</option>
+                </select>
+              </div>
+              {errores.path === "codigo_rol" && (
+                <p className="error">{errores.message}*</p>
+              )}
+              <button className="contentEditUserButton" onClick={handleSubmit}>
+                Editar
+              </button>
+            </form>
           </div>
-          {errores.path === "nombre_usuario" && (
-            <p className="error">{errores.message}*</p>
-          )}
-          <div className="contentEditUserGroup">
-            <p className="pLetter">Correo electrónico SENA</p>
-            <input
-              type="text"
-              name="correo_electronico"
-              className="contentEditUserInput"
-              placeholder="Ingresar el correo electrónico SENA"
-              onChange={handleChange}
-              value={userEdit.correo_electronico}
-            />
+          <div className="containerFooter">
+            <small>Derechos de autor ©2021 SENNOVA</small>
           </div>
-          {errores.path === "correo_electronico" && (
-            <p className="error">{errores.message}*</p>
-          )}
-          <div className="contentEditUserGroup">
-            <p className="pLetter">Correo electrónico de respaldo</p>
-            <input
-              type="text"
-              name="correo_respaldo"
-              className="contentEditUserInput"
-              placeholder="Ingresar un correo electrónico de respaldo"
-              onChange={handleChange}
-              value={userEdit.correo_respaldo}
-            />
-          </div>
-          {errores.path === "correo_respaldo" && (
-            <p className="error">{errores.message}*</p>
-          )}
-          <div className="contentEditUserGroup">
-            <p className="pLetter">Centro de formación</p>
-            <select
-              className="contentEditUserSelect"
-              name="codigo_centro"
-              id="codigo_centro"
-              onChange={handleChangeInt}
-              value={userEdit.codigo_centro}
-            >
-              <option value="">Selecciona un centro de formación</option>
-              {tables.centros &&
-                tables.centros.map((centro, id) => (
-                  <option key={id} value={centro.codigo_centro}>
-                    {centro.nombre_centro}
-                  </option>
-                ))}
-            </select>
-          </div>
-          {errores.path === "codigo_centro" && (
-            <p className="error">{errores.message}*</p>
-          )}
-          <div className="contentEditUserGroup">
-            <p className="pLetter">Fecha de finalización del contrato*</p>
-            <input
-              type="date"
-              name="fecha_fin_cuenta"
-              className="contentEditUserInput"
-              onChange={handleChange}
-              value={userEdit.fecha_fin_cuenta.split("T", 2)[0]}
-            />
-          </div>
-          {errores.path === "fecha_fin_cuenta" && (
-            <p className="error">{errores.message}*</p>
-          )}
-          <div className="contentEditUserGroup">
-            <p className="pLetter">Rol</p>
-            <select
-              className="contentEditUserSelect"
-              onChange={handleChangeInt}
-              name="codigo_rol"
-              id="rol"
-              value={userEdit.codigo_rol}
-            >
-              <option value="">Seleccione el rol</option>
-              <option value={2}>Director</option>
-              <option value={3}>Dinamizador</option>
-              <option value={4}>Auxiliar</option>
-            </select>
-          </div>
-          {errores.path === "codigo_rol" && (
-            <p className="error">{errores.message}*</p>
-          )}
-          <button className="contentEditUserButton" onClick={handleSubmit}>
-            Editar
-          </button>
-        </form>
-      </div>
-      <div className="containerFooter">
-        <small>Derechos de autor ©2021 SENNOVA</small>
-      </div>
-    </div>
+        </div>
+      ) : (
+        <Redirect to="/users" />
+      )}
+    </>
   );
 }

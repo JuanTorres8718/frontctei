@@ -6,6 +6,7 @@ export default function Maquinary({
   setMaquinary,
   errores,
   setErrores,
+  creation,
 }) {
   const mounted = useRef(false);
 
@@ -13,7 +14,7 @@ export default function Maquinary({
     mounted.current = true;
     setMaquinary({
       descripcion_equipo: undefined,
-      valor_equipo: undefined,
+      valor_equipo: 0,
       fecha_compra: undefined,
       codigo_tipo_equipo: undefined,
     });
@@ -57,6 +58,8 @@ export default function Maquinary({
           name="valor_equipo"
           className="contentNewProjectInput"
           placeholder="Ingresar el valor total del equipo"
+          value={maquinary ? maquinary.valor_equipo : 0}
+          disabled={creation}
           onChange={handleChangeInt}
         />
       </div>

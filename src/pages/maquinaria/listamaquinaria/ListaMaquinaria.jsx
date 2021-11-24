@@ -1,7 +1,7 @@
 import "./listaMaquinaria.scss";
 // import { useState } from 'react'
 import { DataGrid } from "@material-ui/data-grid";
-import { DeleteOutline } from "@material-ui/icons";
+// import { DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { MaquinaryContext } from "../../../context/maquinariaContext/MaquinaryContext";
@@ -42,8 +42,8 @@ export default function ListaMaquinaria() {
       width: 170,
     },
     {
-      field: "codigo_proyecto",
-      headerName: "Proyecto Asociado",
+      field: "asociado",
+      headerName: "Proyecto/Producto Asociado",
       width: 170,
     },
   ];
@@ -56,13 +56,18 @@ export default function ListaMaquinaria() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/user/" + params.row.id}>
+            <Link
+              to={{
+                pathname: "/editmachinery/" + params.row.id,
+                maquinary: params.row,
+              }}
+            >
               <button className="maquinaryListEdit">Editar</button>
             </Link>
-            <DeleteOutline
+            {/* <DeleteOutline
               className="maquinaryListDelete"
               //   onClick={() => handleDelete(params.row.id)}
-            />
+            /> */}
           </>
         );
       },
@@ -80,6 +85,11 @@ export default function ListaMaquinaria() {
       tipoEquipo = "Equipo de Computo";
     }
     maquinary["tipo_de_equipo"] = tipoEquipo;
+    if (maquinary.codigo_proyecto) {
+      maquinary["asociado"] = `${maquinary.codigo_proyecto}-Proyecto`;
+    } else {
+      maquinary["asociado"] = `${maquinary.codigo_producto}-Producto`;
+    }
   });
 
   return (

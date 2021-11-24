@@ -12,3 +12,18 @@ export const getMaquinarySuccess = (maquinary) => ({
 export const getMaquinaryFailure = () => ({
   type: "GET_MAQUINARYS_FAILURE",
 });
+
+//Editar
+
+export const editMaquinaryStart = () => ({
+  type: "EDIT_MAQUINARY_START",
+});
+
+export const editMaquinarySuccess = (maquinary) => ({
+  type: "EDIT_MAQUINARY_SUCCESS",
+  payload: maquinary,
+});
+
+export const editMaquinaryFailure = () => ({
+  type: "EDIT_MAQUINARY_FAILURE",
+});

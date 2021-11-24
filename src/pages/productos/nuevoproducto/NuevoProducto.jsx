@@ -15,6 +15,8 @@ import { ProductoContext } from "../../../context/productoContext/ProductoContex
 import { createProduct } from "../../../context/productoContext/apiCalls";
 import { useHistory } from "react-router-dom";
 import Select from "react-select";
+import { schemaMaquinary } from "../../../context/proyectoContext/validateForm";
+import Maquinary from "../../../components/maquinaryComponent/Maquinary";
 
 export default function NuevoProducto() {
   const [autores, setAutores] = useState([]);
@@ -41,6 +43,8 @@ export default function NuevoProducto() {
 
   const { tables, dispatch } = useContext(TsContext);
   const [semilleros, setSemilleros] = useState([]);
+  const [maquinary, setMaquinary] = useState();
+  const [checked, setChecked] = useState(false);
   const { dispatch: dispatchProducto } = useContext(ProductoContext);
 
   useEffect(() => {
@@ -105,10 +109,20 @@ export default function NuevoProducto() {
     setSemilleros(e);
   };
 
+  const handleChecked = (e) => {
+    if (checked) {
+      setChecked(false);
+      setMaquinary();
+    } else {
+      setChecked(true);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
       product: product,
+      maquinary: maquinary,
       talent: autores,
       semilleros: semilleros,
     };
@@ -120,6 +134,19 @@ export default function NuevoProducto() {
             path: "semilleros",
             message: "Agrega los semilleros",
           });
+        } else if (maquinary) {
+          schemaMaquinary
+            .validate(data.maquinary)
+            .then(() => {
+              createProduct(data, dispatchProducto);
+              history.push("/products");
+            })
+            .catch((error) => {
+              setErrores({
+                path: error.path,
+                message: error.errors[0],
+              });
+            });
         } else {
           createProduct(data, dispatchProducto);
           history.push("/products");
@@ -296,7 +323,6 @@ export default function NuevoProducto() {
               <Select
                 placeholder="Selecciona los semilleros"
                 closeMenuOnSelect={false}
-                // defaultValue="Selecciona un semillero"
                 isMulti
                 options={tables.semilleros}
                 onChange={handleChangeSelect}
@@ -305,6 +331,32 @@ export default function NuevoProducto() {
           </div>
           {errores.path === "semilleros" && (
             <p className="error">{errores.message}*</p>
+          )}
+          <div className="contentDataBankCheckAll">
+            <p className="pLetter">¿Se creó equipos de computo o maquinaria?</p>
+            <div className="contentRadioButtons">
+              <p>Si</p>
+              <label className="switch">
+                <input
+                  className="radio"
+                  name="maquinaria"
+                  id="maquinaria"
+                  type="checkbox"
+                  onClick={handleChecked}
+                />
+                <div className="slider round"></div>
+              </label>
+              <p>No</p>
+            </div>
+          </div>
+          {checked && (
+            <Maquinary
+              maquinary={maquinary}
+              setMaquinary={setMaquinary}
+              errores={errores}
+              setErrores={setErrores}
+              creation={true}
+            />
           )}
           <div className="contentDataBankCheckAll">
             <p className="pLetter">

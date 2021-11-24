@@ -20,6 +20,32 @@ export const MaquinaryReducer = (state, action) => {
         isFetching: false,
         error: true,
       };
+
+    case "EDIT_MAQUINARY_START":
+      return {
+        ...state,
+        isFetching: true,
+        error: false,
+      };
+
+    case "EDIT_MAQUINARY_SUCCESS":
+      return {
+        maquinarys: state.maquinarys.map(
+          (maquinary) =>
+            maquinary.codigo_equipo === action.payload.codigo_equipo &&
+            action.payload
+        ),
+        isFetching: false,
+        error: false,
+      };
+
+    case "EDIT_MAQUINARY_FAILURE":
+      return {
+        ...state,
+        isFetching: false,
+        error: true,
+      };
+
     default: {
       return { ...state };
     }
