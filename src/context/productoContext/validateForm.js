@@ -44,6 +44,46 @@ export const schemaProduct = yup.object().shape({
     .required("El campo es obligatorio"),
 });
 
+export const schemaEditProduct = yup.object().shape({
+  codigo_tipologia: yup
+    .number()
+    .typeError("Solo se permite datos númericos")
+    .required("El campo es obligatorio"),
+  fecha_registro_producto: yup
+    .date()
+    .typeError("Solo se permite enviar el campo en fecha")
+    .required("El campo es obligatorio"),
+  intangible: yup
+    .string()
+    .typeError("Solo se permite el tipo de dato string")
+    .required("El campo es obligatorio"),
+  tipo_intangible: yup
+    .number()
+    .typeError("Solo se permite datos númericos")
+    .required("El campo es obligatorio"),
+  aval_autor: yup
+    .number()
+    .typeError("Solo se permite datos númericos")
+    .required("El campo es obligatorio"),
+  link_producto: yup
+    .string()
+    .typeError("Solo se permite el tipo de dato string")
+    .required("El campo es obligatorio"),
+  descripcion_producto: yup
+    .string()
+    .typeError("Solo se permite el tipo de dato string")
+    .required("El campo es obligatorio"),
+  nombre_productos: yup
+    .string()
+    .typeError("Solo se permite el tipo de dato string")
+    .required("El campo es obligatorio")
+    .max(255, "Solo se permite un máximo de 255 caracteres"),
+  codigo_productos: yup
+    .number()
+    .typeError("Solo se permite datos númericos")
+    .required("El campo es obligatorio"),
+});
+
 export const schemaTalent = yup.object().shape({
   codigo_estado_contrato: yup
     .number()

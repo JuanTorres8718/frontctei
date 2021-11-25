@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import "./editarProducto.scss";
-import { schemaProduct } from "../../../context/productoContext/validateForm";
+import { schemaEditProduct } from "../../../context/productoContext/validateForm";
 import { TsContext } from "../../../context/tableSecundaryContext/TsContext";
 import { getAllTipologia } from "../../../context/tableSecundaryContext/apiCalls";
 import { ProductoContext } from "../../../context/productoContext/ProductoContext";
-import { createProduct } from "../../../context/productoContext/apiCalls";
+import { updateProduct } from "../../../context/productoContext/apiCalls";
 import { useHistory, useLocation, Redirect } from "react-router-dom";
 
 export default function EditarProducto() {
@@ -53,10 +53,10 @@ export default function EditarProducto() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    schemaProduct
+    schemaEditProduct
       .validate(editProduct)
       .then(() => {
-        createProduct(editProduct, dispatchProducto);
+        updateProduct(editProduct, dispatchProducto);
         history.push("/products");
       })
       .catch((error) => {
@@ -66,8 +66,6 @@ export default function EditarProducto() {
         });
       });
   };
-
-  console.log(editProduct);
 
   return (
     <>
@@ -150,7 +148,7 @@ export default function EditarProducto() {
                       id="aval_autor"
                       type="checkbox"
                       onClick={hoverInfoProduct}
-                      checked={editProduct.aval_autor}
+                      defaultChecked={editProduct.aval_autor}
                     />
                     <div className="slider round"></div>
                   </label>
@@ -171,7 +169,7 @@ export default function EditarProducto() {
                       id="tipo_intangible"
                       type="checkbox"
                       onClick={hoverInfoProduct}
-                      checked={editProduct.tipo_intangible}
+                      defaultChecked={editProduct.tipo_intangible}
                     />
                     <div className="slider round"></div>
                   </label>

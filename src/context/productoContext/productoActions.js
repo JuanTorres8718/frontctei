@@ -27,3 +27,16 @@ export const createProductSuccess = (Product) => ({
 export const createProductFailure = () => ({
   type: "CREATE_PRODUCT_FAILURE",
 });
+
+export const updateProductStart = () => ({
+  type: "UPDATE_PRODUCT_START",
+});
+
+export const updateProductSuccess = (Product) => ({
+  type: "UPDATE_PRODUCT_SUCCESS",
+  payload: Product,
+});
+
+export const updateProductFailure = () => ({
+  type: "UPDATE_PRODUCT_FAILURE",
+});

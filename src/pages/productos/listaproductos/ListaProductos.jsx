@@ -46,7 +46,7 @@ export default function ListaProductos() {
       width: 200,
     },
     {
-      field: "aval_autor",
+      field: "aval",
       headerName: "Aval del autor",
       width: 200,
     },
@@ -82,6 +82,11 @@ export default function ListaProductos() {
     product["id"] = product.codigo_productos;
     let dateFecha = product.fecha_registro_producto.split("T");
     product["fecha_registro"] = dateFecha[0];
+    if (product.aval_autor) {
+      product["aval"] = "Verdadero";
+    } else {
+      product["aval"] = "Falso";
+    }
   });
 
   return (

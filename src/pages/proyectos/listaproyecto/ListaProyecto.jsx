@@ -53,7 +53,7 @@ export default function ListaProyecto() {
       width: 200,
     },
     {
-      field: "estado_proyecto",
+      field: "estado",
       headerName: "Estado del proyecto",
       width: 200,
     },
@@ -67,7 +67,12 @@ export default function ListaProyecto() {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/project/" + params.row.codigo_proyecto}>
+            <Link
+              to={{
+                pathname: "/project/" + params.row.codigo_proyecto,
+                project: params.row,
+              }}
+            >
               <button className="productListEdit">Editar</button>
             </Link>
             {/* <DeleteOutline
@@ -84,6 +89,15 @@ export default function ListaProyecto() {
     project["id"] = project.codigo_proyecto;
     let dateFecha = project.fecha_cierre_proyecto.split("T");
     project["fecha_cierre"] = dateFecha[0];
+    if (project.codigo_estado_proyecto === 1) {
+      project["estado"] = "Sin iniciar";
+    } else if (project.codigo_estado_proyecto === 2) {
+      project["estado"] = "Ejecución";
+    } else if (project.codigo_estado_proyecto === 3) {
+      project["estado"] = "Terminado";
+    } else if (project.codigo_estado_proyecto === 4) {
+      project["estado"] = "Suspendido";
+    }
   });
 
   return (

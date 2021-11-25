@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./editarTalentoHumano.scss";
 import { schemaTalent } from "../../../context/proyectoContext/validateForm";
 import { TalentContext } from "../../../context/talentoContext/TalentContext";
-import { useLocation, Redirect } from "react-router-dom";
+import { useLocation, Redirect, useHistory } from "react-router-dom";
 import { useContext } from "react";
 import { TsContext } from "../../../context/tableSecundaryContext/TsContext";
 import { useEffect } from "react";
@@ -10,11 +10,14 @@ import {
   getAllNivel,
   getAllRolSennova,
 } from "../../../context/tableSecundaryContext/apiCalls";
+import { updateTalent } from "../../../context/talentoContext/apiCalls";
 
 export default function EditarTalentoHumano() {
   const { talent } = useLocation();
   const { dispatch } = useContext(TalentContext);
   const { tables, dispatch: dispatchTables } = useContext(TsContext);
+
+  let history = useHistory();
 
   useEffect(() => {
     getAllNivel(dispatchTables);
@@ -43,7 +46,8 @@ export default function EditarTalentoHumano() {
     schemaTalent
       .validate(editTalent)
       .then(() => {
-        console.log("Enviado");
+        updateTalent(editTalent, dispatch);
+        history.push("/talents");
       })
       .catch((error) => {
         setErrores({
@@ -52,8 +56,6 @@ export default function EditarTalentoHumano() {
         });
       });
   };
-
-  console.log(editTalent);
 
   return (
     <>
@@ -84,61 +86,12 @@ export default function EditarTalentoHumano() {
                   className="contentEditTalentInput"
                   placeholder="Ingresar el objeto del contrato"
                   onChange={handleChange}
-                  value={editTalent.objeto_contrato}
+                  value={editTalent.objeto_contrato || ""}
                 />
               </div>
               {errores.path === "objeto_contrato" && (
                 <p className="error">{errores.message}*</p>
               )}
-              {/* <div className="contentEditTalentGroup">
-            <p className="pLetter">SENA SENNOVA*</p>
-            <select
-              className="contentEditTalentSelect"
-              name="sena_sennova"
-              id="sena_sennova"
-              onChange={handleChange}
-              value={editTalent.sena_sennova}
-            >
-              <option value="">
-                Selecciones si pertenece a SENA o SENNOVA
-              </option>
-              <option value="sena">SENA</option>
-              <option value="sennova">SENNOVA</option>
-            </select>
-          </div>
-          {errores.path === "sena_sennova" && (
-            <p className="error">{errores.message}*</p>
-          )} */}
-              {/* <div className="contentEditTalentGroup">
-            <p className="pLetter">Valor mensual del contrato</p>
-            <input
-              type="number"
-              name="valor_mensual_contrato"
-              id="valor_mensual_contrato"
-              className="contentEditTalentInput"
-              placeholder="Ingresar el valor mensual del contrato"
-              onChange={handleChangeInt}
-              value={editTalent.valor_mensual_contrato}
-            />
-          </div>
-          {errores.path === "valor_mensual_contrato" && (
-            <p className="error">{errores.message}*</p>
-          )}
-          <div className="contentEditTalentGroup">
-            <p className="pLetter">Valor Total del contrato*</p>
-            <input
-              type="number"
-              name="valor_total_contrato"
-              id="valor_total_contrato"
-              className="contentEditTalentInput"
-              placeholder="Ingresar el valor total del contrato"
-              onChange={handleChangeInt}
-              value={editTalent.valor_total_contrato}
-            />
-          </div>
-          {errores.path === "valor_total_contrato" && (
-            <p className="error">{errores.message}*</p>
-          )} */}
               <div className="contentEditTalentGroup">
                 <p className="pLetter">Género*</p>
                 <select
@@ -165,7 +118,7 @@ export default function EditarTalentoHumano() {
                   className="contentEditTalentInput"
                   placeholder="Ingresar el tiempo dedicado semanal por la persona"
                   onChange={handleChange}
-                  value={editTalent.tiempo_dedicacion_semanal}
+                  value={editTalent.tiempo_dedicacion_semanal || ""}
                 />
               </div>
               {errores.path === "tiempo_dedicacion_semanal" && (
@@ -224,7 +177,7 @@ export default function EditarTalentoHumano() {
                   name="codigo_nivel"
                   id="codigo_nivel"
                   onChange={handleChangeInt}
-                  value={editTalent.codigo_nivel}
+                  value={editTalent.codigo_nivel || ""}
                 >
                   <option value="">Selecciona el nivel academico</option>
                   {tables.niveles &&
@@ -242,7 +195,7 @@ export default function EditarTalentoHumano() {
                   name="codigo_rol_sennova"
                   id="codigo_rol_sennova"
                   onChange={handleChangeInt}
-                  value={editTalent.codigo_rol_sennova}
+                  value={editTalent.codigo_rol_sennova || ""}
                 >
                   <option value="">Selecciona el rol sennova</option>
                   {tables.rolSennova &&

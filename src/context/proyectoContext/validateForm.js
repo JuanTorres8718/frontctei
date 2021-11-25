@@ -71,6 +71,62 @@ export const schemaProject = yup.object().shape({
     .required("El campo es obligatorio"),
 });
 
+export const schemaEditProject = yup.object().shape({
+  codigo_estado_proyecto: yup
+    .number()
+    .typeError("Solo se permite datos númericos")
+    .required("El campo es obligatorio"),
+  video_proyecto: yup
+    .string()
+    .typeError("Solo se permite el tipo de dato string")
+    .required("El campo es obligatorio"),
+  resumen_proyecto: yup
+    .string()
+    .typeError("Solo se permite el tipo de dato string")
+    .required("El campo es obligatorio"),
+  codigo_red_conocimiento: yup
+    .number()
+    .typeError("Solo se permite datos númericos")
+    .required("El campo es obligatorio"),
+  codigo_linea_programatica: yup
+    .number()
+    .typeError("Solo se permite datos númericos")
+    .required("El campo es obligatorio"),
+  codigo_centro: yup
+    .number()
+    .typeError("Solo se permite datos númericos")
+    .required("El campo es obligatorio"),
+  fecha_cierre_proyecto: yup
+    .date()
+    .typeError("Solo se permite enviar el campo en fecha")
+    .required("El campo es obligatorio"),
+  fecha_inicio_proyecto: yup
+    .date()
+    .typeError("Solo se permite enviar el campo en fecha")
+    .required("El campo es obligatorio"),
+  observacion_general: yup
+    .string()
+    .typeError("Solo se permite el tipo de dato string")
+    .required("El campo es obligatorio"),
+  presupuesto_asignado: yup
+    .number()
+    .typeError("Solo se permite datos númericos")
+    .required("El campo es obligatorio"),
+  presupuesto_aprobado: yup
+    .number()
+    .typeError("Solo se permite datos númericos")
+    .required("El campo es obligatorio"),
+  presupuesto_solicitado: yup
+    .number()
+    .typeError("Solo se permite datos númericos")
+    .required("El campo es obligatorio"),
+  nombre_proyecto: yup
+    .string()
+    .typeError("Solo se permite el tipo de dato string")
+    .required("El campo es obligatorio")
+    .max(255, "Solo se permite un máximo de 255 caracteres"),
+});
+
 export const schemaMaquinary = yup.object().shape({
   codigo_tipo_equipo: yup
     .number()

@@ -43,33 +43,3 @@ export const updateProjectSuccess = (project) => ({
 export const updateProjectFailure = () => ({
   type: "UPDATE_PROJECT_FAILURE",
 });
-
-//Eliminar proyecto
-
-export const deleteProjectStart = () => ({
-  type: "DELETE_PROJECT_START",
-});
-
-export const deleteProjectSuccess = (id) => ({
-  type: "DELETE_PROJECT_SUCCESS",
-  payload: id,
-});
-
-export const deleteProjectFailure = () => ({
-  type: "DELETE_PROJECT_FAILURE",
-});
-
-//GET 1 MOVIER OR SERIE ACTIONS
-
-export const getProjectStart = () => ({
-  type: "GET_PROJECT_START",
-});
-
-export const getProjectSuccess = (id) => ({
-  type: "GET_PROJECT_SUCCESS",
-  payload: id,
-});
-
-export const getProjectFailure = () => ({
-  type: "GET_PROJECT_FAILURE",
-});

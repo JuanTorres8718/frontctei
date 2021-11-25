@@ -41,49 +41,29 @@ const ProyectoReducer = (state, action) => {
         error: true,
       };
 
-    // case "UPDATE_PROJECT_START":
-    //   return {
-    //     ...state,
-    //     isFetching: true,
-    //     error: false,
-    //   };
-    // case "UPDATE_PROJECT_SUCCESS":
-    //   return {
-    //     projects: state.projects.map(
-    //       (project) => project._id === action.payload._id && action.payload
-    //     ),
-    //     isFetching: false,
-    //     error: false,
-    //   };
+    case "UPDATE_PROJECT_START":
+      return {
+        ...state,
+        isFetching: true,
+        error: false,
+      };
+    case "UPDATE_PROJECT_SUCCESS":
+      return {
+        projects: state.projects.map(
+          (project) =>
+            project.codigo_proyecto === action.payload.codigo_proyecto &&
+            action.payload
+        ),
+        isFetching: false,
+        error: false,
+      };
 
-    // case "UPDATE_PROJECT_FAILURE":
-    //   return {
-    //     ...state,
-    //     isFetching: false,
-    //     error: true,
-    //   };
-
-    // case "DELETE_PROJECT_START":
-    //   return {
-    //     ...state,
-    //     isFetching: true,
-    //     error: false,
-    //   };
-    // case "DELETE_PROJECT_SUCCESS":
-    //   return {
-    //     projects: state.projects.filter(
-    //       (project) => project._id !== action.payload
-    //     ),
-    //     isFetching: false,
-    //     error: false,
-    //   };
-
-    // case "DELETE_PROJECT_FAILURE":
-    //   return {
-    //     ...state,
-    //     isFetching: false,
-    //     error: true,
-    //   };
+    case "UPDATE_PROJECT_FAILURE":
+      return {
+        ...state,
+        isFetching: false,
+        error: true,
+      };
 
     default:
       return { ...state };

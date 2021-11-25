@@ -7,6 +7,9 @@ import {
   getProductsFailure,
   getProductsSuccess,
   getProductstStart,
+  updateProductFailure,
+  updateProductStart,
+  updateProductSuccess,
 } from "./ProductoActions";
 
 //Obtener todos los productos
@@ -43,5 +46,31 @@ export const createProduct = async (data, dispatch) => {
       confirmButtonText: "Cerrar",
     });
     dispatch(createProductFailure());
+  }
+};
+
+//editar proyecto
+export const updateProduct = async (product, dispatch) => {
+  dispatch(updateProductStart());
+  try {
+    const res = await axios.put(
+      process.env.REACT_APP_API_URL + "/product/" + product.codigo_productos,
+      product
+    );
+    dispatch(updateProductSuccess(res.data));
+    Swal.fire({
+      title: "Actualizado!",
+      text: "Producto actualizado correctamente",
+      icon: "success",
+      confirmButtonText: "Cerrar",
+    });
+  } catch (error) {
+    Swal.fire({
+      title: "Error!",
+      text: "Sucedio algún problema con la base de datos",
+      icon: "error",
+      confirmButtonText: "Cerrar",
+    });
+    dispatch(updateProductFailure());
   }
 };

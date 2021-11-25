@@ -7,6 +7,9 @@ import {
   getProjecstStart,
   getProjectsFailure,
   getProjectsSuccess,
+  updateProjectFailure,
+  updateProjectStart,
+  updateProjectSuccess,
 } from "./proyectoActions";
 
 //Obtener todos los proyectos
@@ -46,32 +49,27 @@ export const createProject = async (data, dispatch) => {
   }
 };
 
-// //update1 movie & serie
-// export const updateMovieSerie = async (movie, dispatch) => {
-//   dispatch(updateMovieStart());
-//   try {
-//     const res = await axios.put("/movies/" + movie._id, movie, {
-//       headers: {
-//         token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
-//       },
-//     });
-//     dispatch(updateMovieSuccess(res.data));
-//   } catch (err) {
-//     dispatch(updateMovieFailure());
-//   }
-// };
-
-// //delete movie or series
-// export const deleteMovieSerie = async (id, dispatch) => {
-//   dispatch(deleteMovieStart());
-//   try {
-//     await axios.delete("/movies/" + id, {
-//       headers: {
-//         token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
-//       },
-//     });
-//     dispatch(deleteMovieSuccess(id));
-//   } catch (err) {
-//     dispatch(deleteMovieFailure());
-//   }
-// };
+export const updateProject = async (project, dispatch) => {
+  dispatch(updateProjectStart());
+  try {
+    const res = await axios.put(
+      process.env.REACT_APP_API_URL + "/project/" + project.codigo_proyecto,
+      project
+    );
+    dispatch(updateProjectSuccess(res.data));
+    Swal.fire({
+      title: "Actualizado!",
+      text: "El proyecto se actualizo correctamente",
+      icon: "success",
+      confirmButtonText: "Cerrar",
+    });
+  } catch (error) {
+    Swal.fire({
+      title: "Error!",
+      text: "Sucedio algún problema con la base de datos",
+      icon: "error",
+      confirmButtonText: "Cerrar",
+    });
+    dispatch(updateProjectFailure());
+  }
+};
