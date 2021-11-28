@@ -159,7 +159,6 @@ export default function NuevoProyecto() {
   };
 
   const handleChangeFile = (e) => {
-    console.log(e.target.name);
     if (e.target.id === "acta") {
       if (e.target.files[0]) {
         if (e.target.files[0].type === "application/pdf") {
@@ -212,7 +211,6 @@ export default function NuevoProyecto() {
   };
 
   const handleChangeSemillero = (e) => {
-    console.log(e);
     setSemilleros(e);
   };
 

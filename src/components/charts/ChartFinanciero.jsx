@@ -1,36 +1,67 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import {
-  AreaChart,
   XAxis,
-  YAxis,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Area,
+  BarChart,
+  Bar,
+  LabelList,
 } from "recharts";
-import { finanzaData } from "../../dummyData";
+import { getValueForYear } from "../../context/estadisticaContext/apiCalls";
+import { EstadisticaContext } from "../../context/estadisticaContext/EstadisticaContext";
 import "./chartStyle.scss";
 
 export default function ChartFinanciero() {
+  const { estadisticas, dispatch } = useContext(EstadisticaContext);
+
+  useEffect(() => {
+    getValueForYear(dispatch);
+  }, [dispatch]);
+
   return (
     <div className="chart">
-      <h1 className="titleChart">Indicadores de Proyectos invertidos</h1>
+      <h1 className="titleChart">Gastos en ACTI total</h1>
       <div className="chartIndicator">
-        <h3 className="chartTitle">Datos Financieros</h3>
-        <h3 className="chartTextY chartFinAndMaq">Cantidad de inversión</h3>
+        <h3 className="chartTitle">Datos Totales</h3>
         <ResponsiveContainer width="100%" aspect={4 / 1}>
-          <AreaChart data={finanzaData}>
-            <Area
+          <BarChart data={estadisticas.values ? estadisticas.values : ""}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="fecha" stroke="#5550bd" />
+            <Tooltip />
+            <Bar
               type="monotone"
-              dataKey="Inversion"
+              dataKey="valorProyectos"
+              stroke="#5550bd"
+              fill="#82ca9d"
+            >
+              <LabelList dataKey="name" position="insideTop" angle="45" />
+            </Bar>
+            <Bar
+              type="monotone"
+              dataKey="valorTalentos"
               stroke="#5550bd"
               fill="#82ca9d"
             />
-            <XAxis dataKey="name" stroke="#5550bd" />
-            <YAxis />
-            <Tooltip />
-            <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
-          </AreaChart>
+            <Bar
+              type="monotone"
+              dataKey="valorMaquinarias"
+              stroke="#5550bd"
+              fill="#82ca9d"
+            />
+            <Bar
+              type="monotone"
+              dataKey="valorSoftware"
+              stroke="#5550bd"
+              fill="#82ca9d"
+            />
+            <Bar
+              type="monotone"
+              dataKey="valorOtrosGastos"
+              stroke="#5550bd"
+              fill="#82ca9d"
+            />
+          </BarChart>
         </ResponsiveContainer>
         <h3 className="chartTextX">Años</h3>
       </div>

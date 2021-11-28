@@ -17,6 +17,14 @@
       margin-left: 15px;
     }
 
+    .containerTitle {
+      display: flex;
+      .titleTalent {
+        width: 33%;
+        text-align: center;
+      }
+    }
+
     .chartTextY {
       left: -121px;
       -webkit-transform: rotate(-90deg);

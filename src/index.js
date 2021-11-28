@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { AuthContextProvider } from "./context/authContext/AuthContext";
+import { EstadisticaContextProvider } from "./context/estadisticaContext/EstadisticaContext";
 import { MaquinaryContextProvider } from "./context/maquinariaContext/MaquinaryContext";
 import { ProductoContextProvider } from "./context/productoContext/ProductoContext";
 import { ProyectoContextProvider } from "./context/proyectoContext/proyectoContext";
@@ -18,7 +19,9 @@ ReactDOM.render(
             <TalentContextProvider>
               <MaquinaryContextProvider>
                 <TsContextProvider>
-                  <App />
+                  <EstadisticaContextProvider>
+                    <App />
+                  </EstadisticaContextProvider>
                 </TsContextProvider>
               </MaquinaryContextProvider>
             </TalentContextProvider>

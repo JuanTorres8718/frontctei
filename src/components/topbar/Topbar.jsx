@@ -1,12 +1,25 @@
 import "./topbar.scss";
 import { ArrowDropDown, Notifications } from "@material-ui/icons";
 import logo from "../../images/logo-sena.png";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../context/authContext/AuthContext";
 import { logoutFinish } from "../../context/authContext/apiCalls";
+import Button from "@material-ui/core/Button";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
 export default function Topbar() {
-  const { user, isFetching, dispatch } = useContext(AuthContext);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const { user, dispatch } = useContext(AuthContext);
 
   const handleLogout = () => {
     logoutFinish(dispatch);
@@ -23,21 +36,33 @@ export default function Topbar() {
             <Notifications className="iconNotifications" />
             <span className="topIconBadge">2</span>
           </div>
-          <div className="profile">
-            <span>{user.nombre_usuario}</span>
-            <ArrowDropDown className="icon" />
-            <div className="options">
-              <span className="option">Setting</span>
-              <span
-                className="option"
+          <div className="menuSelect">
+            <Button
+              aria-controls="simple-menu"
+              aria-haspopup="true"
+              onClick={handleClick}
+              className="btn-login"
+            >
+              {user.nombre_usuario}
+              <ArrowDropDown className="icon" />
+            </Button>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem>Perfil</MenuItem>
+              <MenuItem
+                className="liMenu"
                 onClick={() => {
                   handleLogout();
                 }}
-                disabled={isFetching}
               >
-                Logout
-              </span>
-            </div>
+                Cerrar Sesión
+              </MenuItem>
+            </Menu>
           </div>
         </div>
       </div>

@@ -50,45 +50,9 @@
         }
       }
 
-      .profile {
+      .menuSelect {
         background-color: white;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-
-        .options {
-          display: none;
-          border-radius: 5px;
-        }
-
-        span {
-          padding: 10px;
-          cursor: pointer;
-        }
-
-        .option {
-          color: black;
-          background-color: var(--border-color);
-        }
-
-        &:hover {
-          .options {
-            display: flex;
-            flex-direction: column;
-            position: absolute;
-            right: 22px;
-            top: 44px;
-            width: 127px;
-            color: white;
-            border-radius: 15px;
-
-            .option:hover {
-              color: white;
-              background-color: var(--main-color);
-              border-radius: 5px;
-            }
-          }
-        }
+        border-radius: 10px;
       }
     }
   }
