@@ -1,14 +1,7 @@
 import React, { useContext, useEffect } from "react";
-import {
-  PieChart,
-  Pie,
-  Tooltip,
-  ResponsiveContainer,
-  LabelList,
-} from "recharts";
+import { PieChart, Pie, Tooltip, ResponsiveContainer } from "recharts";
 import { getCategoriesTalent } from "../../context/estadisticaContext/apiCalls";
 import { EstadisticaContext } from "../../context/estadisticaContext/EstadisticaContext";
-import { talentData } from "../../dummyData";
 import "./chartStyle.scss";
 
 export default function ChartTalentoHumano() {
