@@ -38,3 +38,16 @@ export const getValueYearSuccess = (value) => ({
 export const getValueYearFailure = () => ({
   type: "GET_VALUEYEAR_FAILURE",
 });
+
+export const getCreationProductStart = () => ({
+  type: "GET_CREATEPRODUCTS_START",
+});
+
+export const getCreationProductSuccess = (product) => ({
+  type: "GET_CREATEPRODUCTS_SUCCESS",
+  payload: product,
+});
+
+export const getCreationProductFailure = () => ({
+  type: "GET_CREATEPRODUCTS_FAILURE",
+});

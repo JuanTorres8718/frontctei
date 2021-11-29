@@ -48,12 +48,32 @@ const EstadisticaReducer = (state, action) => {
       };
     case "GET_VALUEYEAR_SUCCESS":
       return {
-        estadisticas: { ...state.estadisticas, values: action.payload },
+        estadisticas: { ...state.estadisticas, valuesYear: action.payload },
         isFetching: false,
         error: false,
       };
 
     case "GET_VALUEYEAR_FAILURE":
+      return {
+        ...state,
+        isFetching: false,
+        error: true,
+      };
+
+    case "GET_CREATEPRODUCTS_START":
+      return {
+        ...state,
+        isFetching: true,
+        error: false,
+      };
+    case "GET_CREATEPRODUCTS_SUCCESS":
+      return {
+        estadisticas: { ...state.estadisticas, products: action.payload },
+        isFetching: false,
+        error: false,
+      };
+
+    case "GET_CREATEPRODUCTS_FAILURE":
       return {
         ...state,
         isFetching: false,

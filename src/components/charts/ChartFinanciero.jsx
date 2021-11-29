@@ -24,8 +24,10 @@ export default function ChartFinanciero() {
       <h1 className="titleChart">Gastos en ACTI total</h1>
       <div className="chartIndicator">
         <h3 className="chartTitle">Datos Totales</h3>
-        <ResponsiveContainer width="100%" aspect={4 / 1}>
-          <BarChart data={estadisticas.values ? estadisticas.values : ""}>
+        <ResponsiveContainer width="100%" aspect={3 / 1}>
+          <BarChart
+            data={estadisticas.valuesYear ? estadisticas.valuesYear : ""}
+          >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="fecha" stroke="#5550bd" />
             <Tooltip />

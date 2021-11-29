@@ -1,5 +1,11 @@
 import React, { useContext, useEffect } from "react";
-import { PieChart, Pie, Tooltip, ResponsiveContainer } from "recharts";
+import {
+  PieChart,
+  Pie,
+  Tooltip,
+  ResponsiveContainer,
+  LabelList,
+} from "recharts";
 import { getCategoriesTalent } from "../../context/estadisticaContext/apiCalls";
 import { EstadisticaContext } from "../../context/estadisticaContext/EstadisticaContext";
 import "./chartStyle.scss";
@@ -29,7 +35,10 @@ export default function ChartTalentoHumano() {
               cx="16%"
               cy="50%"
               outerRadius={80}
-            ></Pie>
+            >
+              <LabelList dataKey="codigo_nivel" position="outside" />
+              <LabelList dataKey="cantidad" position="inside" />
+            </Pie>
             <Pie
               type="monotone"
               dataKey="cantidad"
@@ -40,7 +49,9 @@ export default function ChartTalentoHumano() {
               cy="50%"
               outerRadius={80}
               // label
-            />
+            >
+              {/* <LabelList dataKey="codigo_rol_sennova" position="insideTop" /> */}
+            </Pie>
 
             <Pie
               type="monotone"
@@ -52,7 +63,9 @@ export default function ChartTalentoHumano() {
               cy="50%"
               outerRadius={80}
               // label
-            />
+            >
+              <LabelList dataKey="codigo_tipo_contrato" position="inside" />
+            </Pie>
             <Tooltip />
           </PieChart>
         </ResponsiveContainer>

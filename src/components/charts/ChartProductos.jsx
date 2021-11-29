@@ -1,38 +1,42 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import {
-  BarChart,
-  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  LineChart,
+  Line,
 } from "recharts";
-import { finanzaData } from "../../dummyData";
+import { getCreateProducts } from "../../context/estadisticaContext/apiCalls";
+import { EstadisticaContext } from "../../context/estadisticaContext/EstadisticaContext";
 import "./chartStyle.scss";
 
 export default function ChartProductos() {
+  const { estadisticas, dispatch } = useContext(EstadisticaContext);
+
+  useEffect(() => {
+    getCreateProducts(dispatch);
+  }, [dispatch]);
+
   return (
     <div className="chart">
       <h1 className="titleChart">Indicadores de Productos creados</h1>
       <div className="chartIndicator">
         <h3 className="chartTitle">Datos anuales de los Productos</h3>
-        <h3 className="chartTextY charth3Product">
-          Cantidad de productos creados
-        </h3>
-        <ResponsiveContainer width="100%" aspect={4 / 1}>
-          <BarChart data={finanzaData}>
-            <Bar
+        <ResponsiveContainer width="100%" aspect={3 / 1}>
+          <LineChart data={estadisticas.products ? estadisticas.products : ""}>
+            <Line
               type="monotone"
-              dataKey="Inversion"
+              dataKey="creados"
               stroke="#5550bd"
               fill="#82ca9d"
             />
-            <XAxis dataKey="name" stroke="#5550bd" />
+            <XAxis dataKey="fecha" stroke="#5550bd" />
             <YAxis />
             <Tooltip />
             <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
-          </BarChart>
+          </LineChart>
         </ResponsiveContainer>
         <h3 className="chartTextX">Años</h3>
       </div>

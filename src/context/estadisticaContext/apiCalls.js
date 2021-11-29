@@ -5,6 +5,9 @@ import {
   getAllValuesSuccess,
   getCategoryFailure,
   getCategorySuccess,
+  getCreationProductFailure,
+  getCreationProductStart,
+  getCreationProductSuccess,
   getValueYearFailure,
   getValueYearStart,
   getValueYearSuccess,
@@ -162,8 +165,44 @@ export const getValueForYear = async (dispatch) => {
         });
     });
 
+    values.sort(function (a, b) {
+      return a.fecha - b.fecha;
+    });
+
     dispatch(getValueYearSuccess(values));
   } catch (err) {
     dispatch(getValueYearFailure());
+  }
+};
+
+export const getCreateProducts = async (dispatch) => {
+  dispatch(getCreationProductStart());
+  try {
+    let values = [];
+    const res = await axios.get(process.env.REACT_APP_API_URL + "/products");
+    res.data.forEach((product) => {
+      let date = product.fecha_registro_producto.split("-")[0];
+      let bool = true;
+      for (const value of values) {
+        if (value.fecha === date) {
+          value.creados += 1;
+          bool = false;
+        }
+      }
+
+      bool &&
+        values.push({
+          fecha: date,
+          creados: 1,
+        });
+    });
+
+    values.sort(function (a, b) {
+      return a.fecha - b.fecha;
+    });
+
+    dispatch(getCreationProductSuccess(values));
+  } catch (error) {
+    dispatch(getCreationProductFailure());
   }
 };
