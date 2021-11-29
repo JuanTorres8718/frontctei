@@ -320,6 +320,26 @@ const TsReducer = (state, action) => {
         error: true,
       };
 
+    case "GET_FORMACION_START":
+      return {
+        tables: {},
+        isFetching: true,
+        error: false,
+      };
+    case "GET_FORMACION_SUCCESS":
+      return {
+        tables: { ...state.tables, formaciones: action.payload },
+        isFetching: false,
+        error: false,
+      };
+
+    case "GET_FORMACION_FAILURE":
+      return {
+        tables: {},
+        isFetching: false,
+        error: true,
+      };
+
     default:
       return { ...state };
   }

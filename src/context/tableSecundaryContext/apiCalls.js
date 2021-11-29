@@ -12,6 +12,9 @@ import {
   getDisciplinaFailure,
   getDisciplinaStart,
   getDisciplinaSuccess,
+  getFormacionFailure,
+  getFormacionStart,
+  getFormacionSuccess,
   getGrupoFailure,
   getGrupoStart,
   getGrupoSuccess,
@@ -271,5 +274,18 @@ export const getAllDisciplina = async (dispatch) => {
     dispatch(getDisciplinaSuccess(res.data));
   } catch (err) {
     dispatch(getDisciplinaFailure());
+  }
+};
+
+export const getAllFormacion = async (dispatch) => {
+  dispatch(getFormacionStart());
+  try {
+    const res = await axios.get(
+      process.env.REACT_APP_API_URL + "/table/formacion"
+    );
+
+    dispatch(getFormacionSuccess(res.data));
+  } catch (err) {
+    dispatch(getFormacionFailure());
   }
 };

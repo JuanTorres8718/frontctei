@@ -237,3 +237,16 @@ export const getDisciplinaSuccess = (disciplina) => ({
 export const getDisciplinaFailure = () => ({
   type: "GET_DISCIPLINA_FAILURE",
 });
+
+export const getFormacionStart = () => ({
+  type: "GET_FORMACION_START",
+});
+
+export const getFormacionSuccess = (formacion) => ({
+  type: "GET_FORMACION_SUCCESS",
+  payload: formacion,
+});
+
+export const getFormacionFailure = () => ({
+  type: "GET_FORMACION_FAILURE",
+});

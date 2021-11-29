@@ -8,6 +8,7 @@ import {
   getAllCentros,
   getAllCiiu,
   getAllDisciplina,
+  getAllFormacion,
   getAllMunicipios,
   getAllNivel,
   getAllRed,
@@ -59,6 +60,7 @@ export default function NuevoProyecto() {
   const [maquinary, setMaquinary] = useState();
   const [municipios, setMunicipios] = useState([]);
   const [semilleros, setSemilleros] = useState([]);
+  const [formaciones, setFormaciones] = useState([]);
 
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -81,6 +83,7 @@ export default function NuevoProyecto() {
     getAllRubros(dispatch);
     getAllCiiu(dispatch);
     getAllDisciplina(dispatch);
+    getAllFormacion(dispatch);
   }, [dispatch]);
 
   const handleOpen = () => {
@@ -218,6 +221,10 @@ export default function NuevoProyecto() {
     setMunicipios(e);
   };
 
+  const handleChangeFormaciones = (e) => {
+    setFormaciones(e);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
@@ -227,6 +234,7 @@ export default function NuevoProyecto() {
       rubros: rubros,
       semilleros: semilleros,
       municipios: municipios,
+      formaciones: formaciones,
     };
     // const images = [
     //   data.project.file_proyecto,
@@ -254,6 +262,11 @@ export default function NuevoProyecto() {
           setErrores({
             path: "municipios",
             message: "Agrega los municipios beneficiados en el proyecto",
+          });
+        } else if (data.formaciones.length === 0) {
+          setErrores({
+            path: "formacion",
+            message: "Agrega las formaciones beneficiados en el proyecto",
           });
         } else if (maquinary) {
           schemaMaquinary
@@ -608,6 +621,24 @@ export default function NuevoProyecto() {
             )}
           </div>
           {errores.path === "municipios" && (
+            <p className="error">{errores.message}*</p>
+          )}
+          <div className="contentNewSelectGroup">
+            <p className="pLetter">
+              ¿Cuales fueron las formaciones beneficiadas con el proyecto?*
+            </p>
+            {tables.formaciones && (
+              <Select
+                placeholder="Selecciona los formaciones"
+                closeMenuOnSelect={false}
+                isMulti
+                name="formacion"
+                options={tables.formaciones}
+                onChange={handleChangeFormaciones}
+              />
+            )}
+          </div>
+          {errores.path === "formacion" && (
             <p className="error">{errores.message}*</p>
           )}
           <div className="contentDataBankCheckAll">
