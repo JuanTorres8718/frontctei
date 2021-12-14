@@ -30,6 +30,7 @@ import ChartFormacion from "./components/charts/ChartFormacion";
 import { useContext } from "react";
 import { AuthContext } from "./context/authContext/AuthContext";
 import EditMaquinary from "./pages/maquinaria/editarmaquinaria/EditMaquinary";
+import Indicadores from "./pages/Indicadores/Indicadores";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -45,6 +46,9 @@ function App() {
               <Sidebar />
               <Route exact path="/">
                 <Home />
+              </Route>
+              <Route exact path="/indicators">
+                <Indicadores />
               </Route>
               {user.codigo_rol !== 4 ? (
                 <>

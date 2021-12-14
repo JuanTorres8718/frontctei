@@ -280,11 +280,19 @@ export const getAllDisciplina = async (dispatch) => {
 export const getAllFormacion = async (dispatch) => {
   dispatch(getFormacionStart());
   try {
+    let array = [];
     const res = await axios.get(
       process.env.REACT_APP_API_URL + "/table/formacion"
     );
 
-    dispatch(getFormacionSuccess(res.data));
+    res.data.forEach((result) => {
+      array.push({
+        label: result.nombre_programas,
+        value: result.codigo_formacion,
+      });
+    });
+
+    dispatch(getFormacionSuccess(array));
   } catch (err) {
     dispatch(getFormacionFailure());
   }

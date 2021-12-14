@@ -294,6 +294,8 @@ export default function NuevoProyecto() {
       });
   };
 
+  console.log(tables);
+
   return (
     <div className="newProject">
       <h1 className="newProjectTitle">Registrar Nuevo Proyecto</h1>
@@ -612,7 +614,6 @@ export default function NuevoProyecto() {
               <Select
                 placeholder="Selecciona los municipios"
                 closeMenuOnSelect={false}
-                // defaultValue="Selecciona un semillero"
                 isMulti
                 name="municipios"
                 options={tables.municipios}

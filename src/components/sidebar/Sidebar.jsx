@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import {
-  ArrowDropDown,
+  // ArrowDropDown,
   BusinessCenter,
   Computer,
   DataUsage,
@@ -71,14 +71,16 @@ export default function Sidebar() {
                 Inicio
               </li>
             </Link>
-            <li className="indicator" onClick={hoverMenu}>
-              <div className="listIndicator">
-                <Equalizer className="sidebarIcon" />
-                Indicadores CTeI
-                <ArrowDropDown className="icon" />
-              </div>
-            </li>
-            <div id="options" className="options displayOptions">
+            <Link to="/indicators" className="link">
+              <li className="indicator" /*onClick={hoverMenu}*/>
+                <div className="listIndicator">
+                  <Equalizer className="sidebarIcon" />
+                  Indicadores CTeI
+                  {/* <ArrowDropDown className="icon" /> */}
+                </div>
+              </li>
+            </Link>
+            {/* <div id="options" className="options displayOptions">
               <Link to="/chartfinanciero" className="link">
                 <span>-Financiero</span>
               </Link>
@@ -94,7 +96,7 @@ export default function Sidebar() {
               <Link to="/chartformacion" className="link">
                 <span>-Formación en CTeI</span>
               </Link>
-            </div>
+            </div> */}
             {user.codigo_rol !== 4 && (
               <Link to="/databank" className="link">
                 <li className="sidebarListItem">
